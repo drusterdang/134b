@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Test Document</title>
+</head>
+<body>
+<h1>HTML Tag Test</h1>
+<p>The HTML Tag contains a head and a body, and you can declare the language.</p>
+
+<h1>body Test</h1>
+<p>The Body tag contains all the contents of an HTML document. Everything you see here is written in the body tag.</p>
+
+<h1>nav Test</h1>
+<nav>
+  <ul>
+   <li><a href="/">Home</a></li>
+   <li><a href="/about">About Page</a></li>
+   <li><a href="/buy">Buy stuff!</a></li>
+  </ul>
+
+<p> The navigation element represents a section of a page that links to other pages or to parts within the page.</p>
+</nav>
+
+<h1>aside Test</h1>
+
+<p>The aside element defines some content that is set aside from the content it is placed in. 
+<q>I really enjoy using aside elements because it allows me to organize my content better. It helps provide focus. </q></p>
+
+<aside>
+	<p>For example, I can write this here to provide more information to the previously mentioned statements.</p>
+</aside>
+
+<p>Now, let's get back to the content!</p>
+
+<h1> h1, h2, h3, h4, h5, h6 Test</h1>
+These elements represent headings for their sections. As the number increases, the header size decreases.
+<h1>h1</h1>
+<h2>h2</h2>
+<h3>h3</h3>
+<h4>h4</h4>
+<h5>h5</h5>
+<h6>h6</h6>
+
+
+<h1>header test</h1>
+<header>
+	The header element represents a container for introductory content or a set of navigational links.
+  <h1>WOW. LOOK AT THIS!</h1>
+  <h3>MUCH WOW. BUT A LITTLE LESS</h3>
+
+</header>
+
+<h1>address test</h1>
+<p>This tag defines the contact information for the author/owner of a document or an article. If the tag falls under the body, then it is the address of the author of that document. If the tag falls under the article, then it is the address for the author of that article.</p>
+<address>
+Written by <a href="mailto:webmaster@example.com">Andrew Dang</a>.<br>
+Visit us at:<br>
+Example.com<br>
+Box 564, Disneyland<br>
+USA
+</address>
+<h1>Section test</h1>
+<section>
+	<h1>This is a section.</h1>
+	<p>The content here is included in this section. A section tag defines sections in a document. It is very similar to headers and footers!</p>
+</section>
+
+<h1>article test</h1>
+<article>
+	<h1>Read this blog post about articles!</h1>
+	<p>An article tag specifies independent, self-contained content. An article should make sense on its own and it should be possible to distribute it independently from the rest of the site. These includes forum posts, blog posts, news stories, and comments.</p>
+</article>
+
+<h1>ins test</h1>
+<p>The Ins tag defines a text that has been inserted into a document. Browsers usually underline inserted text. For example, <ins>this right here</ins> is an example of text that is newly inserted.</p>
+
+<h1>del test</h1>
+<p>The Del tag defines a text that has been deleted. Browsers usually strike a line through deleted text. For example, <del>this right here</del> is an example of text that was deleted.</p>
+
+<h1>img test</h1>
+<p>The img tag defines an image in an HTML page. It has two required attributes: src and alt. Let's look at this cute picture of Chris Pratt right below!</p>
+<img src="http://40.media.tumblr.com/b9627acb59fa7877375a9003b718f54e/tumblr_mx7fjrtOAr1r988d8o1_1280.jpg" alt="Chris Pratt's face" width="200" height="200">
+
+<h1>embed test</h1>
+<p>The embed tag defines a container for an external application or interactive content. For example, a plug in. Let's look at an example below. WOAH! So awesome!</p>
+<embed src= "http://33.media.tumblr.com/bb11a3f6d420cfd54af86e281ada4616/tumblr_nels64g9mG1s48ibpo1_500.gif">
+
+<h1>object test</h1>
+
+<p>The object test defines an embedded object within an HTML document. Use this element to embed multimedia in our web pages. You can also use the object tag to embed another webpage into your HTML document. Object tag is newer than embed. Embed is used just incase older browsers don't support object. Here's another gif example of Chris Pratt!</p>
+
+<object width="600" height="400" data="https://uproxx.files.wordpress.com/2014/08/chris-pratt-dancing.gif?w=650&h=292">
+</object>
+
+
+<h1>param test</h1>
+<p>This param tag is used to define parameters for plugins embedded with an object element. For example, below is an video file that has a param name autoplay and the value has been set to true. This will autoplay the video file when the page loads. Let's move to the groove!</p>
+
+<object data="movie.mp4">
+<param name="autoplay" value="true">
+</object>
+
+<h1>video test</h1>
+<p>This video tag specifies video such as a movie clip or other video streams. There are 3 supported video formats for the video element. MP4, WebM, and Ogg. We have the same video used before except it doesn't have the autoplay parameter.</p>
+<video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+  Your browser does not support the video tag.
+</video>
+
+<h1>audio test</h1>
+<p>This audio tag defines sound, such as music or other audio streams. There are 3 supported file formats. MP3, Wav, and Ogg. Let's listen to some rad music now!</p>
+<audio controls>
+  <source src="horse.ogg" type="audio/ogg">
+  Your browser does not support the audio tag.
+</audio>
+
+
+<h1>source test</h1>
+<p>This source tag is used to specify multiple media resources for media elements, such as video and audio. It allows you to specify alternative video/audio files which the browser may choose from, based on its media type or codec support. Below will either be audio or video depending on which your browser chooses/supports. This is useful because you don't know what browsers the users are using. It is helpful to provide multiple sources.</p>
+
+<audio controls>
+<source src="horse.ogg" type="audio/ogg">
+<source src="movie.mp4" type="video/mp4">
+Your browser does not support the audio/video element.
+</audio>
+
+<h1>track test</h1>
+<p>This is a track tag that specifies the text that tracks for media elements. This element is used to specify subtitles, caption files, or other files containing text, that should be visible when the media is playing.</p>
+
+
+<video width="320" height="240" controls>
+  <source src="movie.mp4" type="video/mp4">
+  <track src="videos-subtitles-en.vtt" kind="subtitles" srclang="en" label="English">
+  </video>
+
+<h1>footer test</h1>
+
+<p>Footer tag defines a footer for a document or section. It should contain information about authorship, copyright, contact, sitemap, back to top links, related documents. It is typically located at the bottom of the document.</p>
+<footer>
+  <p>Posted by: Andrew Dang</p>
+  <p>Contact information: <a href="mailto:someone@example.com">someone@example.com</a>.</p>
+</footer>
+
+
+<h1>iframe test</h1>
+<p>The iframe tag is used to specify an inline frame. An inline frame is used to embed another document within the current HTML document. For example, let's embed our cse134b hw2 page!</p>
+<iframe src="http://classes.pint.com/cse134b/homework/hw2.html"></iframe>
+
+</body>
+</html>
