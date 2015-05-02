@@ -1,0 +1,23 @@
+Hassan
+	Desktop-SideNav
+	Desktop-Slide3
+	Slide 9
+	Slide 10
+	
+Eugene
+	Desktop-Stack Value + Graph (Slide2)
+	Slide 8
+	
+Alex
+	Slide 4+5
+	Slide 11+12
+
+Scott
+	Desktop-Login
+	Desktop-Mobile
+
+Andrew
+	Slide 6+7
+
+Undone
+	Mobile Navbar
