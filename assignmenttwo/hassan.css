@@ -1,7 +1,17 @@
-@font-face {
-        font-family: "Name of your font";
-        src: url(bootstrap/fonts/glyphicons-halflings-regular.ttf);
+#sidebar{
+	position: absolute;
+	top: 50px;
 }
-* {
-    font-family: "Name of your font";
+
+#sidebar > ul > a >li {
+	padding-top: 10px;
+	border: 1px solid darkslategray;
+	padding: 5px;
+	background-color: #eee;
+	font-size: 25px;
+}
+ul
+{
+	padding: 15px;
+    list-style-type: none;
 }
