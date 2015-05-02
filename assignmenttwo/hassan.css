@@ -1,0 +1,7 @@
+@font-face {
+        font-family: "Name of your font";
+        src: url(bootstrap/fonts/glyphicons-halflings-regular.ttf);
+}
+* {
+    font-family: "Name of your font";
+}
