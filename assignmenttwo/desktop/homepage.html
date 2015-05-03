@@ -1,12 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Test Document</title>
-	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <title>Test Document</title>
+  <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+  <style>
+    .atom {
+      white-space: nowrap;
+    }
+    .metal-head {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 <body>
-<p> PAGE</p>
+<div class='container'>
+  <div class='row'>
+    <div class='col-md-6'>
+      <div id='market-summary' class='row well well-sm'>
+        <p>
+          <span class='main-price'>$24,495.23</span>
+          <span class='sub-price-change'>+3.5%</span>
+        </p>
+        <p>My Total Stack Value</p>
+      </div>
+      <div id='market-status' class='clearfix'>
+        <p class='pull-left'>Market is <b>open</b></p>
+        <p class='pull-right'>closes in 3h 35min</p>
+      </div>
+      <div>
+        <div class='metal-head clearfix'>
+          <p class='pull-left'>Gold</p>
+          <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></span>
+        </div>
+        <div class='row text-center'>
+          <div class='col-xs-4'>
+            <h4>1206.10</h4>
+            <p>Bid</p>
+          </div>
+          <div class='col-xs-4'>
+            <h4>1207.10</h4>
+            <p>Ask</p>
+          </div>
+          <div class='col-xs-4'>
+            <h4>+23.40</h4>
+            <p>Change</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class='metal-head clearfix'>
+          <p class='pull-left'>Silver</p>
+          <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></span>
+        </div>
+        <div class='row text-center'>
+          <div class='col-xs-4'>
+            <h4>16.10</h4>
+            <p>Bid</p>
+          </div>
+          <div class='col-xs-4'>
+            <h4>16.50</h4>
+            <p>Ask</p>
+          </div>
+          <div class='col-xs-4'>
+            <h4>-0.36</h4>
+            <p>Change</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class='metal-head clearfix'>
+          <p class='pull-left'>Platinum</p>
+          <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></span>
+        </div>
+        <div class='row text-center'>
+          <div class='col-xs-4'>
+            <h4>1206.10</h4>
+            <p>Bid</p>
+          </div>
+          <div class='col-xs-4'>
+            <h4>1207.10</h4>
+            <p>Ask</p>
+          </div>
+          <div class='col-xs-4'>
+            <h4>+23.40</h4>
+            <p>Change</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class='col-md-6'>
+      <img src='http://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Directed_acyclic_graph_3.svg/1280px-Directed_acyclic_graph_3.svg.png' alt='' width='100%' />
+      <div class='text-center'>
+        <div class='col-xs-4'>
+          <p>Gold</p> 
+          <p><i class='glyphicon glyphicon-arrow-up'></i> Unit  <wbr /> <i class='glphicon glyphicon-arrow-up'></i> Total</p>
+        </div>
+        <div class='col-xs-4'>
+          <p>Silver<p>
+          <p>
+            <span class='atom'><i class='glyphicon glyphicon-arrow-up'></i> Unit</span>
+            <span class='atom'><i class='glphicon glyphicon-arrow-up'></i> Total</span>
+          </p>
+        </div>
+        <div class='col-xs-4'>
+          <p>Platinum</p> 
+          </p><i class='glyphicon glyphicon-arrow-up'></i> Unit <wbr /> <i class='glphicon glyphicon-arrow-up'></i> Total</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript" src="../jquery.min.js">
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js">
 </script>
