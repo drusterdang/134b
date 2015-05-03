@@ -1,0 +1,78 @@
+.sidebar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.menu-icon {
+  font-weight: bold;
+}
+
+.horizontal {
+  display: inline;
+  text-align: center;
+}
+
+.horizontal .menu-icon {
+  font-size: 20px;
+  line-height: 40px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.horizontal .menu-text {
+  font-size: 14px;
+  line-height: 40px;
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.vertical {
+  display: block;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.vertical .menu-icon {
+  display: block;
+  font-size: 28px;
+  vertical-align: middle;
+}
+
+.vertical .menu-text {
+  display: block;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.menu-item {
+  color: #888;
+}
+
+.menu-item.current {
+  color: #333;
+}
+
+.menu-item.current:hover {
+  color: #333;
+}
+
+.menu-item:hover {
+  color: #444;
+}
+
+.top-bar {
+}
+
+.top-bar p {
+  padding: 10px;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.top-bar h1 {
+  padding: 10px;
+  margin: 0;
+  font-size: 22px;
+  vertical-align: middle;
+}
+

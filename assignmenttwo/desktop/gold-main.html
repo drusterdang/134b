@@ -6,6 +6,16 @@
   <link rel="stylesheet" type='text/css' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" type='text/css' href="sidebar.css">
   <style>
+    table {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    table td {
+        vertical-align: middle;
+        line-height: 64px;
+    }
+
     canvas {
       box-sizing: border;
       width: 100%;
@@ -20,20 +30,18 @@
       margin-bottom: 5px;
     }
 
-    .main-price, .sub-price-change {
-      line-height: 30px;
-    }
-
     .main-price {
-      font-size: 24px;
+      font-size: 30px;
       font-weight: 600;
       vertical-align: baseline;
     }
 
     .sub-price-change {
+      line-height: 15px;
       font-size: 14px;
       color: #888;
-      vertical-align: baseline;
+      vertical-align: middle;
+      text-align: right;
     }
 
     .backdrop {
@@ -42,6 +50,21 @@
       background-color:#f4f4f4;
       border-radius: 5px;
       border: 1px solid #dfdfdf;
+    }
+
+    .metal.backdrop {
+      background-color:#fdfdfd;
+    }
+
+    #stack {
+      position: relative;
+    }
+
+    #stack-control {
+      margin-bottom: 0;
+      position:absolute;
+      bottom: 6px;
+      right: 0;
     }
   </style>
 </head>
@@ -100,60 +123,22 @@
     <div class='row'>
       <div class='col-md-5'>
         <div id='market-summary' class='row backdrop'>
-          <p>
-            <span class='main-price'>$24,495.23</span>
-            <span class='sub-price-change'>+3.5%</span>
-          </p>
-          <p>My Total Stack Value</p>
+          <div class='row'>
+            <div class='col-xs-6'>
+              <p>
+                <span class='main-price'>$24,495.23</span>
+              </p>
+            </div>
+            <div class='col-xs-6'>
+              <p class='sub-price-change'>Daily +3.5%</p>
+              <p class='sub-price-change'>Overall +1.2%</p>
+            </div>
+          </div>
+          <p>My Gold Value</p>
         </div>
-        <div id='market-status' class='clearfix'>
-          <p class='pull-left'>Market is <b>open</b></p>
-          <p class='pull-right'>closes in 3h 35min</p>
-        </div>
-        <div>
+        <div class='metal backdrop row'>
           <div class='metal-head clearfix'>
-            <p class='pull-left'>Gold</p>
-            <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></p>
-          </div>
-          <div class='row text-center'>
-            <div class='col-xs-4'>
-              <h4>1206.10</h4>
-              <p>Bid</p>
-            </div>
-            <div class='col-xs-4'>
-              <h4>1207.10</h4>
-              <p>Ask</p>
-            </div>
-            <div class='col-xs-4'>
-              <h4>+23.40</h4>
-              <p>Change</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class='metal-head clearfix'>
-            <p class='pull-left'>Silver</p>
-            <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></p>
-          </div>
-          <div class='row text-center'>
-            <div class='col-xs-4'>
-              <h4>16.10</h4>
-              <p>Bid</p>
-            </div>
-            <div class='col-xs-4'>
-              <h4>16.50</h4>
-              <p>Ask</p>
-            </div>
-            <div class='col-xs-4'>
-              <h4>-0.36</h4>
-              <p>Change</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class='metal-head clearfix'>
-            <p class='pull-left'>Platinum</p>
-            <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></p>
+            <p class='pull-left'>Current Spot</p>
           </div>
           <div class='row text-center'>
             <div class='col-xs-4'>
@@ -176,30 +161,59 @@
           <canvas id="main-chart"></canvas>
         </div>
         <div class='text-center'>
-          <div class='col-xs-4'>
-            <p>Gold</p>
+          <div class='col-xs-12'>
             <p>
               <span class='atom'><i style='color:#969562;' class='glyphicon glyphicon-stop'></i> Unit</span>
               <span class='atom'><i style='color:#E3E2B3;' class='glyphicon glyphicon-stop'></i> Total</span>
             </p>
           </div>
-          <div class='col-xs-4'>
-            <p>Silver</p>
-            <p>
-              <span class='atom'><i style='color:#8C8C8C;' class='glyphicon glyphicon-stop'></i> Unit</span>
-              <span class='atom'><i style='color:#C8C8C8;' class='glyphicon glyphicon-stop'></i> Total</span>
-            </p>
-          </div>
-          <div class='col-xs-4'>
-            <p>Platinum</p>
-            <p>
-              <span class='atom'><i style='color:#646464;' class='glyphicon glyphicon-stop'></i> Unit</span>
-              <span class='atom'><i style='color:#B3B3B3;' class='glyphicon glyphicon-stop'></i> Total</span>
-            </p>
-          </div>
         </div>
       </div>
     </div>
+    <div id='stack' class='row'>
+      <h3 class='pull-left'>My Stack</h3>
+      <div id='stack-control' class='form-group pull-right'>
+        <input type="text" class="form-control-inline" width=200 placeholder="Search for...">
+        <i class='glyphicon glyphicon-plus'></i>
+      </div>
+      <p class=''></p>
+    </div>
+    <table class='table'>
+      <tbody>
+        <tr>
+          <th width=64>Image</th>
+          <th>Item</th>
+          <th>Qty.</th> 
+          <th>Weight/Unit(g)</th>
+          <th>% Au</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td><img src='../img/aecoin.jpg' alt='' height=48 /></td>
+          <td>US Eagle</td>
+          <td>1</td>
+          <td>1.244</td>
+          <td>0.917</td>
+          <td>1199.10</td>
+        </tr>
+        <tr>
+          <td><img src='../img/aecoin.jpg' alt='' height=48 /></td>
+          <td>US Eagle</td>
+          <td>1</td>
+          <td>1.244</td>
+          <td>0.917</td>
+          <td>1199.10</td>
+        </tr>
+        <tr>
+          <td><img src='../img/aecoin.jpg' alt='' height=48 /></td>
+          <td>US Eagle</td>
+          <td>1</td>
+          <td>1.244</td>
+          <td>0.917</td>
+          <td>1199.10</td>
+        </tr>
+      </tbody>
+    </table>
   </main>
 </div>
 <script type="text/javascript" src="../jquery.min.js"></script>
@@ -221,26 +235,6 @@
       data: [65, 59, 80, 81, 56, 55]
     },
     {
-      label: "Total Silver",
-      fillColor: "rgba(179,179,175,0.2)",
-      strokeColor: "rgba(179,179,175,1)",
-      pointColor:  "rgba(179,179,175,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(220,220,220,1)",
-      data: [30, 20, 25, 28, 35, 35]
-    },
-    {
-      label: "Total Platinum",
-      fillColor: "rgba(200,200,200,0.2)",
-      strokeColor: "rgba(200,200,200,1)",
-      pointColor:  "rgba(200,200,200,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(220,220,220,1)",
-      data: [50, 58, 70, 72, 78, 40]
-    },
-    {
       label: "Unit Gold",
       fillColor: "rgba(150,149,98,0.2)",
       strokeColor: "rgba(150,149,98,1)",
@@ -249,26 +243,6 @@
       pointHighlightFill: "#fff",
       pointHighlightStroke: "rgba(220,220,220,1)",
       data: [5, 9, 10, 11, 8, 9]
-    },
-    {
-      label: "Total Silver",
-      fillColor: "rgba(100,100,100,0.2)",
-      strokeColor: "rgba(100,100,100,1)",
-      pointColor:  "rgba(100,100,100,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(220,220,220,1)",
-      data: [3, 2, 2, 1, 3, 2]
-    },
-    {
-      label: "Unit Platinum",
-      fillColor: "rgba(100,100,100,0.2)",
-      strokeColor: "rgba(140,140,140,1)",
-      pointColor:  "rgba(140,140,140,1)",
-      pointStrokeColor: "#fff",
-      pointHighlightFill: "#fff",
-      pointHighlightStroke: "rgba(220,220,220,1)",
-      data: [4, 8, 3, 4, 7, 4]
     },
     ]
   };
