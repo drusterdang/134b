@@ -3,8 +3,19 @@
 <head>
   <meta charset="utf-8">
   <title>Test Document</title>
-  <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <style>
+    nav {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    canvas {
+      box-sizing: border;
+      width: 100%;
+      padding: 0 20px;
+    }
+
     .atom {
       white-space: nowrap;
     }
@@ -12,108 +23,333 @@
       border-bottom: 1px solid #ccc;
       margin-bottom: 5px;
     }
+    .main-price, .sub-price-change {
+      line-height: 30px;
+    }
+
+    .main-price {
+      font-size: 24px;
+      font-weight: 600;
+      vertical-align: baseline;
+    }
+
+    .sub-price-change {
+      font-size: 14px;
+      vertical-align: baseline;
+    }
+
+    .backdrop {
+      padding: 8px 22px;
+      margin-bottom: 20px;
+      background-color:#f4f4f4;
+      border-radius: 5px;
+      border: 1px solid #dfdfdf;
+    }
+
+    .menu-icon {
+      font-weight: bold;
+    }
+
+    .horizontal {
+      display: inline;
+      text-align: center;
+    }
+
+    .horizontal .menu-icon {
+      font-size: 20px;
+      line-height: 40px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    .horizontal .menu-text {
+      font-size: 14px;
+      line-height: 40px;
+      vertical-align: middle;
+      margin-right: 20px;
+    }
+
+    .vertical {
+      display: block;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .vertical .menu-icon {
+      display: block;
+      font-size: 28px;
+      vertical-align: middle;
+    }
+
+    .vertical .menu-text {
+      display: block;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    .menu-item {
+      color: #888;
+    }
+
+    .menu-item.current {
+      color: #333;
+    }
+
+    .menu-item.current:hover {
+      color: #333;
+    }
+
+    .menu-item:hover {
+      color: #444;
+    }
+
+    .top-bar {
+    }
+
+    .top-bar p {
+      padding: 10px;
+      font-size: 20px;
+      vertical-align: middle;
+    }
+
+    .top-bar h1 {
+      padding: 10px;
+      margin: 0;
+      font-size: 22px;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
+<div class='top-bar container clearfix'>
+    <p class='pull-left'><i class='glyphicon glyphicon-refresh'></i></p>
+    <h1 class='pull-left'>Team #14</h1>
+    <p class='pull-right'><i class='glyphicon glyphicon-cog'></i></p>
+</div>
 <div class='container'>
-  <div class='row'>
-    <div class='col-md-6'>
-      <div id='market-summary' class='row well well-sm'>
-        <p>
-          <span class='main-price'>$24,495.23</span>
-          <span class='sub-price-change'>+3.5%</span>
-        </p>
-        <p>My Total Stack Value</p>
-      </div>
-      <div id='market-status' class='clearfix'>
-        <p class='pull-left'>Market is <b>open</b></p>
-        <p class='pull-right'>closes in 3h 35min</p>
-      </div>
-      <div>
-        <div class='metal-head clearfix'>
-          <p class='pull-left'>Gold</p>
-          <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></span>
+  <nav>
+    <div class='visible-md visible-lg'>
+      <div class="col-md-2">
+        <div class='menu-item vertical current'>
+          <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
+          <span class='menu-text'>Home</span>
         </div>
-        <div class='row text-center'>
-          <div class='col-xs-4'>
-            <h4>1206.10</h4>
-            <p>Bid</p>
-          </div>
-          <div class='col-xs-4'>
-            <h4>1207.10</h4>
-            <p>Ask</p>
-          </div>
-          <div class='col-xs-4'>
-            <h4>+23.40</h4>
-            <p>Change</p>
-          </div>
+        <div class='menu-item vertical'>
+          <span class='menu-icon'>Au</span>
+          <span class='menu-text'>My Gold</span>
+        </div>
+        <div class='menu-item vertical'>
+          <span class='menu-icon'>Ag</span>
+          <span class='menu-text'>My Silver</span>
+        </div>
+        <div class='menu-item vertical'>
+          <span class='menu-icon'>Pl</span>
+          <span class='menu-text'>My Platinum</span>
         </div>
       </div>
-      <div>
-        <div class='metal-head clearfix'>
-          <p class='pull-left'>Silver</p>
-          <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></span>
-        </div>
-        <div class='row text-center'>
-          <div class='col-xs-4'>
-            <h4>16.10</h4>
-            <p>Bid</p>
+    </div>
+    <div class='visible-sm visible-xs'>
+      <div class='col-md-12'>
+        <div class='row'>
+          <div class='menu-item horizontal current col-sm-3 col-xs-12'>
+            <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
+            <span class='menu-text'>Home</span>
           </div>
-          <div class='col-xs-4'>
-            <h4>16.50</h4>
-            <p>Ask</p>
+          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+            <span class='menu-icon'>Au</span>
+            <span class='menu-text'>My Gold</span>
           </div>
-          <div class='col-xs-4'>
-            <h4>-0.36</h4>
-            <p>Change</p>
+          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+            <span class='menu-icon'>Ag</span>
+            <span class='menu-text'>My Silver</span>
           </div>
-        </div>
-      </div>
-      <div>
-        <div class='metal-head clearfix'>
-          <p class='pull-left'>Platinum</p>
-          <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></span>
-        </div>
-        <div class='row text-center'>
-          <div class='col-xs-4'>
-            <h4>1206.10</h4>
-            <p>Bid</p>
-          </div>
-          <div class='col-xs-4'>
-            <h4>1207.10</h4>
-            <p>Ask</p>
-          </div>
-          <div class='col-xs-4'>
-            <h4>+23.40</h4>
-            <p>Change</p>
+          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+            <span class='menu-icon'>Pl</span>
+            <span class='menu-text'>My Platinum</span>
           </div>
         </div>
       </div>
     </div>
-    <div class='col-md-6'>
-      <img src='http://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Directed_acyclic_graph_3.svg/1280px-Directed_acyclic_graph_3.svg.png' alt='' width='100%' />
-      <div class='text-center'>
-        <div class='col-xs-4'>
-          <p>Gold</p> 
-          <p><i class='glyphicon glyphicon-arrow-up'></i> Unit  <wbr /> <i class='glphicon glyphicon-arrow-up'></i> Total</p>
-        </div>
-        <div class='col-xs-4'>
-          <p>Silver<p>
+  </nav>
+  <div class="col-md-10">
+    <div class='row'>
+      <div class='col-md-5'>
+        <div id='market-summary' class='row backdrop'>
           <p>
-            <span class='atom'><i class='glyphicon glyphicon-arrow-up'></i> Unit</span>
-            <span class='atom'><i class='glphicon glyphicon-arrow-up'></i> Total</span>
+            <span class='main-price'>$24,495.23</span>
+            <span class='sub-price-change'>+3.5%</span>
           </p>
+          <p>My Total Stack Value</p>
         </div>
-        <div class='col-xs-4'>
-          <p>Platinum</p> 
-          </p><i class='glyphicon glyphicon-arrow-up'></i> Unit <wbr /> <i class='glphicon glyphicon-arrow-up'></i> Total</p>
+        <div id='market-status' class='clearfix'>
+          <p class='pull-left'>Market is <b>open</b></p>
+          <p class='pull-right'>closes in 3h 35min</p>
+        </div>
+        <div>
+          <div class='metal-head clearfix'>
+            <p class='pull-left'>Gold</p>
+            <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></p>
+          </div>
+          <div class='row text-center'>
+            <div class='col-xs-4'>
+              <h4>1206.10</h4>
+              <p>Bid</p>
+            </div>
+            <div class='col-xs-4'>
+              <h4>1207.10</h4>
+              <p>Ask</p>
+            </div>
+            <div class='col-xs-4'>
+              <h4>+23.40</h4>
+              <p>Change</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class='metal-head clearfix'>
+            <p class='pull-left'>Silver</p>
+            <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></p>
+          </div>
+          <div class='row text-center'>
+            <div class='col-xs-4'>
+              <h4>16.10</h4>
+              <p>Bid</p>
+            </div>
+            <div class='col-xs-4'>
+              <h4>16.50</h4>
+              <p>Ask</p>
+            </div>
+            <div class='col-xs-4'>
+              <h4>-0.36</h4>
+              <p>Change</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class='metal-head clearfix'>
+            <p class='pull-left'>Platinum</p>
+            <p class='pull-right'><i class='glyphicon glyphicon-chevron-right'></i></p>
+          </div>
+          <div class='row text-center'>
+            <div class='col-xs-4'>
+              <h4>1206.10</h4>
+              <p>Bid</p>
+            </div>
+            <div class='col-xs-4'>
+              <h4>1207.10</h4>
+              <p>Ask</p>
+            </div>
+            <div class='col-xs-4'>
+              <h4>+23.40</h4>
+              <p>Change</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class='col-md-7'>
+        <div class="row">
+          <canvas id="main-chart"></canvas>
+        </div>
+        <div class='text-center'>
+          <div class='col-xs-4'>
+            <p>Gold</p>
+            <p>
+              <span class='atom'><i style='color:#969562;' class='glyphicon glyphicon-stop'></i> Unit</span>
+              <span class='atom'><i style='color:#E3E2B3;' class='glyphicon glyphicon-stop'></i> Total</span>
+            </p>
+          </div>
+          <div class='col-xs-4'>
+            <p>Silver</p>
+            <p>
+              <span class='atom'><i style='color:#8C8C8C;' class='glyphicon glyphicon-stop'></i> Unit</span>
+              <span class='atom'><i style='color:#C8C8C8;' class='glyphicon glyphicon-stop'></i> Total</span>
+            </p>
+          </div>
+          <div class='col-xs-4'>
+            <p>Platinum</p>
+            <p>
+              <span class='atom'><i style='color:#646464;' class='glyphicon glyphicon-stop'></i> Unit</span>
+              <span class='atom'><i style='color:#B3B3B3;' class='glyphicon glyphicon-stop'></i> Total</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript" src="../jquery.min.js">
-<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js">
+<script type="text/javascript" src="../jquery.min.js"></script>
+<script type="text/javascript" src="../Chart.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script>
+  var options = { animation: false, responsive: true};
+  var data = {
+    labels: ["1day", "1hour", "30min", "10sec", "5sec", "Now"],
+    datasets: [
+    {
+      label: "Total Gold",
+      fillColor: "rgba(227,226,179,0.2)",
+      strokeColor: "rgba(227,226,179,1)",
+      pointColor:  "rgba(227,226,179,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: [65, 59, 80, 81, 56, 55]
+    },
+    {
+      label: "Total Silver",
+      fillColor: "rgba(179,179,175,0.2)",
+      strokeColor: "rgba(179,179,175,1)",
+      pointColor:  "rgba(179,179,175,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: [30, 20, 25, 28, 35, 35]
+    },
+    {
+      label: "Total Platinum",
+      fillColor: "rgba(200,200,200,0.2)",
+      strokeColor: "rgba(200,200,200,1)",
+      pointColor:  "rgba(200,200,200,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: [50, 58, 70, 72, 78, 40]
+    },
+    {
+      label: "Unit Gold",
+      fillColor: "rgba(150,149,98,0.2)",
+      strokeColor: "rgba(150,149,98,1)",
+      pointColor:  "rgba(150,149,98,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: [5, 9, 10, 11, 8, 9]
+    },
+    {
+      label: "Total Silver",
+      fillColor: "rgba(100,100,100,0.2)",
+      strokeColor: "rgba(100,100,100,1)",
+      pointColor:  "rgba(100,100,100,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: [3, 2, 2, 1, 3, 2]
+    },
+    {
+      label: "Unit Platinum",
+      fillColor: "rgba(100,100,100,0.2)",
+      strokeColor: "rgba(140,140,140,1)",
+      pointColor:  "rgba(140,140,140,1)",
+      pointStrokeColor: "#fff",
+      pointHighlightFill: "#fff",
+      pointHighlightStroke: "rgba(220,220,220,1)",
+      data: [4, 8, 3, 4, 7, 4]
+    },
+    ]
+  };
+  var canvas = document.getElementById("main-chart");
+  var context = canvas.getContext("2d");
+  new Chart(context).Line(data, options);
 </script>
 </body>
 </html>
