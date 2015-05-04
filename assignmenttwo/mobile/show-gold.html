@@ -6,6 +6,11 @@
   <link rel="stylesheet" type='text/css' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" type='text/css' href="bar.css">
   <style>
+    canvas {
+      box-sizing: border;
+      width: 100%;
+      padding: 0 20px;
+    }
     .atom {
       white-space: nowrap;
     }
@@ -84,107 +89,100 @@
     .subnav i:hover {
       background-color: #ddd;
     }
+
+    .form label {
+      text-align: right;
+    }
+
+    .form .row {
+      padding: 10px 20px;
+    }
+
+    .control-label {
+      padding: 7px 10px;
+    }
   </style>
 </head>
 <body>
 <div class='top-bar'>
     <p class='bar-icon left'><i class='glyphicon glyphicon-chevron-left'></i></p>
-    <h1 id='bar-title'>My Stack</h1>
+    <h1 id='bar-title'>Gold</h1>
     <p class='bar-icon right'><i class='glyphicon glyphicon-plus'></i></p>
 </div>
 <main>
-<div id='market-summary' class='row'>
-  <div class='col-xs-6'>
-    <p>
-    <span class='main-price'>$24,495.23</span>
-    </p>
-  </div>
-  <div class='col-xs-6'>
-    <p class='sub-price-change'>Daily +3.5%</p>
-    <p class='sub-price-change'>Overall +1.2%</p>
-  </div>
-  <div class='col-xs-12'>
-    <p class='pull-left'>My Stack Value</p>
-  </div>
-</div>
-<div class='backdrop row'>
-  <div class='subnav'>
-    <i class='current glyphicon glyphicon-align-justify'></i>
-    <i class='glyphicon glyphicon-signal'></i>
-  </div>
-</div>
-<div>
-  <div class='metal-head clearfix'>
-    <p class='pull-left'>Gold</p>
-    <p class='pull-right'><span>My Gold Value</span> <span class='metal-my-price'>18,234.10</span><i class='glyphicon glyphicon-chevron-right'></i></p>
-  </div>
-  <div class='row text-center'>
-    <div class='col-xs-3'>
-      <h4>1199.10</h4>
-      <p>Spot Price</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>21.02</h4>
-      <p>Total Ounces</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>+23.40</h4>
-      <p>Daily</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>+16.40</h4>
-      <p>Overall</p>
+<form class="form">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <img src='../img/aecoin.jpg' alt='' width=180 />
     </div>
   </div>
-</div>
-<div>
-  <div class='metal-head clearfix'>
-    <p class='pull-left'>Silver</p>
-    <p class='pull-right'><span>My Silver Value</span> <span class='metal-my-price'>18,234.10</span> <i class='glyphicon glyphicon-chevron-right'></i></p>
-  </div>
-  <div class='row text-center'>
-    <div class='col-xs-3'>
-      <h4>1199.10</h4>
-      <p>Spot Price</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>21.02</h4>
-      <p>Total Ounces</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>+23.40</h4>
-      <p>Daily</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>+16.40</h4>
-      <p>Overall</p>
+  <div class="row">
+    <label class="col-xs-6 control-label">Metal</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>Gold</p>
     </div>
   </div>
-</div>
-<div>
-  <div class='metal-head clearfix'>
-    <p class='pull-left'>Platinum</p>
-    <p class='pull-right'><span>My Platinum Value</span> <span class='metal-my-price'>18,234.10</span> <i class='glyphicon glyphicon-chevron-right'></i></p>
-  </div>
-  <div class='row text-center'>
-    <div class='col-xs-3'>
-      <h4>1199.10</h4>
-      <p>Spot Price</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>21.02</h4>
-      <p>Total Ounces</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>+23.40</h4>
-      <p>Daily</p>
-    </div>
-    <div class='col-xs-3'>
-      <h4>+16.40</h4>
-      <p>Overall</p>
+  <div class="row">
+    <label class="col-xs-6 control-label">Type</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>US Eagle</p>
     </div>
   </div>
-</div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Qty.</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>1</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Premium</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>47.00</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Unit Price</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>1250.60</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Gold %</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>0.999</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Weight/Unit (g)</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>1.244</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Gold g/u</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>1.244</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Gold ozt/u</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>0.0400</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Total au (ozt)</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>0.0400</p>
+    </div>
+  </div>
+  <div class="row">
+    <label class="col-xs-6 control-label">Total</label>
+    <div class="col-xs-6">
+      <p class='form-control-static'>1199.10</p>
+    </div>
+  </div>
+</form>
 </main>
 <script type="text/javascript" src="../jquery.min.js"></script>
 <script type="text/javascript" src="../Chart.min.js"></script>
