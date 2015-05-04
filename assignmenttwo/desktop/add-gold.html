@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Test Document</title>
+  <link rel="stylesheet" type='text/css' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" type='text/css' href="sidebar.css">
+  <style>
+    .top {
+      margin-top: 0;
+    }
+
+    canvas {
+      box-sizing: border;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .atom {
+      white-space: nowrap;
+    }
+    .metal-head {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 5px;
+    }
+
+    .main-price, .sub-price-change {
+      line-height: 30px;
+    }
+
+    .main-price {
+      font-size: 24px;
+      font-weight: 600;
+      vertical-align: baseline;
+    }
+
+    .sub-price-change {
+      font-size: 14px;
+      color: #888;
+      vertical-align: baseline;
+    }
+
+    .backdrop {
+      padding: 8px 22px;
+      margin-bottom: 20px;
+      background-color:#f4f4f4;
+      border-radius: 5px;
+      border: 1px solid #dfdfdf;
+    }
+  </style>
+</head>
+<body>
+<div class='top-bar container clearfix'>
+    <p class='pull-left'><i class='glyphicon glyphicon-refresh'></i></p>
+    <h1 class='pull-left'>Team #14</h1>
+    <p class='pull-right'><i class='glyphicon glyphicon-cog'></i></p>
+</div>
+<div class='container'>
+  <nav class='sidebar'>
+    <div class='visible-md visible-lg'>
+      <div class="col-md-2">
+        <div class='menu-item vertical current'>
+          <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
+          <span class='menu-text'>Home</span>
+        </div>
+        <div class='menu-item vertical'>
+          <span class='menu-icon'>Au</span>
+          <span class='menu-text'>My Gold</span>
+        </div>
+        <div class='menu-item vertical'>
+          <span class='menu-icon'>Ag</span>
+          <span class='menu-text'>My Silver</span>
+        </div>
+        <div class='menu-item vertical'>
+          <span class='menu-icon'>Pl</span>
+          <span class='menu-text'>My Platinum</span>
+        </div>
+      </div>
+    </div>
+    <div class='visible-sm visible-xs'>
+      <div class='col-md-12'>
+        <div class='row'>
+          <div class='menu-item horizontal current col-sm-3 col-xs-12'>
+            <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
+            <span class='menu-text'>Home</span>
+          </div>
+          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+            <span class='menu-icon'>Au</span>
+            <span class='menu-text'>My Gold</span>
+          </div>
+          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+            <span class='menu-icon'>Ag</span>
+            <span class='menu-text'>My Silver</span>
+          </div>
+          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+            <span class='menu-icon'>Pl</span>
+            <span class='menu-text'>My Platinum</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main class="col-md-10 col-xs-12">
+  <div class='row'>
+    <h2 class='top lead'><i class='glyphicon glyphicon-chevron-left'></i> Item Detail</h2>
+  </div>
+  <div class='row'>
+    <div class='col-sm-6 text-center'>
+      <img src='../img/aecoin.jpg' alt='' />
+    </div>
+    <div class='col-sm-6 '>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Metal</label>
+          <div class="col-sm-6">
+            <select class="form-control">
+              <option>Gold</option>
+              <option>Silver</option>
+              <option>Platinum</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Type</label>
+          <div class="col-sm-6">
+            <input class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Purchase Date</label>
+          <div class="col-sm-6">
+            <input type='date' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Qty.</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Premium</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Unit Price</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Gold %</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Weight/Unit(g)</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Gold g/u</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Gold ozt/u</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-6 control-label">Total au (ozt)</label>
+          <div class="col-sm-6">
+            <input type='number' class='form-control' />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-6 col-sm-6">
+            <button type='submit' class='btn'>Save to My Stack</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  </main>
+  </div>
+  <script type="text/javascript" src="../jquery.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</body>
+</html>
