@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Test Document</title>
+  <title>My Gold</title>
   <link rel="stylesheet" type='text/css' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" type='text/css' href="sidebar.css">
   <style>
@@ -78,11 +78,13 @@
   <nav class='sidebar'>
     <div class='visible-md visible-lg'>
       <div class="col-md-2">
+        <a href='homepage.html'>
+          <div class='menu-item vertical'>
+            <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
+            <span class='menu-text'>Home</span>
+          </div>
+        </a>
         <div class='menu-item vertical current'>
-          <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
-          <span class='menu-text'>Home</span>
-        </div>
-        <div class='menu-item vertical'>
           <span class='menu-icon'>Au</span>
           <span class='menu-text'>My Gold</span>
         </div>
@@ -99,11 +101,13 @@
     <div class='visible-sm visible-xs'>
       <div class='col-md-12'>
         <div class='row'>
-          <div class='menu-item horizontal current col-sm-3 col-xs-12'>
-            <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
-            <span class='menu-text'>Home</span>
-          </div>
-          <div class='menu-item horizontal col-sm-3 col-xs-4'>
+          <a href='homepage.html'>
+            <div class='menu-item horizontal col-sm-3 col-xs-12'>
+              <span class='menu-icon'><i class='glyphicon glyphicon-home'></i></span>
+              <span class='menu-text'>Home</span>
+            </div>
+          </a>
+          <div class='menu-item horizontal current col-sm-3 col-xs-4'>
             <span class='menu-icon'>Au</span>
             <span class='menu-text'>My Gold</span>
           </div>
@@ -179,7 +183,7 @@
             <input type="text" class="form-control" id="exampleInputAmount" placeholder="Search">
           </div>
         </div>
-        <button type="submit" class="btn btn-default">Add Coin</button>
+        <a class="btn btn-default" href="add-gold.html">Add Coin</a>
       </form>
     </div>
     <table class='table'>
@@ -193,7 +197,7 @@
           <th>Value</th>
         </tr>
         <tr>
-          <td><img src='../img/aecoin.jpg' alt='' height=48 /></td>
+          <td><a href="show-gold.html"><img src='../img/aecoin.jpg' alt='' height=48 /></a></td>
           <td>US Eagle</td>
           <td>1</td>
           <td>1.244</td>

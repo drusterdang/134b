@@ -3,6 +3,10 @@
   margin-bottom: 10px;
 }
 
+.sidebar a{
+  text-decoration: none;
+}
+
 .menu-icon {
   font-weight: bold;
 }
