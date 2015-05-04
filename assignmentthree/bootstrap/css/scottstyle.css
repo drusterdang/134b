@@ -1,0 +1,66 @@
+body {
+	background: url(http://www.industryleadersmagazine.com/wp-content/uploads/2011/04/free-wallpaper-29.jpg) no-repeat center center fixed;
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+	background-size: cover;
+}
+
+.login-card {
+  padding: 30px;
+  width: 274px;
+  background-color: #f4f4f4;
+  margin: 0 auto 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  position: fixed;
+  border: 1px solid #ccc;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.login-card h1 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 2.3em;
+}
+
+.login-card input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.login-card a {
+  margin-bottom: 20px;
+}
+
+.login {
+  text-align: center;
+  font-size: 14px;
+  font-family: 'Arial', sans-serif;
+  font-weight: 700;
+  height: 36px;
+  padding: 0 8px;
+  border-radius: 50px; 
+/* -webkit-user-select: none;
+  user-select: none; */
+}
+
+.login-card a {
+  text-decoration: none;
+  color: #666;
+  font-weight: 400;
+  text-align: center;
+  display: inline-block;
+}
+
+
+.login-help {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+}
+
+
