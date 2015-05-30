@@ -94,43 +94,15 @@ function loadFooter(){
 
 }
 
-
-
-$(window).load(function() {
-
-	var path = window.location.pathname;
-	var page = path.split("/").pop();
-
-
-
-	/* * * * * * * * * * * * * *
-	 *                         *
-	 *        GENERAL          *
-	 *                         *
-	 * * * * * * * * * * * * * */
-
-	 $('.icon-spinner2').click(function(){
-	 	location.reload();	
-	 });
-
-	 $('tr').click(function(){
-	 	$(this).find('a')[0].click();
-	 });
-
-	/* * * * * * * * * * * * * *
-	 *                         *
-	 *        GRAPHING         *
-	 *                         *
-	 * * * * * * * * * * * * * */
- 	// graph for wire2 page
- 	var drawGraph = function(){
+function drawAllTheGraphs(page, goldDates, goldData, silverData, platData){
+ 		var drawGraph = function(){
  		var pointStroke = "rgba(255,255,255,0.6)";
  		var pointHighlightFill = "#fff";
  		var pointHighlightStroke = "#fff";
 
  		if(page == "wire2.html") {
  			var data = {
- 				labels: ["January", "February", "March", "April", "May", "June", "July"],
+ 				labels: goldDates,
  				datasets: [
  				{
  					label: "Gold Total",
@@ -140,7 +112,7 @@ $(window).load(function() {
  					pointStrokeColor: pointStroke,
  					pointHighlightFill: pointHighlightFill,
  					pointHighlightStroke: pointHighlightStroke,
- 					data: [700,820,700,800,730,950,900]
+ 					data: goldData
  				},
  				{
  					label: "Platinum Total",
@@ -150,7 +122,7 @@ $(window).load(function() {
  					pointStrokeColor: pointStroke,
  					pointHighlightFill: pointHighlightFill,
  					pointHighlightStroke: pointHighlightStroke,
- 					data: [467, 555, 490, 550, 555, 560, 660]
+ 					data: platData
  				},
  				{
  					label: "Silver Total",
@@ -160,7 +132,7 @@ $(window).load(function() {
  					pointStrokeColor: pointStroke,
  					pointHighlightFill: pointHighlightFill,
  					pointHighlightStroke: pointHighlightStroke,
- 					data: [200, 350, 300, 389, 330, 400, 488]
+ 					data: silverData
  				},
  				{
  					label: "1oz Gold",
@@ -341,6 +313,92 @@ $(window).load(function() {
 	};
 
 	drawGraph();
+ 	}
+
+
+
+$(window).load(function() {
+
+	var path = window.location.pathname;
+	var page = path.split("/").pop();
+
+
+
+	/* * * * * * * * * * * * * *
+	 *                         *
+	 *        GENERAL          *
+	 *                         *
+	 * * * * * * * * * * * * * */
+
+	 $('.icon-spinner2').click(function(){
+	 	location.reload();	
+	 });
+
+	 $('tr').click(function(){
+	 	$(this).find('a')[0].click();
+	 });
+
+	/* * * * * * * * * * * * * *
+	 *                         *
+	 *        GRAPHING         *
+	 *                         *
+	 * * * * * * * * * * * * * */
+ 	// graph for wire2 page
+
+
+ 	/*We are grabbing data from Quandl here */
+
+ 	var myGoldData;
+
+ 	var date = new Date();
+ 	date.setMonth(date.getMonth() - 2);
+ 	var startDate = "?trim_start=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+ 	$.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + startDate, function(data){
+ 		myGoldData = data.data;
+
+
+		//Iterate and make array for dates
+		var goldDates = [];
+		var goldData = [];
+
+		for (var i = 29; i >= 0; i--){
+			goldDates.push(myGoldData[i][0]);
+			goldData.push(myGoldData[i][1]);
+		}
+
+		$.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + startDate, function(data){
+			var mySilverData = data.data;
+
+				//Iterate and make array for dates
+
+			var silverData = [];
+
+			for (var i = 29; i >= 0; i--){
+				silverData.push(mySilverData[i][1]);
+			}
+
+			$.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + startDate, function(data){
+				var myPlatData = data.data;
+				var platData = [];
+
+				for (var i = 29; i >= 0; i--){
+					platData.push(myPlatData[i][1]);
+				}
+
+				drawAllTheGraphs(page, goldDates, goldData, silverData, platData);
+			});
+
+
+		});
+
+	});
+
+
+
+
+
+
 
 	/* * * * * * * * * * * * * *
 	 *                         *
