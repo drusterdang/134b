@@ -318,7 +318,7 @@ function drawAllTheGraphs(page, goldDates, goldData, silverData, platData){
 
 
 
-function initMain()
+function initMain() {
     $(window).load(function() {
 
         var path = window.location.pathname;
@@ -449,4 +449,4 @@ function initMain()
 
 
     });
-} 
+}
