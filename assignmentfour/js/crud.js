@@ -155,7 +155,7 @@ function createItem(
         onerror) 
 {
     /* We assume validity, allowing server to handle garbage */
-    var parseItem = new Parse.Object.extend("Item");
+    var parseItem = new (Parse.Object.extend("Item"))();
     parseItem.set("itype",  iType);
     parseItem.set("mtype",  mType);
     parseItem.set("name",   name);
@@ -164,7 +164,7 @@ function createItem(
     parseItem.set("unitPrice", unitPrice);
     parseItem.set("fineness", fineness);
     parseItem.set("wpu", wpu);
-    coin.save(null, {
+    parseItem.save(null, {
         success: onsuccess,
         error: onerror
     });

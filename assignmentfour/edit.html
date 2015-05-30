@@ -147,8 +147,8 @@
       typeName.html(typeOptions);
     }
 
-    function updateFineness(id) {
-      console.log(id);
+    function updateFineness() {
+      var id = $("#type-name").val();
       if (id) {
         var item = currentItemList[id];
         if (item && item.fineness) {
@@ -157,8 +157,17 @@
       }
     }
 
+    function updateWpu() {
+      var id = $("#type-name").val();
+      if (id) {
+        var item = currentItemList[id];
+        if (item && item.wpu) {
+          $("#wpu").val(item.wpu);
+        }
+      }
+    }
+
     function updateCalculatables() {
-      console.log("update");
       var qty = parseInt($("#qty").val());
       if (isNaN(qty)) {
         qty = 0;
@@ -214,7 +223,8 @@
       mediumType.change(updateTypeFilter);
       metalType.change(updateTypeFilter);
       typeName.change(function() {
-        updateFineness(typeName.val());
+        updateFineness();
+        updateWpu();
         updateCalculatables();
       });
       var qty = $("#qty");
@@ -237,6 +247,34 @@
 
     /* Submit Item */
     function submitItem() {
+      var iType = parseInt($("#medium-type").val());
+      var mType = parseInt($("#metal-type").val());
+      var name = $("#type-name").val().toString();
+      var purchaseDate = Date.parse($("#purchase-date").val());
+      var qty = parseInt($("#qty").val());
+      var unitPrice = parseFloat($("#unit-price").val());
+      var fineness = parseFloat($("#fineness").val());
+      var wpu = parseFloat($("#wpu").val());
+      console.log(iType + " " + mType + " " + 
+          name + " " + purchaseDate + " " + qty + " " + unitPrice + " " +
+          fineness + " " + wpu);
+      createItem(
+          iType,
+          mType,
+          name,
+          purchaseDate,
+          qty,
+          unitPrice,
+          fineness,
+          wpu,
+          function(item) {
+            alert(item.toString() + " created")
+          },
+          function(item, error) {
+            alert(item.toString() + " errored: " + error)
+
+          });
+
     }
 
     $(document).ready(function() {
