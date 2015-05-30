@@ -954,14 +954,32 @@ select {
 
 #save {
     background: #397C86;
-    border: 1px solid #151515;
+    border: 2px solid #151515;
     color: white;
     text-decoration: none;
     width: 275px;
 }
 
 #save:hover {
-    border: 1px solid #68CEDE;
+    border: 2px solid #68CEDE;
+}
+
+#delete {
+    background: #864332;
+    border: 2px solid #151515;
+    color: white;
+    text-decoration: none;
+    width: 275px;
+}
+
+#delete:hover {
+    border: 2px solid #E69382;
+    background: ;
+}
+
+#delete.hidden {
+    visibility: hidden;
+    position: absolute;
 }
 
 #cancel {

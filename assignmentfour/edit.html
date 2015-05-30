@@ -123,7 +123,8 @@
                         </tr>
                     </table>
                     <a onclick='submitItem()'><span id='save'>Save to My Stack</span></a>
-                    <a href='wire3.html'><span id='cancel'>Cancel</span></a>
+                    <a onclick='removeItem()'><span id='delete' class='hidden'>Delete from My Stack</span></a>
+                    <a href='main.html'><span id='cancel'>Cancel</span></a>
                 </section>
             </div>
         </section>
@@ -244,6 +245,7 @@
         });
       }
       if (window.location.hash) {
+        $("#delete").removeClass("hidden");
         $(".command-header").text("Edit Item");
         readItem(window.location.hash.substring(1),
             function (item) {
@@ -299,7 +301,7 @@
             fineness,
             wpu,
             function(item) {
-              alert(item.toString() + " updated")
+              alert(item.toString() + " updated");
             },
             function(item, error) {
               alert(item.toString() + " errored: " + error.message)
@@ -315,9 +317,22 @@
             fineness,
             wpu,
             function(item) {
-              alert(item.toString() + " created")
+              alert(item.toString() + " created");
             },
             function(item, error) {
+              alert(item.toString() + " errored: " + error.message)
+            });
+      }
+    }
+
+    /* Delete Item */
+    function removeItem() {
+      if (currentEditItem) {
+        deleteItem(currentEditItem, 
+            function (item) {
+              alert(item.toString() + " deleted");
+            },
+            function (item, error) {
               alert(item.toString() + " errored: " + error.message)
             });
       }
