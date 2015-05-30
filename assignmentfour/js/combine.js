@@ -174,6 +174,8 @@ function createItem(
     parseItem.set("unitPrice", unitPrice);
     parseItem.set("fineness", fineness);
     parseItem.set("wpu", wpu);
+    parseItem.set("createdBy", Parse.User.current());
+    item.setACL(new Parse.ACL(Parse.User.current()));
     parseItem.save(null, {
         success: onsuccess,
         error: onerror
@@ -192,6 +194,26 @@ function readItem(
         success: onsuccess,
         error: onerror
     });
+}
+
+function readAllItems(
+        page,
+        filters,
+        onsuccess,
+        onerror)
+{
+    var query = new ParseQuery(Parse.Object.extend("Item"));
+    if (filters) {
+        filters(query);
+    }
+    query.limit(10);
+    query.skip(page * 10);
+    query.equalTo("createdBy", Parse.User.current());
+    query.find({
+        success: onsuccess,
+        error: onerror
+    })
+
 }
 
 /* Update */

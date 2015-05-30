@@ -281,6 +281,11 @@
 
     /* Submit Item */
     function submitItem() {
+      var currentUser = Parse.User.current();
+      if (!currentUser) {
+        alert("Must be logged in!");
+        return;
+      }
       var iType = parseInt($("#medium-type").val());
       var mType = parseInt($("#metal-type").val());
       var name = $("#type-name option:selected").text();
