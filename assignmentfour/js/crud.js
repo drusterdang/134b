@@ -171,10 +171,58 @@ function createItem(
 }
 
 /* Read */
+function readItem(
+        objectId,
+        onsuccess,
+        onerror
+        )
+{
+    var query = new Parse.Query(Parse.Object.extend("Item"));
+    query.get(objectId, {
+        success: onsuccess,
+        error: onerror
+    });
+}
 
 /* Update */
+function updateItem(
+        item,
+        iType, 
+        mType, 
+        name,
+        purchaseDate, 
+        qty, 
+        unitPrice,
+        fineness,
+        wpu,
+        onsuccess,
+        onerror) 
+{
+    item.set("itype",  iType);
+    item.set("mtype",  mType);
+    item.set("name",   name);
+    item.set("purchaseDate", purchaseDate);
+    item.set("qty", qty);
+    item.set("unitPrice", unitPrice);
+    item.set("fineness", fineness);
+    item.set("wpu", wpu);
+    item.save(null, {
+        success: onsuccess,
+        error: onerror
+    });
+}
 
 /* Delete */
+function deleteItem(
+        item,
+        onsuccess,
+        onerror)
+{
+    item.destroy({
+        success: onsuccess,
+        error: onerror
+    });
+}
 
 /* Global Helpers */
 function numberNicify(num) {
@@ -199,4 +247,8 @@ function numberPricify(num) {
     }
     var  big = parseInt(num);
     return "$" + big + "." + small;
+}
+
+function dateNicify(date) {
+    return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
 }

@@ -131,6 +131,7 @@
     <script type='text/javascript'>
     loadFooter();
 
+    var currentEditItem = null;
     var currentItemList = [];
 
     /* Updates */
@@ -212,38 +213,68 @@
         "<option value='" + MetalType.GOLD      + "'>Gold</option>" + 
         "<option value='" + MetalType.SILVER    + "'>Silver</option>" +
         "<option value='" + MetalType.PLATINUM  + "'>Platinum</option>";
-      metalType.html(metalOptions);
-      var purchaseDate = $("#purchase-date");
-      var theDate = new Date();
-      var theDateString = theDate.getMonth() + "/" + theDate.getDay() + "/" + theDate.getFullYear();
-      purchaseDate.val(theDateString);
-      var typeName = $("#type-name");
-      updateTypeFilter();
-      updateCalculatables();
-      mediumType.change(updateTypeFilter);
-      metalType.change(updateTypeFilter);
-      typeName.change(function() {
-        updateFineness();
-        updateWpu();
+      function loadHandlers() {
+        metalType.html(metalOptions);
+        var purchaseDate = $("#purchase-date");
+        var theDate = new Date();
+        purchaseDate.val(dateNicify(theDate));
+        var typeName = $("#type-name");
+        var qty = $("#qty");
+        qty.change(function() {
+          updateCalculatables();
+        });
+        var unitPrice = $("#unit-price");
+        unitPrice.change(function() {
+          updateCalculatables();
+        });
+        var fineness = $("#fineness");
+        fineness.change(function() {
+          updateCalculatables();
+        });
+        var wpu = $("#wpu");
+        wpu.change(function() {
+          updateCalculatables();
+        });
+        mediumType.change(updateTypeFilter);
+        metalType.change(updateTypeFilter);
+        typeName.change(function() {
+          updateFineness();
+          updateWpu();
+          updateCalculatables();
+        });
+      }
+      if (window.location.hash) {
+        readItem(window.location.hash.substring(1),
+            function (item) {
+              currentEditItem = item;
+              $("#medium-type option").filter(function() {
+                return $(this).val() == currentEditItem.get("itype");
+              }).prop("selected", true);
+              $("#metal-type option").filter(function() {
+                return $(this).val() == currentEditItem.get("mtype");
+              }).prop("selected", true);
+              updateTypeFilter();
+              $("#type-name option").filter(function() {
+                return $(this).text() == currentEditItem.get("name");
+              }).prop("selected", true);
+              $("#purchase-date").val(dateNicify(currentEditItem.get("purchaseDate"))); 
+              $("#qty").val(currentEditItem.get("qty")); 
+              $("#unit-price").val(currentEditItem.get("unitPrice")); 
+              $("#fineness").val(currentEditItem.get("fineness")); 
+              $("#wpu").val(currentEditItem.get("wpu")); 
+              loadHandlers();
+              updateCalculatables();
+            },
+            function (item, error) {
+              alert(error.message);
+            });
+      } else {
+        loadHandlers();
+        updateTypeFilter();
         updateCalculatables();
-      });
-      var qty = $("#qty");
-      qty.change(function() {
-        updateCalculatables();
-      });
-      var unitPrice = $("#unit-price");
-      unitPrice.change(function() {
-        updateCalculatables();
-      });
-      var fineness = $("#fineness");
-      fineness.change(function() {
-        updateCalculatables();
-      });
-      var wpu = $("#wpu");
-      wpu.change(function() {
-        updateCalculatables();
-      });
+      }
     }
+
 
     /* Submit Item */
     function submitItem() {
@@ -255,22 +286,40 @@
       var unitPrice = parseFloat($("#unit-price").val());
       var fineness = parseFloat($("#fineness").val());
       var wpu = parseFloat($("#wpu").val());
-      createItem(
-          iType,
-          mType,
-          name,
-          purchaseDate,
-          qty,
-          unitPrice,
-          fineness,
-          wpu,
-          function(item) {
-            alert(item.toString() + " created")
-          },
-          function(item, error) {
-            alert(item.toString() + " errored: " + error.message)
-          });
-
+      if (currentEditItem) {
+        updateItem(
+            currentEditItem,
+            iType,
+            mType,
+            name,
+            purchaseDate,
+            qty,
+            unitPrice,
+            fineness,
+            wpu,
+            function(item) {
+              alert(item.toString() + " updated")
+            },
+            function(item, error) {
+              alert(item.toString() + " errored: " + error.message)
+            });
+      } else {
+        createItem(
+            iType,
+            mType,
+            name,
+            purchaseDate,
+            qty,
+            unitPrice,
+            fineness,
+            wpu,
+            function(item) {
+              alert(item.toString() + " created")
+            },
+            function(item, error) {
+              alert(item.toString() + " errored: " + error.message)
+            });
+      }
     }
 
     $(document).ready(function() {
