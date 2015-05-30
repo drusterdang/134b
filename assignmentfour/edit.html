@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8'>
+    <meta name='description' content='bullion management site, rare coins, gold, silver, platinum'>
+    <meta name='author' content='CSE134B Dream Team'>
+    <link rel='stylesheet' type='text/css' href='./style/style.css'>
+    <meta name=viewport content='width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes'>
+    <link rel='icon' href='favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+    <script src='./js/combine.js'></script>
+    <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
+    <title>New Item - CoinFlip</title>
+</head>
+
+<body>
+    <script type='text/javascript'>
+    initParse();
+    loadTopNav();
+    loadSideNav(1);
+    </script>
+    <section class='main-section'>
+        <section class='coin_wrapper'>
+            <div class='mobile-nav'>
+                <a href='main.html'>
+                    <svg class='icon icon-keyboard-arrow-left'>
+                        <symbol id='icon-keyboard-arrow-left' viewBox='0 0 1024 1024'>
+                            <title>keyboard-arrow-left</title>
+                            <path class='path1' d='M657.707 696.96l-195.627-195.627 195.627-195.627-60.373-60.373-256 256 256 256z'></path>
+                        </symbol>
+                        <use xlink:href='#icon-keyboard-arrow-left'></use>
+                    </svg>
+                </a>
+                <span class='command-header'>Add Item</span>
+            </div>
+            <div class='coin_main'>
+                <a href='main.html'>
+                    <div class='breadcrumb'>
+                        <svg class='icon icon-play-arrow-rev'>
+                            <symbol id='icon-play-arrow' viewBox='0 0 1024 1024'>
+                                <title>play-arrow</title>
+                                <path class='path1' d='M682.667 213.333v597.333l-469.333-298.667z'></path>
+                            </symbol>
+                            <use xlink:href='#icon-play-arrow'></use>
+                        </svg>
+                        <span class='command-header'>Add Item</span>
+                    </div>
+                </a>
+                <section class='coin_image'>
+                    <div class='img_box'>
+                        <div class='img_circle'></div>
+                    </div>
+                </section>
+                <section class='coin_detail'>
+                    <table>
+                        <tr>
+                            <td>Medium</td>
+                            <td>
+                                <select id='medium-type'>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Metal</td>
+                            <td>
+                                <select id='metal-type'>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Type</td>
+                            <td>
+                                <select id='type-name' name='typeName'>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Purchase Date</td>
+                            <td>
+                                <input id='purchase-date' name='purchaseDate' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Qty.</td>
+                            <td>
+                                <input id='qty' name='qty' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Unit Price</td>
+                            <td>
+                                <input id='unit-price' name='unitPrice' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Metal %</td>
+                            <td><input id='fineness' name='fineness'/></td>
+                        </tr>
+                        <tr>
+                            <td>Weight/unit (g)</td>
+                            <td><input id='wpu' name='wpu'/></td>
+                        </tr>
+                        <tr>
+                            <td>Metal g/u</td>
+                            <td><span id='mgpu'></span></td>
+                        </tr>
+                        <tr>
+                            <td>Metal ozt/u</td>
+                            <td><span id='mopu'></span></td>
+                        </tr>
+                        <tr>
+                            <td>Total Metal (ozt)</td>
+                            <td><span id='total-metal'></span></td>
+                        </tr>
+                        <tr>
+                            <td>Premium</td>
+                            <td><span id='premium'></span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>TOTAL</strong></td>
+                            <td><strong><span id='total-cost'></span></strong></td>
+                        </tr>
+                    </table>
+                    <a onclick='submitItem()'><span id='save'>Save to My Stack</span></a>
+                    <a onclick='removeItem()'><span id='delete' class='hidden'>Delete from My Stack</span></a>
+                    <a href='main.html'><span id='cancel'>Cancel</span></a>
+                </section>
+            </div>
+        </section>
+    </section>
+    <script type='text/javascript'>
+    loadFooter();
+
+    var currentEditItem = null;
+    var currentItemList = [];
+
+    /* Updates */
+    function updateTypeFilter() {
+      var typeName = $("#type-name");
+      var mediumType = $("#medium-type").val();
+      var metalType = $("#metal-type").val();
+      var knownItems = getKnownItems(mediumType, metalType);
+      currentItemList = [{ name: "Custom" }].concat(knownItems);
+      var typeOptions = "";
+      for (var i = 0; i < currentItemList.length; i++) {
+        typeOptions += "<option value='" + i + "'>" + currentItemList[i].name + "</option>";
+      }
+      typeName.html(typeOptions);
+    }
+
+    function updateFineness() {
+      var id = $("#type-name").val();
+      if (id) {
+        var item = currentItemList[id];
+        if (item && item.fineness) {
+          $("#fineness").val(item.fineness);
+        }
+      }
+    }
+
+    function updateWpu() {
+      var id = $("#type-name").val();
+      if (id) {
+        var item = currentItemList[id];
+        if (item && item.wpu) {
+          $("#wpu").val(item.wpu);
+        }
+      }
+    }
+
+    function updateCalculatables() {
+      var qty = parseInt($("#qty").val());
+      if (isNaN(qty)) {
+        qty = 0;
+      }
+      var fineness = parseFloat($("#fineness").val());
+      if (isNaN(fineness)) {
+        fineness = 0;
+      }
+      var unitPrice = parseFloat($("#unit-price").val());
+      if (isNaN(unitPrice)) {
+        unitPrice = 0;
+      }
+      var wpu = parseFloat($("#wpu").val());
+      if (isNaN(wpu)) {
+        wpu = 0;
+      }
+      var mcpo = 0;
+      var mType = $("#metal-type").val();
+      if (mType == MetalType.GOLD)
+        mcpo = getGoldPrice();
+      if (mType == MetalType.SILVER)
+        mcpo = getSilverPrice();
+      if (mType == MetalType.PLATINUM)
+        mcpo = getPlatinumPrice();
+      var g2ozt = 0.032151;
+      $("#mgpu").text(numberNicify(fineness * wpu));
+      $("#mopu").text(numberNicify(fineness * wpu * g2ozt));
+      $("#total-metal").text(numberNicify(qty * fineness * wpu * g2ozt));
+      $("#premium").text(numberPricify(unitPrice - mcpo * fineness * wpu * g2ozt));
+      $("#total-cost").text(numberPricify(unitPrice * qty));
+    }
+
+    /* Init Form */
+    function initForm() {
+      var mediumType = $("#medium-type");
+      var mediumOptions = 
+        "<option value='" + ItemType.COIN + "'>Coin</option>" + 
+        "<option value='" + ItemType.BAR  + "'>Bar</option>";
+      mediumType.html(mediumOptions);
+      var metalType = $("#metal-type");
+      var metalOptions = 
+        "<option value='" + MetalType.GOLD      + "'>Gold</option>" + 
+        "<option value='" + MetalType.SILVER    + "'>Silver</option>" +
+        "<option value='" + MetalType.PLATINUM  + "'>Platinum</option>";
+      function loadHandlers() {
+        metalType.html(metalOptions);
+        var purchaseDate = $("#purchase-date");
+        var theDate = new Date();
+        purchaseDate.val(dateNicify(theDate));
+        var typeName = $("#type-name");
+        var qty = $("#qty");
+        qty.change(function() {
+          updateCalculatables();
+        });
+        var unitPrice = $("#unit-price");
+        unitPrice.change(function() {
+          updateCalculatables();
+        });
+        var fineness = $("#fineness");
+        fineness.change(function() {
+          updateCalculatables();
+        });
+        var wpu = $("#wpu");
+        wpu.change(function() {
+          updateCalculatables();
+        });
+        mediumType.change(updateTypeFilter);
+        metalType.change(updateTypeFilter);
+        typeName.change(function() {
+          updateFineness();
+          updateWpu();
+          updateCalculatables();
+        });
+      }
+      if (window.location.hash) {
+        $("#delete").removeClass("hidden");
+        $(".command-header").text("Edit Item");
+        readItem(window.location.hash.substring(1),
+            function (item) {
+              currentEditItem = item;
+              $("#medium-type option").filter(function() {
+                return $(this).val() == currentEditItem.get("itype");
+              }).prop("selected", true);
+              $("#metal-type option").filter(function() {
+                return $(this).val() == currentEditItem.get("mtype");
+              }).prop("selected", true);
+              updateTypeFilter();
+              $("#type-name option").filter(function() {
+                return $(this).text() == currentEditItem.get("name");
+              }).prop("selected", true);
+              $("#purchase-date").val(dateNicify(currentEditItem.get("purchaseDate"))); 
+              $("#qty").val(currentEditItem.get("qty")); 
+              $("#unit-price").val(currentEditItem.get("unitPrice")); 
+              $("#fineness").val(currentEditItem.get("fineness")); 
+              $("#wpu").val(currentEditItem.get("wpu")); 
+              loadHandlers();
+              updateCalculatables();
+            },
+            function (item, error) {
+              alert(error.message);
+            });
+      } else {
+        loadHandlers();
+        updateTypeFilter();
+        updateCalculatables();
+      }
+    }
+
+
+    /* Submit Item */
+    function submitItem() {
+      var iType = parseInt($("#medium-type").val());
+      var mType = parseInt($("#metal-type").val());
+      var name = $("#type-name option:selected").text();
+      var purchaseDate = new Date($("#purchase-date").val());
+      var qty = parseInt($("#qty").val());
+      var unitPrice = parseFloat($("#unit-price").val());
+      var fineness = parseFloat($("#fineness").val());
+      var wpu = parseFloat($("#wpu").val());
+      if (currentEditItem) {
+        updateItem(
+            currentEditItem,
+            iType,
+            mType,
+            name,
+            purchaseDate,
+            qty,
+            unitPrice,
+            fineness,
+            wpu,
+            function(item) {
+              alert(item.toString() + " updated");
+            },
+            function(item, error) {
+              alert(item.toString() + " errored: " + error.message)
+            });
+      } else {
+        createItem(
+            iType,
+            mType,
+            name,
+            purchaseDate,
+            qty,
+            unitPrice,
+            fineness,
+            wpu,
+            function(item) {
+              alert(item.toString() + " created");
+            },
+            function(item, error) {
+              alert(item.toString() + " errored: " + error.message)
+            });
+      }
+    }
+
+    /* Delete Item */
+    function removeItem() {
+      if (currentEditItem) {
+        deleteItem(currentEditItem, 
+            function (item) {
+              alert(item.toString() + " deleted");
+            },
+            function (item, error) {
+              alert(item.toString() + " errored: " + error.message)
+            });
+      }
+    }
+
+    $(document).ready(function() {
+      initForm();
+    });
+    </script>
+</body>
+
+</html>

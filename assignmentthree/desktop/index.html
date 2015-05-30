@@ -7,8 +7,8 @@
   <link rel="stylesheet" type='text/css' href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="../bootstrap/css/scottstyle.css">
 </head>  
-<body>
-<div class="login-card">
+  <body>
+  <div class="login-card">
     <h1>Welcome</h1><br>
   <form  class='text-center'>
     <input type="text" name="user" class='form-control' placeholder="Username">
@@ -19,8 +19,23 @@
   <div class="login-help">
     <a href="#">Register</a> • <a href="#">Forgot Password</a>
   </div>
-</div>
-</body>
 
-
+  <script>
+   /*Parse.initialize("C1vSKr7qozzQJbvpdwgirOAnFegdiBA4ATzsMIts", "z9OYp348kGoWdYpHOu1thm2D8897Q7ub7aDB67Mx");
+  function login(){
+    var username = document.getElementById("user").value;
+    var pass = document.getElementById("pass").value;
+    
+    var user = Parse.User.logIn(username, pass, {
+      success: function(user) {
+	window.location.assign("index.html");	
+      },
+      error : function(user, error){
+	alert("Incorrect login password combo");
+      }
+      });
+      event.preventDefault();
+    }*/
+</script>
+  </body>
 </html>
