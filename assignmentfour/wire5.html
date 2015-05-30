@@ -158,6 +158,7 @@
     }
 
     function updateCalculatables() {
+      console.log("update");
       var qty = parseInt($("#qty").val());
       if (isNaN(qty)) {
         qty = 0;
@@ -225,7 +226,7 @@
         updateCalculatables();
       });
       var fineness = $("#fineness");
-      unitPrice.change(function() {
+      fineness.change(function() {
         updateCalculatables();
       });
       var wpu = $("#wpu");
