@@ -97,30 +97,26 @@ function loadFooter(){
 
 function getMetalData(page){
 
-    var myGoldData;
     var date = new Date();
+	date.setMonth(date.getMonth() - 2);
+    var startDate = "?trim_start=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(); //date filter
+    var authenCode = "?auth_token=C3HZx3Q9-W8qQUhDX-vJ"; // Gives us unlimited access to data!
 
-    date.setMonth(date.getMonth() - 2);
-    var startDate = "?trim_start=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    var authenCode = "?auth_token=C3HZx3Q9-W8qQUhDX-vJ";
-
+    // access gold data
     $.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + startDate + authenCode, function(data){
-        myGoldData = data.data;
+        var myGoldData = data.data;
 
-
-        //Iterate and make array for dates
-        var goldDates = [];
+        var arrayOfDates = [];
         var goldData = [];
 
         for (var i = 29; i >= 0; i--){
-            goldDates.push(myGoldData[i][0]);
+            arrayOfDates.push(myGoldData[i][0]);
             goldData.push(myGoldData[i][1]);
         }
 
+        //access silver data
         $.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + startDate + authenCode, function(data){
             var mySilverData = data.data;
-
-            //Iterate and make array for dates
 
             var silverData = [];
 
@@ -128,15 +124,18 @@ function getMetalData(page){
                 silverData.push(mySilverData[i][1]);
             }
 
+            //access plat data
             $.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + startDate + authenCode, function(data){
                 var myPlatData = data.data;
+
                 var platData = [];
 
                 for (var i = 29; i >= 0; i--){
                     platData.push(myPlatData[i][1]);
                 }
 
-                drawAllTheGraphs(page, goldDates, goldData, silverData, platData);
+                // calls on function that uses data to construct graphs
+                drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData);
             });
 
 
@@ -146,7 +145,7 @@ function getMetalData(page){
 
 }
 
-function drawAllTheGraphs(page, goldDates, goldData, silverData, platData){
+function drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData){
 	var drawGraph = function(){
 
 		var pointStroke = "rgba(255,255,255,0.6)";
@@ -155,7 +154,7 @@ function drawAllTheGraphs(page, goldDates, goldData, silverData, platData){
 
 		if(page == "main.html") {
 			var data = {
-				labels: goldDates,
+				labels: arrayOfDates,
 				datasets: [
 				{
 					label: "Gold Total",
@@ -372,9 +371,6 @@ function initMain() {
         var path = window.location.pathname;
         var page = path.split("/").pop();
 
-        //grabs the data and then calls on drawAllTheGraphs()
-        getMetalData(page);
-
 
         /* * * * * * * * * * * * * *
          *                         *
@@ -395,8 +391,9 @@ function initMain() {
          *        GRAPHING         *
          *                         *
          * * * * * * * * * * * * * */
-        // graph for wire2 page
 
+        //grabs the data and then calls on drawAllTheGraphs()
+        getMetalData(page);
 
         /* * * * * * * * * * * * * *
          *                         *
