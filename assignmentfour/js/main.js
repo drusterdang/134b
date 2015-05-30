@@ -318,134 +318,135 @@ function drawAllTheGraphs(page, goldDates, goldData, silverData, platData){
 
 
 
-$(window).load(function() {
+function initMain()
+    $(window).load(function() {
 
-	var path = window.location.pathname;
-	var page = path.split("/").pop();
-
-
-
-	/* * * * * * * * * * * * * *
-	 *                         *
-	 *        GENERAL          *
-	 *                         *
-	 * * * * * * * * * * * * * */
-
-	 $('.icon-spinner2').click(function(){
-	 	location.reload();	
-	 });
-
-	 $('tr').click(function(){
-	 	$(this).find('a')[0].click();
-	 });
-
-	/* * * * * * * * * * * * * *
-	 *                         *
-	 *        GRAPHING         *
-	 *                         *
-	 * * * * * * * * * * * * * */
- 	// graph for wire2 page
-
-
- 	/*We are grabbing data from Quandl here */
-
- 	var myGoldData;
-
- 	var date = new Date();
- 	date.setMonth(date.getMonth() - 2);
- 	var startDate = "?trim_start=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
- 	$.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + startDate, function(data){
- 		myGoldData = data.data;
-
-
-		//Iterate and make array for dates
-		var goldDates = [];
-		var goldData = [];
-
-		for (var i = 29; i >= 0; i--){
-			goldDates.push(myGoldData[i][0]);
-			goldData.push(myGoldData[i][1]);
-		}
-
-		$.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + startDate, function(data){
-			var mySilverData = data.data;
-
-				//Iterate and make array for dates
-
-			var silverData = [];
-
-			for (var i = 29; i >= 0; i--){
-				silverData.push(mySilverData[i][1]);
-			}
-
-			$.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + startDate, function(data){
-				var myPlatData = data.data;
-				var platData = [];
-
-				for (var i = 29; i >= 0; i--){
-					platData.push(myPlatData[i][1]);
-				}
-
-				drawAllTheGraphs(page, goldDates, goldData, silverData, platData);
-			});
-
-
-		});
-
-	});
+        var path = window.location.pathname;
+        var page = path.split("/").pop();
 
 
 
+        /* * * * * * * * * * * * * *
+         *                         *
+         *        GENERAL          *
+         *                         *
+         * * * * * * * * * * * * * */
+
+        $('.icon-spinner2').click(function(){
+            location.reload();	
+        });
+
+        $('tr').click(function(){
+            $(this).find('a')[0].click();
+        });
+
+        /* * * * * * * * * * * * * *
+         *                         *
+         *        GRAPHING         *
+         *                         *
+         * * * * * * * * * * * * * */
+        // graph for wire2 page
+
+
+        /*We are grabbing data from Quandl here */
+
+        var myGoldData;
+
+        var date = new Date();
+        date.setMonth(date.getMonth() - 2);
+        var startDate = "?trim_start=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+        $.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + startDate, function(data){
+            myGoldData = data.data;
+
+
+            //Iterate and make array for dates
+            var goldDates = [];
+            var goldData = [];
+
+            for (var i = 29; i >= 0; i--){
+                goldDates.push(myGoldData[i][0]);
+                goldData.push(myGoldData[i][1]);
+            }
+
+            $.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + startDate, function(data){
+                var mySilverData = data.data;
+
+                //Iterate and make array for dates
+
+                var silverData = [];
+
+                for (var i = 29; i >= 0; i--){
+                    silverData.push(mySilverData[i][1]);
+                }
+
+                $.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + startDate, function(data){
+                    var myPlatData = data.data;
+                    var platData = [];
+
+                    for (var i = 29; i >= 0; i--){
+                        platData.push(myPlatData[i][1]);
+                    }
+
+                    drawAllTheGraphs(page, goldDates, goldData, silverData, platData);
+                });
+
+
+            });
+
+        });
 
 
 
 
-	/* * * * * * * * * * * * * *
-	 *                         *
-	 *     MOBILE HANDLING     *
-	 *                         *
-	 * * * * * * * * * * * * * */
-
-	 $('.mtb-1').click(function(){
-	 	$('.graph-panel').removeClass('graph-panel-show');
-	 	$('.market-status').fadeIn(0);
-	 	$('.market-list').fadeIn(0);
-	 	if( page == "metal-main.html")
-	 		$('.my_stack').fadeIn(0);
-	 	$('.mtb-2').removeClass('mobile-toggle-selected');
-	 	$('.mtb-1').addClass('mobile-toggle-selected');
-
-	 });
-
-	 $('.mtb-2').click(function(){
-	 	$('.market-status').fadeOut(0);
-	 	$('.market-list').fadeOut(0);
-	 	if( page == "metal-main.html")
-	 		$('.my_stack').fadeOut(0);
-	 	$('.mtb-1').removeClass('mobile-toggle-selected');
-	 	$('.mtb-2').addClass('mobile-toggle-selected');
-	 	$('.graph-panel').addClass('graph-panel-show');
-	 	drawGraph();
-	 });
-
-	 var resizer = function(){
-	 	winWidth = $(window).width();
-	 	winHeight = $(window).height();
-
-	 	if (winWidth > 999){
-	 		$('.graph-panel').removeClass('graph-panel-show');
-	 		$('.market-status').fadeIn(0);
-	 		$('.market-list').fadeIn(0);
-	 		if( page == "metal-main.html")
-	 			$('.my_stack').fadeIn(0);
-	 		$('.mtb-2').removeClass('mobile-toggle-selected');
-	 		$('.mtb-1').addClass('mobile-toggle-selected');
-	 	}
-	 };
-
-	 $(window).resize(resizer);
 
 
-	});
 
+        /* * * * * * * * * * * * * *
+         *                         *
+         *     MOBILE HANDLING     *
+         *                         *
+         * * * * * * * * * * * * * */
+
+        $('.mtb-1').click(function(){
+            $('.graph-panel').removeClass('graph-panel-show');
+            $('.market-status').fadeIn(0);
+            $('.market-list').fadeIn(0);
+            if( page == "metal-main.html")
+                $('.my_stack').fadeIn(0);
+            $('.mtb-2').removeClass('mobile-toggle-selected');
+            $('.mtb-1').addClass('mobile-toggle-selected');
+
+        });
+
+        $('.mtb-2').click(function(){
+            $('.market-status').fadeOut(0);
+            $('.market-list').fadeOut(0);
+            if( page == "metal-main.html")
+                $('.my_stack').fadeOut(0);
+            $('.mtb-1').removeClass('mobile-toggle-selected');
+            $('.mtb-2').addClass('mobile-toggle-selected');
+            $('.graph-panel').addClass('graph-panel-show');
+            drawGraph();
+        });
+
+        var resizer = function(){
+            winWidth = $(window).width();
+            winHeight = $(window).height();
+
+            if (winWidth > 999){
+                $('.graph-panel').removeClass('graph-panel-show');
+                $('.market-status').fadeIn(0);
+                $('.market-list').fadeIn(0);
+                if( page == "metal-main.html")
+                    $('.my_stack').fadeIn(0);
+                $('.mtb-2').removeClass('mobile-toggle-selected');
+                $('.mtb-1').addClass('mobile-toggle-selected');
+            }
+        };
+
+        $(window).resize(resizer);
+
+
+    });
+} 
