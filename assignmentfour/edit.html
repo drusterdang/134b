@@ -23,7 +23,7 @@
     <section class='main-section'>
         <section class='coin_wrapper'>
             <div class='mobile-nav'>
-                <a href='wire3.html'>
+                <a href='main.html'>
                     <svg class='icon icon-keyboard-arrow-left'>
                         <symbol id='icon-keyboard-arrow-left' viewBox='0 0 1024 1024'>
                             <title>keyboard-arrow-left</title>
@@ -32,10 +32,10 @@
                         <use xlink:href='#icon-keyboard-arrow-left'></use>
                     </svg>
                 </a>
-                ADD ITEM
+                <span class='command-header'>Add Item</span>
             </div>
             <div class='coin_main'>
-                <a href='wire3.html'>
+                <a href='main.html'>
                     <div class='breadcrumb'>
                         <svg class='icon icon-play-arrow-rev'>
                             <symbol id='icon-play-arrow' viewBox='0 0 1024 1024'>
@@ -44,7 +44,7 @@
                             </symbol>
                             <use xlink:href='#icon-play-arrow'></use>
                         </svg>
-                        Add Item
+                        <span class='command-header'>Add Item</span>
                     </div>
                 </a>
                 <section class='coin_image'>
@@ -244,6 +244,7 @@
         });
       }
       if (window.location.hash) {
+        $(".command-header").text("Edit Item");
         readItem(window.location.hash.substring(1),
             function (item) {
               currentEditItem = item;
