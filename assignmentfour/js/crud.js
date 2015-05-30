@@ -1,13 +1,13 @@
 /* Pseudo-Enums */
 var ItemType  = Object.freeze({
-    COIN        : "coin",
-    BAR         : "bar"
+    COIN        : 0,
+    BAR         : 1
 });
 
 var MetalType = Object.freeze({
-    GOLD        : "gold",
-    SILVER      : "silver",
-    PLATINUM    : "platinum"
+    GOLD        : 0,
+    SILVER      : 1,
+    PLATINUM    : 2
 });
 
 /* Initialize Parse */
@@ -117,14 +117,26 @@ var knownItems = [
 /* Filters list of known items */
 function getKnownItems(iType, mType) {
     var result = [];
-    for (var i in knownItems) {
-        var validIType = !iType || iType == i.item;
-        var validMType = !mType || mType == i.metal;
+    for (var i = 0; i < knownItems.length; i++) {
+        var validIType = !iType || iType == knownItems[i].item;
+        var validMType = !mType || mType == knownItems[i].metal;
         if (validIType && validMType) {
-            result.push(i);
+            result.push(knownItems[i]);
         }
     }
     return result;
+}
+
+function getGoldPrice() {
+    return 100;
+}
+
+function getSilverPrice() {
+    return 80;
+}
+
+function getPlatinumPrice() {
+    return 120;
 }
 
 /* CRUD Implementation */
@@ -138,7 +150,7 @@ function createItem(
         qty, 
         unitPrice,
         fineness,
-        denomination,
+        wpu,
         onsuccess,
         onerror) 
 {
@@ -151,7 +163,7 @@ function createItem(
     parseItem.set("qty", qty);
     parseItem.set("unitPrice", unitPrice);
     parseItem.set("fineness", fineness);
-    parseItem.set("denomination", denomination);
+    parseItem.set("wpu", wpu);
     coin.save(null, {
         success: onsuccess,
         error: onerror
@@ -163,3 +175,28 @@ function createItem(
 /* Update */
 
 /* Delete */
+
+/* Global Helpers */
+function numberNicify(num) {
+    var small = parseInt(num * 1000) % 1000;
+    if (small < 0)
+        small *= -1;
+    small = small.toString();
+    while (small.length < 3) {
+        small = "0" + small;
+    }
+    var  big = parseInt(num);
+    return big + "." + small;
+}
+
+function numberPricify(num) {
+    var small = parseInt(num * 100) % 100;
+    if (small < 0)
+        small *= -1;
+    small = small.toString();
+    while (small.length < 2) {
+        small = "0" + small;
+    }
+    var  big = parseInt(num);
+    return "$" + big + "." + small;
+}

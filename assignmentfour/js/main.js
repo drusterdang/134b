@@ -96,7 +96,8 @@ function loadFooter(){
 
 
 
-$(window).load(function() {
+function initMain() {
+    $(window).load(function() {
 
 	var path = window.location.pathname;
 	var page = path.split("/").pop();
@@ -389,3 +390,4 @@ $(window).load(function() {
 
 
 	});
+}
