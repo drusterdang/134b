@@ -249,15 +249,12 @@
     function submitItem() {
       var iType = parseInt($("#medium-type").val());
       var mType = parseInt($("#metal-type").val());
-      var name = $("#type-name").val().toString();
-      var purchaseDate = Date.parse($("#purchase-date").val());
+      var name = $("#type-name option:selected").text();
+      var purchaseDate = new Date($("#purchase-date").val());
       var qty = parseInt($("#qty").val());
       var unitPrice = parseFloat($("#unit-price").val());
       var fineness = parseFloat($("#fineness").val());
       var wpu = parseFloat($("#wpu").val());
-      console.log(iType + " " + mType + " " + 
-          name + " " + purchaseDate + " " + qty + " " + unitPrice + " " +
-          fineness + " " + wpu);
       createItem(
           iType,
           mType,
@@ -271,8 +268,7 @@
             alert(item.toString() + " created")
           },
           function(item, error) {
-            alert(item.toString() + " errored: " + error)
-
+            alert(item.toString() + " errored: " + error.message)
           });
 
     }
