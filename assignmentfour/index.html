@@ -1,49 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="description" content="bullion management site, rare coins, gold, silver, platinum">
-    <meta name="author" content="CSE134B Dream Team">
-    <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
-    <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8'>
+    <meta name='description' content='bullion management site, rare coins, gold, silver, platinum'>
+    <meta name='author' content='CSE134B Dream Team'>
+    <meta name=viewport content='width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes'>
+    <link rel='stylesheet' type='text/css' href='./style/style.css'>
+    <link rel='icon' href='favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
     <title>Login - CoinFlip</title>
-    <script src="./js/combine.js"></script>
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+    <script src='./js/combine.js'></script>
+    <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
 </head>
 
 <body>
     <nav>
         COINFLIP
     </nav>
-    <div class="mobile-nav">
+    <div class='mobile-nav'>
         COINFLIP
     </div>
-    <div id="w1-wrapper">
+    <div id='w1-wrapper'>
 
-        <section id="w1-left">
+        <section id='w1-left'>
             <h1>COINFLIP</h1>
             <h3>Manage your coin collection with a simple app.</h3>
-            <a href="main.html"><span id="sign-up-button">Sign up</span></a>
-            <a href="main.html"><span id="log-in-button">Log in</span></a>
+            <br/>
+            <div id='main-input-section'>
+              <table>
+                <tr>
+                  <td>Username</td>
+                  <td><input type='text' id='username' name='username'/></td>
+                </tr>
+                <tr>
+                  <td>Password</td>
+                  <td><input type='password' id='passwd' name='passwd'/></td>
+                </tr>
+                <tr>
+                </tr>
+              </table>
+            </div>
+            <a id='login-button' onclick='loginUser();'><span>Login</span></a>
+            <a id='signup-button' onclick='signupUser();'><span>Sign Up</span></a>
         </section>
 
-        <section id="w1-right">
-            <div id="iphone">
-                <div id="iphone-camera"></div>
-                <div id="iphone-speaker"></div>
-                <div id="iphone-screen"></div>
-                <div id="iphone-home"></div>
+        <section id='w1-right'>
+            <div id='iphone'>
+                <div id='iphone-camera'></div>
+                <div id='iphone-speaker'></div>
+                <div id='iphone-screen'></div>
+                <div id='iphone-home'></div>
             </div>
         </section>
 
     </div>
+    <script type='text/javascript'>
+      loadFooter();
+      initParse();
 
-    <script type="text/javascript">loadFooter();</script>
-    <script type="text/javascript">
-      Parse.initialize("C1vSKr7qozzQJbvpdwgirOAnFegdiBA4ATzsMIts", "z9OYp348kGoWdYpHOu1thm2D8897Q7ub7aDB67Mx");
+      function signupUser() {
+        var user = new Parse.User();
+        var username = $("#username").val();
+        var password = $("#passwd").val();
+        user.set("username", username);
+        user.set("password", password);
+        user.signUp(null, {
+          success: function(user) {
+            alert("Successfully signed up!");
+          },
+          error: function(user, error) {
+            alert("Failed to sign up... " + error.message);
+          }
+        });
+      }
+
+      function loginUser() {
+        var username = $("#username").val();
+        var password = $("#passwd").val();
+        Parse.User.logIn(username, password, {
+          success: function (user) {
+            alert("Successfully logged in!");
+            window.location.href = "main.html";
+          },
+          error: function (user, error) {
+            alert("Failed to login... " + error.message)
+          }
+        });
+      }
     </script>
 </body>
 

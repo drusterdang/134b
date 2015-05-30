@@ -371,25 +371,57 @@ a:visited {
     line-height: 55px;
     text-align: center;
     font-size: 1.3em;
-    margin-top: 30px;
 }
 
-#sign-up-button {
+#main-input-section {
+  padding: 10px;
+  background: #323232;
+}
+
+#main-input-section table {
+  width: 100%;
+}
+
+#main-input-section input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#main-input-section tr td {
+  padding: 5px;
+}
+
+#signup-button,
+#login-button
+{
+  box-sizing: border-box;
+  display: block;
+}
+
+#signup-button .button-main,
+#login-button .button-main
+{
+  margin-top: 0;
+}
+
+#signup-button {
+    border: 2px solid #1C3A3F;
     background: #1C3A3F;
-    border: 1px solid #151515;
 }
 
-#sign-up-button:hover {
-    border: 1px solid #68CEDE;
+#signup-button:hover {
+    cursor: pointer;
+    border: 2px solid #2C5A5F;
 }
 
-#log-in-button {
+#login-button {
+    border: 2px solid #397C86;
     background: #397C86;
-    border: 1px solid #151515;
 }
 
-#log-in-button:hover {
-    border: 1px solid #68CEDE;
+#login-button:hover {
+    cursor: pointer;
+    border: 2px solid #599CA6;
 }
 
 #w1-right {
@@ -984,7 +1016,7 @@ select {
 
 #cancel {
     background: #1C3A3F;
-    border: 1px solid #151515;
+    border: 2px solid #151515;
     color: white;
     text-decoration: none;
     width: 275px;
@@ -994,7 +1026,7 @@ select {
 }
 
 #cancel:hover {
-    border: 1px solid #68CEDE;
+    border: 2px solid #68CEDE;
 }
 /* * * * * * * * * * * * * * * *
  *                             *
