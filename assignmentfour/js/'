@@ -29,12 +29,10 @@ function loadData() {
         var milliPerDay = 3600 * 1000 * 24;
         var now = (new Date()).getTime();
         if (goldDone && silverDone && platDone && spotDone) {
-            /* Setup Mutexes */
             goldDone = false;
             silverDone = false;
             platDone = false;
             spotDone = false;
-            /* Process Finish Callback */
             function finishCallback() {
                 if (goldDone && silverDone && platDone && spotDone) {
                     goldTotalData = [];
