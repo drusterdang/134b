@@ -744,6 +744,11 @@ a:visited {
  *                             *
  * * * * * * * * * * * * * * * */
 
+#searchbar {
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
 .current_gold {
     margin-top: -24px;
     margin-left: 150px;
@@ -1143,13 +1148,30 @@ select {
   border-radius: 0;
   font-size: 16px;
   width: 100%;
-  border-bottom: 1px solid #141414;
+  line-height: 50px;
+  height: 50px;
+  background: #4C4C4C;
+  border: 2px solid #4C4C4C
+}
+
+.popup-main-button:hover {
+  background: #5C5C5C;
+  border: 2px solid #5C5C5C
+}
+
+.popup-main-button:nth-child(even) {
+  background: #383838;
+  border: 2px solid #383838;
+}
+
+.popup-main-button:nth-child(even):hover {
+  background: #404040;
+  border: 2px solid #404040;
 }
 
 .popup-main-button:last-child {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  border-bottom: 0px solid #141414;
 }
 
 /* * * * * * * * * * * * * * * *

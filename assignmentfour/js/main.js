@@ -42,8 +42,10 @@ function loadData() {
             silverTotalData[i] = silverTotal * silverOzData[i];
             platTotalData[i] = platTotal * platOzData[i];
           }
-          $(".gold-bid").text(numberPricify(goldBid));
-          $(".gold-ask").text(numberPricify(goldAsk));
+          $(".gold-bid").text(numberPricify(goldBid)); // update gold bid via html manipulation
+          $(".gold-ask").text(numberPricify(goldAsk)); // update gold ask via html manipulation
+
+          // check if styling should be changed based on the change's sign
           var mGoldChange = $(".gold-change");
           mGoldChange.text(numberNicify(goldChange));
           if (goldChange > 0) {
@@ -53,8 +55,11 @@ function loadData() {
             mGoldChange.removeClass("pos-change");
             mGoldChange.addClass("neg-change");
           }
-          $(".silver-bid").text(numberPricify(silverBid));
-          $(".silver-ask").text(numberPricify(silverAsk));
+
+          $(".silver-bid").text(numberPricify(silverBid)); // update silver bid via html manipulation
+          $(".silver-ask").text(numberPricify(silverAsk)); // update silver ask via html manipulation
+
+          // check if styling should be changed based on the change's sign
           var mSilverChange = $(".silver-change");
           mSilverChange.text(numberNicify(silverChange));
           if (silverChange > 0) {
@@ -64,8 +69,11 @@ function loadData() {
             mSilverChange.removeClass("pos-change");
             mSilverChange.addClass("neg-change");
           }
-          $(".plat-bid").text(numberPricify(platBid));
-          $(".plat-ask").text(numberPricify(platAsk));
+
+          $(".plat-bid").text(numberPricify(platBid)); // update plat bid via html manipulation
+          $(".plat-ask").text(numberPricify(platAsk)); // update plat ask via html manipulation
+
+          // check if styling should be changed based on the change's sign
           var mPlatChange = $(".plat-change");
           mPlatChange.text(numberNicify(platChange));
           if (platChange > 0) {
@@ -75,6 +83,8 @@ function loadData() {
             mPlatChange.removeClass("pos-change");
             mPlatChange.addClass("neg-change");
           }
+
+          // calculate chart data for total value, change, and %change
           var totalValue = goldTotal * goldBid + silverTotal * silverBid + platTotal * platBid;
           var totalChange = (goldTotal * goldBid * goldChange + silverTotal * silverBid * silverChange + platTotal * platBid * platChange) / 100;
           var totalPercentChange = totalChange / totalValue * 100;
