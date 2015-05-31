@@ -789,9 +789,14 @@ a:visited {
 }
 
 .my_stack .item .controls a {
+  cursor: pointer;
   color: #AAAAAA;
   font-weight: 400;
   margin-left: 10px;
+}
+
+.my_stack .item .controls a:hover {
+  text-decoration: underline;
 }
 
 .my_stack {

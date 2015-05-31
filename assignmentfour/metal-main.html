@@ -216,6 +216,7 @@
               alert("Successful delete");
               currentTableItems.splice(i, 1);
               updateTable();
+              updateLoaded();
             },
             function (item, error) {
               alert(error.message);
