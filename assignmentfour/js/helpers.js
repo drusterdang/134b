@@ -1,8 +1,9 @@
 /* Global Helpers */
 function numberNicify(num) {
     var small = parseInt(num * 1000) % 1000;
-    if (small < 0)
+    if (small < 0) {
         small *= -1;
+    }
     small = small.toString();
     while (small.length < 3) {
         small = "0" + small;
@@ -16,8 +17,9 @@ function numberNicify(num) {
 
 function numberPricify(num) {
     var small = parseInt(num * 100) % 100;
-    if (small < 0)
+    if (small < 0) {
         small *= -1;
+    }
     small = small.toString();
     while (small.length < 2) {
         small = "0" + small;
@@ -32,9 +34,9 @@ function dateNicify(date) {
 
 function metalToString(mtype) {
     switch (mtype) {
-    case MetalType.GOLD: return "gold";
-    case MetalType.SILVER: return "silver";
-    case MetalType.PLATINUM: return "platinum";
+        case MetalType.GOLD: return "gold";
+        case MetalType.SILVER: return "silver";
+        case MetalType.PLATINUM: return "platinum";
     }
     return null;
 }
@@ -42,16 +44,17 @@ function metalToString(mtype) {
 function metalInHash() {
     var hash = window.location.hash.substring(1); 
     var props = hash.split("&");
-    for (var i = 0; i < props.length; i++) {
+    var i;
+    for (i = 0; i < props.length; i++) {
         var prop = props[i];
         var split = prop.indexOf("=");
         if (split > -1) {
             var propName = prop.substring(0, split);
             if (propName == "metal") {
                 switch (prop.substring(split + 1)) {
-                case "gold": return MetalType.GOLD;
-                case "silver": return MetalType.SILVER;
-                case "platinum": return MetalType.PLATINUM;
+                    case "gold": return MetalType.GOLD;
+                    case "silver": return MetalType.SILVER;
+                    case "platinum": return MetalType.PLATINUM;
                 }
             }
         }
@@ -62,7 +65,8 @@ function metalInHash() {
 function idInHash() {
     var hash = window.location.hash.substring(1); 
     var props = hash.split("&");
-    for (var i = 0; i < props.length; i++) {
+    var i;
+    for (i = 0; i < props.length; i++) {
         var prop = props[i];
         var split = prop.indexOf("=");
         if (split > -1) {
@@ -77,7 +81,8 @@ function idInHash() {
 function pageInHash() {
     var hash = window.location.hash.substring(1); 
     var props = hash.split("&");
-    for (var i = 0; i < props.length; i++) {
+    var i;
+    for (i = 0; i < props.length; i++) {
         var prop = props[i];
         var split = prop.indexOf("=");
         if (split > -1) {
@@ -95,8 +100,9 @@ function setPageInHash(page) {
     var newHash = "#";
     var props = hash.split("&");
     var set = false;
-    for (var i = 0; i < props.length; i++) {
-        if (i) newHash += "&";
+    var i;
+    for (i = 0; i < props.length; i++) {
+        if (i) { newHash += "&"; }
         var prop = props[i];
         var split = prop.indexOf("=");
         if (split > -1) {

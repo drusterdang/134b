@@ -1,5 +1,5 @@
 /* Globals */
-var ajaxMutex = false;;
+var ajaxMutex = false;
 var g2ozt = 0.032151;
 
 var currentEditItem = null;
@@ -20,12 +20,12 @@ var denominations;
 
 /* Hooks */
 function cancel() {
-    var metalType = metalInHash()
-        if (metalType >= 0) {
-            window.location.href = "metal-main.html#metal=" + metalToString(metalType);
-        } else {
-            window.location.href = "main.html";
-        }
+    var metalType = metalInHash();
+    if (metalType >= 0) {
+        window.location.href = "metal-main.html#metal=" + metalToString(metalType);
+    } else {
+        window.location.href = "main.html";
+    }
 }
 
 function submitItem() {
@@ -169,7 +169,7 @@ function submitItem() {
         }
     } else {
         if (!ajaxMutex) {
-            ajaxMutex = true
+            ajaxMutex = true;
             setPopupSize(400);
             setPopupHeader("Creating item!");
             setPopupMain("");
@@ -235,14 +235,16 @@ function removeItem() {
 function updateTypeFilter() {
     currentItemList = getKnownItems(mediumType.val(), metalType.val());
     var typeOptions = "";
-    for (var i = 0; i < currentItemList.length; i++) {
+    var i;
+    for (i = 0; i < currentItemList.length; i++) {
         typeOptions += "<option>" + currentItemList[i].name + "</option>";
     }
     knownTypes.html(typeOptions);
 }
 
 function updateAutocomplete() {
-    for (var i = 0; i < currentItemList.length; i++) {
+    var i;
+    for (i = 0; i < currentItemList.length; i++) {
         var item = currentItemList[i];
         if (item.name == typeName.val()) {
             if (item.wpu) {
@@ -253,8 +255,9 @@ function updateAutocomplete() {
             }
             if (item.denominations) {
                 var denomOptions = "";
-                for (var i = 0; i < item.denominations.length; i++) {
-                    denomOptions += "<option>" + numberNicify(item.denominations[i] / g2ozt) + "</option>";
+                var j;
+                for (j = 0; j < item.denominations.length; j++) {
+                    denomOptions += "<option>" + numberNicify(item.denominations[j] / g2ozt) + "</option>";
                 }
                 denominations.html(denomOptions);
                 if (!wpu.val() && item.denominations.length > 0) {
@@ -283,12 +286,15 @@ function updateCalculatables() {
         wpuVal = 0;
     }
     var mcpo = 0;
-    if (metalType.val() == MetalType.GOLD)
+    if (metalType.val() == MetalType.GOLD) {
         mcpo = getGoldPrice();
-    if (metalType.val() == MetalType.SILVER)
+    }
+    if (metalType.val() == MetalType.SILVER) {
         mcpo = getSilverPrice();
-    if (metalType.val() == MetalType.PLATINUM)
+    }
+    if (metalType.val() == MetalType.PLATINUM) {
         mcpo = getPlatinumPrice();
+    }
     $("#mgpu").text(numberNicify(finenessVal * wpuVal));
     $("#mopu").text(numberNicify(finenessVal * wpuVal * g2ozt));
     $("#total-metal").text(numberNicify(qtyVal * finenessVal * wpuVal * g2ozt));
@@ -393,7 +399,7 @@ $(document).ready(function() {
                     }
                     loadHandlers();
                     updateCalculatables();
-                    hidePopup()
+                    hidePopup();
                 },
                 function (item, error) {
                     alert(error.message);

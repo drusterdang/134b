@@ -39,12 +39,15 @@ function updateCalculatables() {
         wpuVal = 0;
     }
     var mcpo = 0;
-    if (metalType.val() == MetalType.GOLD)
+    if (metalType.val() == MetalType.GOLD) {
         mcpo = getGoldPrice();
-    if (metalType.val() == MetalType.SILVER)
+    }
+    if (metalType.val() == MetalType.SILVER) {
         mcpo = getSilverPrice();
-    if (metalType.val() == MetalType.PLATINUM)
+    }
+    if (metalType.val() == MetalType.PLATINUM) {
         mcpo = getPlatinumPrice();
+    }
     $("#mgpu").text(numberNicify(finenessVal * wpuVal));
     $("#mopu").text(numberNicify(finenessVal * wpuVal * g2ozt));
     $("#total-metal").text(numberNicify(qtyVal * finenessVal * wpuVal * g2ozt));
