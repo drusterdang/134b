@@ -43,15 +43,16 @@ function loadData() {
                     platTotalData = [];
                     /* Set Data w/ user totals */
                     var i;
-                    for (i = 0; i < 30; i++) {
+                    for (i = 0; i <= 30; i++) {
                         goldTotalData[i] = goldTotal * goldOzData[i];
                         silverTotalData[i] = silverTotal * silverOzData[i];
                         platTotalData[i] = platTotal * platOzData[i];
                     }
                     /* Set gold prices in view */
-                    $(".gold-bid").text(numberPricify(goldBid));
-                    $(".gold-ask").text(numberPricify(goldAsk));
+                    $(".gold-bid").text(numberPricify(goldBid)); // update gold bid via html manipulation
+                    $(".gold-ask").text(numberPricify(goldAsk)); // update gold ask via html manipulation
                     var mGoldChange = $(".gold-change");
+                    // check if styling should be changed based on the change's sign
                     mGoldChange.text(numberNicify(goldChange));
                     if (goldChange > 0) {
                         mGoldChange.removeClass("neg-change");
@@ -61,8 +62,9 @@ function loadData() {
                         mGoldChange.addClass("neg-change");
                     }
                     /* Set silver prices in view */
-                    $(".silver-bid").text(numberPricify(silverBid));
-                    $(".silver-ask").text(numberPricify(silverAsk));
+                    $(".silver-bid").text(numberPricify(silverBid)); // update silver bid via html manipulation
+                    $(".silver-ask").text(numberPricify(silverAsk)); // update silver ask via html manipulation
+                    // check if styling should be changed based on the change's sign
                     var mSilverChange = $(".silver-change");
                     mSilverChange.text(numberNicify(silverChange));
                     if (silverChange > 0) {
@@ -73,8 +75,9 @@ function loadData() {
                         mSilverChange.addClass("neg-change");
                     }
                     /* Set plat prices in view */
-                    $(".plat-bid").text(numberPricify(platBid));
-                    $(".plat-ask").text(numberPricify(platAsk));
+                    $(".plat-bid").text(numberPricify(platBid)); // update plat bid via html manipulation
+                    $(".plat-ask").text(numberPricify(platAsk)); // update plat ask via html manipulation
+                    // check if styling should be changed based on the change's sign
                     var mPlatChange = $(".plat-change");
                     mPlatChange.text(numberNicify(platChange));
                     if (platChange > 0) {
@@ -127,10 +130,14 @@ function loadData() {
             getGoldData(function (json) {
                 goldOzData = [];
                 var i;
+                //iterate through dates backwards
                 for (i = json.data.length - 1; i >= 0; i--) {
+                    //grab date
                     var dataDate = Date.parse(json.data[i][0]);
+                    //determine how many days ago
                     var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                    if (idays < 30) {
+                    //save the data for the date if within 30 days
+                    if (idays <= 30) {
                         goldOzData[idays] = parseFloat(json.data[i][1]);
                     }
                 }
@@ -141,11 +148,14 @@ function loadData() {
             /* Silver Data */
             getSilverData(function (json) {
                 silverOzData = [];
+                //iterate through dates backwards
                 var i;
                 for (i = json.data.length - 1; i >= 0; i--) {
+                    //grab date
                     var dataDate = Date.parse(json.data[i][0]);
+                    //determine how many days ago
                     var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                    if (idays < 30) {
+                    if (idays <= 30) {
                         silverOzData[idays] = parseFloat(json.data[i][1]);
                     }
                 }
@@ -156,11 +166,13 @@ function loadData() {
             /* Plat Data */
             getPlatinumData(function (json) {
                 platOzData = [];
+                // iterate through dates backwards
                 var i;
                 for (i = json.data.length - 1; i >= 0; i--) {
                     var dataDate = Date.parse(json.data[i][0]);
+                    //determine how many days ago
                     var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                    if (idays < 30) {
+                    if (idays <= 30) {
                         platOzData[idays] = parseFloat(json.data[i][1]);
                     }
                 }
@@ -226,7 +238,7 @@ function loadGraph() {
     };
     var labels = ["now"];
     var i;
-    for (i = 2; i <= 30; i++) {
+    for (i = 1; i <= 30; i++) {
         labels.push(i + "days ago");
     }
     labels.reverse();
