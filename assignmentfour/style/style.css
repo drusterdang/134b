@@ -744,6 +744,11 @@ a:visited {
  *                             *
  * * * * * * * * * * * * * * * */
 
+#searchbar {
+  padding: 5px 10px;
+  border-radius: 3px;
+}
+
 .current_gold {
     margin-top: -24px;
     margin-left: 150px;

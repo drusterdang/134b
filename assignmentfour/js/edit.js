@@ -47,6 +47,94 @@ function submitItem() {
         var file = picture[0].files[0];
         fpicture = new Parse.File(file.name, file);
     }
+    if (isNaN(fitype)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Medium Type</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (isNaN(fmtype)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Metal Type</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (!fname) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Name</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (isNaN(fpurchaseDate)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Purchase Date</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (isNaN(fqty)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Quantity</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (isNaN(funitPrice)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Unit Price</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (isNaN(ffineness)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Fineness</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
+    if (isNaN(fwpu)) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Failed to modify item.</p>" + 
+                "<p> Invalid Weight per Unit</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        showPopup();
+        return;
+    }
     if (currentEditItem) {
         if (!ajaxMutex) {
             ajaxMutex = true;
