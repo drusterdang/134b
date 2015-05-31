@@ -10,6 +10,7 @@
     <link rel='icon' href='favicon.ico' type='image/x-icon' />
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
     <script src='./js/combine.js'></script>
+    <script src='./js/metal-main.js'></script>
     <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
     <title>My Metal - CoinFlip</title>
 </head>
@@ -47,15 +48,15 @@
             </div>
             <section class='overview-panel'>
                 <section class='total-value'>
-                    <div class='total-dollars'>$18,234.10</div>
+                    <div class='total-dollars'>N/a</div>
                     <table class='current_gold'>
                         <tr>
                             <td>Daily</td>
-                            <td>+3.5%</td>
+                            <td class='change'></td>
                         </tr>
                         <tr>
                             <td>Overall</td>
-                            <td>+1.2%</td>
+                            <td class='ochange'></td>
                         </tr>
                     </table> 
                     <div class='total-label' id='my_gold_value'>My <span class='metal-name'></span> Value</div>
@@ -88,9 +89,9 @@
                     <section class='market-item-stats'>
                         <table>
                             <tr>
-                                <td>1206.10</td>
-                                <td>1207.10</td>
-                                <td class='pos-change'>+23.40</td>
+                                <td class='metal-bid'>N/a</td>
+                                <td class='metal-ask'>N/a</td>
+                                <td class='metal-change pos-neg'>N/a</td>
                             </tr>
                             <tr>
                                 <td>Bid</td>
@@ -105,13 +106,13 @@
                 <section class='chart-legend'>
                     <div class='legend-left-half'>
                         <section class='legend-item'>
-                            <div class='legend-item-color' id='legend-1'></div>
+                            <div id='legend-total' class='legend-item-color'></div>
                             <span class='metal-name'></span> Total
                         </section> 
                     </div>
                     <div class='legend-right-half'>      
                         <section class='legend-item'>
-                            <div class='legend-item-color' id='legend-4'></div>
+                            <div id='legend-oz' class='legend-item-color'></div>
                             1oz <span class='metal-name'></span>
                         </section>
                     </div>    
@@ -161,162 +162,6 @@
     <script type="text/javascript">
     loadFooter();
     initParse();
-    initMain();
-
-    /* Globals */
-    var ajaxMutex = false;
-
-    var metalType;
-    var searchbar;
-    var currentPage = 0;
-
-    function currentFilter(query) {
-      query.equalTo("mtype", metalType);
-      if (searchbar.val()) {
-        query.startsWith("name", searchbar.val());
-      }
-    }
-    var currentTableItems = [];
-    var nextTableItems = [];
-    var prevTableItems = [];
-
-    /* Hooks */
-
-    function prevPage() {
-      if (currentPage > 0) {
-        currentPage -= 1;
-        updateLoaded();
-      }
-    }
-
-    function nextPage() {
-      currentPage += 1;
-      updateLoaded();
-    }
-
-    function viewItem(i) {
-      var item = currentTableItems[i];
-      if (item) {
-        window.location.href = "view.html#metal=" + metalToString(metalType) + "&id=" + item.id;
-      } else {
-        alert("Invalid item to view");
-      }
-    }
-
-    function editItem(i) {
-      var item = currentTableItems[i];
-      if (item) {
-        window.location.href = "edit.html#metal=" + metalToString(metalType) + "&id=" + item.id;
-      } else {
-        window.location.href = "edit.html#metal=" + metalToString(metalType)
-      }
-    }
-
-    function removeItem(i) {
-      var item = currentTableItems[i];
-      if (item) {
-        if (!ajaxMutex) {
-          ajaxMutex = true;
-          deleteItem(item, 
-              function (item) {
-                currentTableItems.splice(i, 1);
-                updateTable();
-                updateLoaded();
-                ajaxMutex = false;
-              },
-              function (item, error) {
-                alert(error.message);
-                ajaxMutex = false;
-              });
-        }
-      }
-    }
-    
-    /* Updates */
-    function updateTable() {
-      var tbody = $(".my_stack tbody");
-      tbody.empty();
-      for (var i = 0; i < currentTableItems.length; i++) {
-        var item = currentTableItems[i];
-        var imgTag = "<div class='coin_mini'></div>"
-        var mpicture = item.get("picture");
-        if (mpicture) {
-            imgTag = "<img src='" + mpicture.url() +  "' alt='' />";
-        }
-        var itemObject = 
-          "<tr class='item'>" +
-          "<td class='stack_img_col'>" + imgTag + "</div></td>" +
-          "<td>" + 
-          "<a onclick='viewItem(" + i + ");' style='white-space: nowrap;'>" + item.get("name") + "</a>" + 
-          "<span class='controls'>" + 
-          "<a onclick='editItem(" + i + ");'>Edit</a>" + 
-          "<a onclick='removeItem(" + i + ");'>Delete</a>" + 
-          "</span>" + 
-          "</td>" +
-          "<td>" + numberNicify(item.get("qty")) + "</td>" +
-          "<td>" + numberNicify(item.get("wpu")) + "</td>" +
-          "<td>" + numberNicify(item.get("fineness")) + "</td>" +
-          "<td>" + numberPricify(item.get("unitPrice")) + "</td>" +
-          "</tr>";
-        tbody.append(itemObject);
-      }
-    }
-
-    function updateLoaded() {
-      if (!ajaxMutex) {
-        ajaxMutex = true;
-        readAllItems(currentPage, currentFilter, 
-            function (items) {
-              if (items.length <= 0) {
-                ajaxMutex = false;
-                prevPage();
-              } else {
-                currentTableItems = items;
-                updateTable();
-                setPageInHash(currentPage);
-                ajaxMutex = false;
-              }
-            },
-            function (items, error) {
-              alert(error.message);
-            });
-      }
-    }
-
-    /* Initializers */
-    function initTable() {
-      updateLoaded();
-      searchbar.keypress(function (e) {
-          var kcode = e.keyCode ? e.keyCode : e.which;
-          if (kcode == 13) {
-
-            updateLoaded();
-          }
-        });
-    }
-
-    function baseInit() {
-      currentPage = pageInHash();
-      searchbar = $("#searchbar");
-      metalType = metalInHash();
-      switch (metalType) {
-      case MetalType.GOLD: $(".metal-name").text("Gold"); break;
-      case MetalType.SILVER: $(".metal-name").text("Silver"); break;
-      case MetalType.PLATINUM: $(".metal-name").text("Platinum"); break;
-      }
-      if (metalType >= 0) {
-        initTable();
-      } else {
-        alert("Invalid Metal Type!");
-      }
-    }
-
-    $(document).ready(baseInit);
-
-    /* Force reload */
-    window.onhashchange = function() {
-      window.location.reload();
-    }
     </script>
 </body>
 

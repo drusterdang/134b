@@ -1,483 +1,319 @@
-function loadTopNav(){
-	document.write("    <nav>");
-	document.write("        <svg class=\"icon-spinner2\">");
-	document.write("            <symbol id=\"icon-spinner2\" viewBox=\"0 0 1024 1024\">");
-	document.write("                <title>spinner2<\/title>");
-	document.write("                <path class=\"path1\" d=\"M1024 384h-384l143.53-143.53c-72.53-72.526-168.96-112.47-271.53-112.47s-199 39.944-271.53 112.47c-72.526 72.53-112.47 168.96-112.47 271.53s39.944 199 112.47 271.53c72.53 72.526 168.96 112.47 271.53 112.47s199-39.944 271.528-112.472c6.056-6.054 11.86-12.292 17.456-18.668l96.32 84.282c-93.846 107.166-231.664 174.858-385.304 174.858-282.77 0-512-229.23-512-512s229.23-512 512-512c141.386 0 269.368 57.326 362.016 149.984l149.984-149.984v384z\"><\/path>");
-	document.write("            <\/symbol>");
-	document.write("            <use xlink:href=\"#icon-spinner2\"><\/use>");
-	document.write("        <\/svg>");
-	document.write("        <a href=\"main.html\">COINFLIP<\/a>");
-	document.write("        <svg class=\"icon-cog\">");
-	document.write("            <symbol id=\"icon-cog\" viewBox=\"0 0 1024 1024\">");
-	document.write("                <title>cog<\/title>");
-	document.write("                <path class=\"path1\" d=\"M933.79 610.25c-53.726-93.054-21.416-212.304 72.152-266.488l-100.626-174.292c-28.75 16.854-62.176 26.518-97.846 26.518-107.536 0-194.708-87.746-194.708-195.99h-201.258c0.266 33.41-8.074 67.282-25.958 98.252-53.724 93.056-173.156 124.702-266.862 70.758l-100.624 174.292c28.97 16.472 54.050 40.588 71.886 71.478 53.638 92.908 21.512 211.92-71.708 266.224l100.626 174.292c28.65-16.696 61.916-26.254 97.4-26.254 107.196 0 194.144 87.192 194.7 194.958h201.254c-0.086-33.074 8.272-66.57 25.966-97.218 53.636-92.906 172.776-124.594 266.414-71.012l100.626-174.29c-28.78-16.466-53.692-40.498-71.434-71.228zM512 719.332c-114.508 0-207.336-92.824-207.336-207.334 0-114.508 92.826-207.334 207.336-207.334 114.508 0 207.332 92.826 207.332 207.334-0.002 114.51-92.824 207.334-207.332 207.334z\"><\/path>");
-	document.write("            <\/symbol>");
-	document.write("            <use xlink:href=\"#icon-cog\"><\/use>");
-	document.write("        <\/svg>");
-	document.write("    <\/nav>");
-}
+/* Mutexes */
+var goldDone   = true, 
+    silverDone = true, 
+    platDone   = true, 
+    spotDone   = true;
 
-function loadTopNavPersist(){
-	document.write("    <nav style='display: block; visibility: visible;'>");
-	document.write("        <svg class=\"icon-spinner2\">");
-	document.write("            <symbol id=\"icon-spinner2\" viewBox=\"0 0 1024 1024\">");
-	document.write("                <title>spinner2<\/title>");
-	document.write("                <path class=\"path1\" d=\"M1024 384h-384l143.53-143.53c-72.53-72.526-168.96-112.47-271.53-112.47s-199 39.944-271.53 112.47c-72.526 72.53-112.47 168.96-112.47 271.53s39.944 199 112.47 271.53c72.53 72.526 168.96 112.47 271.53 112.47s199-39.944 271.528-112.472c6.056-6.054 11.86-12.292 17.456-18.668l96.32 84.282c-93.846 107.166-231.664 174.858-385.304 174.858-282.77 0-512-229.23-512-512s229.23-512 512-512c141.386 0 269.368 57.326 362.016 149.984l149.984-149.984v384z\"><\/path>");
-	document.write("            <\/symbol>");
-	document.write("            <use xlink:href=\"#icon-spinner2\"><\/use>");
-	document.write("        <\/svg>");
-	document.write("        <a href=\"main.html\">COINFLIP<\/a>");
-	document.write("        <svg class=\"icon-cog\">");
-	document.write("            <symbol id=\"icon-cog\" viewBox=\"0 0 1024 1024\">");
-	document.write("                <title>cog<\/title>");
-	document.write("                <path class=\"path1\" d=\"M933.79 610.25c-53.726-93.054-21.416-212.304 72.152-266.488l-100.626-174.292c-28.75 16.854-62.176 26.518-97.846 26.518-107.536 0-194.708-87.746-194.708-195.99h-201.258c0.266 33.41-8.074 67.282-25.958 98.252-53.724 93.056-173.156 124.702-266.862 70.758l-100.624 174.292c28.97 16.472 54.050 40.588 71.886 71.478 53.638 92.908 21.512 211.92-71.708 266.224l100.626 174.292c28.65-16.696 61.916-26.254 97.4-26.254 107.196 0 194.144 87.192 194.7 194.958h201.254c-0.086-33.074 8.272-66.57 25.966-97.218 53.636-92.906 172.776-124.594 266.414-71.012l100.626-174.29c-28.78-16.466-53.692-40.498-71.434-71.228zM512 719.332c-114.508 0-207.336-92.824-207.336-207.334 0-114.508 92.826-207.334 207.336-207.334 114.508 0 207.332 92.826 207.332 207.334-0.002 114.51-92.824 207.334-207.332 207.334z\"><\/path>");
-	document.write("            <\/symbol>");
-	document.write("            <use xlink:href=\"#icon-cog\"><\/use>");
-	document.write("        <\/svg>");
-	document.write("    <\/nav>");
-}
+/* Globals */
+var goldOzData, goldTotalData;
+var silverOzData, silverTotalData;
+var platOzData, platTotalData;
+var goldAsk, goldBid, goldChange;
+var silverAsk, silverBid, silverChange;
+var platAsk, platBid, platChange;
 
-function loadSideNav(selected){
-	document.write("    <aside>");
-	document.write("        <a href=\"main.html\">");
-	if(selected == 0)
-		document.write("        <figure class='nav-selected'>");
-	else
-		document.write("        <figure>");
-	document.write("            <br\/>");
-	document.write("              <svg class=\"icon-home2\">");
-	document.write("                    <symbol id=\"icon-home2\" viewBox=\"0 0 1024 1024\">");
-	document.write("                        <title>home2<\/title>");
-	document.write("                        <path class=\"path1\" d=\"M426.667 853.333v-256h170.667v256h213.333v-341.333h128l-426.667-384-426.667 384h128v341.333z\"><\/path>");
-	document.write("                    <\/symbol>");
-	document.write("                    <use xlink:href=\"#icon-home2\"><\/use>");
-	document.write("                <\/svg>");
-	document.write("");
-	document.write("            <figcaption>Home<\/figcaption>");
-	document.write("        <\/figure>       ");
-	document.write("        <\/a> ");
-	document.write("        <a href=\"metal-main.html#metal=gold\">");
-	if(selected == 1)
-		document.write("        <figure class='nav-selected'>");
-	else
-		document.write("        <figure>");
-	document.write("            Au");
-	document.write("            <figcaption>My Gold<\/figcaption>");
-	document.write("        <\/figure>       ");
-	document.write("        <\/a> ");
-	document.write("        <a href=\"metal-main.html#metal=silver\">");
-	if(selected == 2)
-		document.write("        <figure class='nav-selected'>");
-	else
-		document.write("        <figure>");
-	document.write("            Ag");
-	document.write("            <figcaption>My Silver<\/figcaption>");
-	document.write("        <\/figure>       ");
-	document.write("        <\/a> ");
-	document.write("        <a href=\"metal-main.html#metal=platinum\">");
-	if(selected == 3)
-		document.write("        <figure class='nav-selected'>");
-	else
-		document.write("        <figure>");
-	document.write("            Pt");
-	document.write("            <figcaption>My Platinum<\/figcaption>");
-	document.write("        <\/figure>");
-	document.write("        <\/a> ");
-	document.write("    <\/aside>");
-}
+var goldTotal, silverTotal, platTotal;
 
-function loadFooter(){
-	document.write("    <footer>");
-	document.write("        &copy; 2015 CoinFlip");
-	document.write("    <\/footer> ");
+var coinChart;
 
-}
-
-
-function getMetalData(page){
-
-    var date = new Date();
-	date.setMonth(date.getMonth() - 2);
-    var startDate = "?trim_start=" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(); //date filter
-    var authenCode = "?auth_token=C3HZx3Q9-W8qQUhDX-vJ"; // Gives us unlimited access to data!
-
-    // access gold data
-    $.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + authenCode + startDate, function(data){
-        var myGoldData = data.data;
-
-        var arrayOfDates = [];
-        var goldData = [];
-
-        for (var i = 29; i >= 0; i--){
-            arrayOfDates.push(myGoldData[i][0]);
-            goldData.push(myGoldData[i][1]);
+/* Loaders */
+function loadData() {
+  function buildGraph() {
+    var milliPerDay = 3600 * 1000 * 24;
+    var now = (new Date()).getTime();
+    if (goldDone && silverDone && platDone && spotDone) {
+      goldDone = false;
+      silverDone = false;
+      platDone = false;
+      spotDone = false;
+      function finishCallback() {
+        if (goldDone && silverDone && platDone && spotDone) {
+          goldTotalData = [];
+          silverTotalData = [];
+          platTotalData = [];
+          for (var i = 0; i < 30; i++) {
+            goldTotalData[i] = goldTotal * goldOzData[i];
+            silverTotalData[i] = silverTotal * silverOzData[i];
+            platTotalData[i] = platTotal * platOzData[i];
+          }
+          $(".gold-bid").text(numberPricify(goldBid));
+          $(".gold-ask").text(numberPricify(goldAsk));
+          var mGoldChange = $(".gold-change");
+          mGoldChange.text(numberNicify(goldChange));
+          if (goldChange > 0) {
+            mGoldChange.removeClass("neg-change");
+            mGoldChange.addClass("pos-change");
+          } else {
+            mGoldChange.removeClass("pos-change");
+            mGoldChange.addClass("neg-change");
+          }
+          $(".silver-bid").text(numberPricify(silverBid));
+          $(".silver-ask").text(numberPricify(silverAsk));
+          var mSilverChange = $(".silver-change");
+          mSilverChange.text(numberNicify(silverChange));
+          if (silverChange > 0) {
+            mSilverChange.removeClass("neg-change");
+            mSilverChange.addClass("pos-change");
+          } else {
+            mSilverChange.removeClass("pos-change");
+            mSilverChange.addClass("neg-change");
+          }
+          $(".plat-bid").text(numberPricify(platBid));
+          $(".plat-ask").text(numberPricify(platAsk));
+          var mPlatChange = $(".plat-change");
+          mPlatChange.text(numberNicify(platChange));
+          if (platChange > 0) {
+            mPlatChange.removeClass("neg-change");
+            mPlatChange.addClass("pos-change");
+          } else {
+            mPlatChange.removeClass("pos-change");
+            mPlatChange.addClass("neg-change");
+          }
+          var totalValue = goldTotal * goldBid + silverTotal * silverBid + platTotal * platBid;
+          var totalChange = (goldTotal * goldBid * goldChange + silverTotal * silverBid * silverChange + platTotal * platBid * platChange) / 100;
+          var totalPercentChange = totalChange / totalValue * 100;
+          $(".total-dollars").text(numberPricify(totalValue));
+          mTotalChange = $(".total-change");
+          mTotalChange.text(numberNicify(totalPercentChange) + "%");
+          if (totalPercentChange > 0) {
+            mTotalChange.removeClass("neg-change");
+            mTotalChange.addClass("pos-change");
+          } else {
+            mTotalChange.removelass("neg-change");
+            mTotalChange.addClass("pos-change");
+          }
+          loadGraph();
         }
-
-        //access silver data
-        $.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + authenCode + startDate, function(data){
-            var mySilverData = data.data;
-
-            var silverData = [];
-
-            for (var i = 29; i >= 0; i--){
-                silverData.push(mySilverData[i][1]);
-            }
-
-            //access plat data
-            $.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + authenCode + startDate, function(data){
-                var myPlatData = data.data;
-
-                var platData = [];
-
-                for (var i = 29; i >= 0; i--){
-                    platData.push(myPlatData[i][1]);
+      }
+      function fillGaps(data, len) {
+          var paint = null;
+          for (var i = 0; i < len; i++) {
+            if (data[i]) {
+              if (!paint) {
+                paint = data[i];
+                for (var j = i - 1; j >= 0; j--) {
+                  data[j] = paint;
                 }
-
-            	// grabbing spot data
-				$.getJSON("https://cse134b.herokuapp.com/jm", function(data){
-					var spotData = data;
-					var goldAsk, goldBid, goldChange, silverAsk, silverBid, silverChange, platAsk, platBid, platChange;
-					var goldSpot, silverSpot, platSpot;
-
-					//Gold spot
-					goldSpot = spotData[0];
-					goldAsk = goldSpot.ask;
-					goldBid = goldSpot.bid;
-
-					//Silver spot
-
-					silverSpot = spotData[1];
-					silverAsk = silverSpot.ask;
-					silverBid = silverSpot.bid;
-
-					//Plat spot
-					platSpot = spotData[2];
-					platSpot = platSpot.ask;
-					platSpot = platSpot.bid;
-
-					// calls on function that uses data to construct graphs
-                	drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData, goldAsk, goldBid, goldChange, silverAsk, silverBid, silverChange, platAsk, platBid, platChange);
-
-				});
-
-
-            });
-
-
-        });
-
-    });
-
-
-
-}
-
-function drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData, goldAsk, goldBid, goldChange, silverAsk, silverBid, silverChange, platAsk, platBid, platChange){
-	var drawGraph = function(){
-
-		var pointStroke = "rgba(255,255,255,0.6)";
-		var pointHighlightFill = "#fff";
-		var pointHighlightStroke = "#fff";
-
-		if(page == "main.html") {
-			var data = {
-				labels: arrayOfDates,
-				datasets: [
-				{
-					label: "Gold Total",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#FF6D67",
-					pointColor: "#FF6D67",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: goldData
-				},
-				{
-					label: "Platinum Total",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#FFA859",
-					pointColor: "#FFA859",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: platData
-				},
-				{
-					label: "Silver Total",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#F3FF88",
-					pointColor: "#F3FF88",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: silverData
-				},
-				{
-					label: "1oz Gold",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#9FFF98",
-					pointColor: "#9FFF98",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: [100, 110, 120, 90, 102, 135, 115]
-				},
-				{
-					label: "1oz Platinum",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#BBF5FF",
-					pointColor: "#BBF5FF",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: [56, 78, 67, 68, 73, 80, 76]
-				},
-				{
-					label: "1oz Silver",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#C29FFF",
-					pointColor: "#C29FFF",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: [20, 22, 20, 32, 35, 50, 40]
-				},
-				]
-			};	
-
-			var options = {
-
-			    ///Boolean - Whether grid lines are shown across the chart
-			    scaleShowGridLines : true,
-
-			    //String - Colour of the grid lines
-			    scaleGridLineColor : "rgba(104, 206, 222, 0.1)",
-
-			    //Number - Width of the grid lines
-			    scaleGridLineWidth : 1,
-
-			    //Boolean - Whether to show horizontal lines (except X axis)
-			    scaleShowHorizontalLines: true,
-
-			    //Boolean - Whether to show vertical lines (except Y axis)
-			    scaleShowVerticalLines: true,
-
-			    //Boolean - Whether the line is curved between points
-			    bezierCurve : true,
-
-			    //Number - Tension of the bezier curve between points
-			    bezierCurveTension : 0.4,
-
-			    //Boolean - Whether to show a dot for each point
-			    pointDot : true,
-
-			    //Number - Radius of each point dot in pixels
-			    pointDotRadius : 4,
-
-			    //Number - Pixel width of point dot stroke
-			    pointDotStrokeWidth : 1,
-
-			    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-			    pointHitDetectionRadius : 20,
-
-			    //Boolean - Whether to show a stroke for datasets
-			    datasetStroke : true,
-
-			    //Number - Pixel width of dataset stroke
-			    datasetStrokeWidth : 2,
-
-			    //Boolean - Whether to fill the dataset with a colour
-			    datasetFill : true,
-
-			    //String - A legend template
-			    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-
-			    responsive: true,
-
-			    maintainAspectRatio: false,
-			};
-
-			var ctx = document.getElementById("total-chart").getContext("2d");
-			var coinChart = new Chart(ctx).Line(data,options);
-			coinChart.update();
-
-			/* Updating Spot Prices in the Chart*/
-			//gold
-			$(".market-item-stats table tr:first td:first").text(goldBid);
-			$(".market-item-stats table tr:first td:second").text(goldAsk);
-
-			//silver
-
-
-			//plat
-
-
-
-		} else if(page =="metal-main.html"){
-			var data = {
-				labels: arrayOfDates,
-				datasets: [
-				{
-					label: "Gold Total",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#FF6D67",
-					pointColor: "#FF6D67",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: goldData
-				},
-				{
-					label: "1oz Gold",
-					fillColor: "rgba(104, 206, 222, 0.05)",
-					strokeColor: "#9FFF98",
-					pointColor: "#9FFF98",
-					pointStrokeColor: pointStroke,
-					pointHighlightFill: pointHighlightFill,
-					pointHighlightStroke: pointHighlightStroke,
-					data: [100, 110, 120, 90, 102, 135, 115]
-				}
-				]
-			};
-
-			var options = {
-
-			    ///Boolean - Whether grid lines are shown across the chart
-			    scaleShowGridLines : true,
-
-			    //String - Colour of the grid lines
-			    scaleGridLineColor : "rgba(104, 206, 222, 0.1)",
-
-			    //Number - Width of the grid lines
-			    scaleGridLineWidth : 1,
-
-			    //Boolean - Whether to show horizontal lines (except X axis)
-			    scaleShowHorizontalLines: true,
-
-			    //Boolean - Whether to show vertical lines (except Y axis)
-			    scaleShowVerticalLines: true,
-
-			    //Boolean - Whether the line is curved between points
-			    bezierCurve : true,
-
-			    //Number - Tension of the bezier curve between points
-			    bezierCurveTension : 0.4,
-
-			    //Boolean - Whether to show a dot for each point
-			    pointDot : true,
-
-			    //Number - Radius of each point dot in pixels
-			    pointDotRadius : 4,
-
-			    //Number - Pixel width of point dot stroke
-			    pointDotStrokeWidth : 1,
-
-			    //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-			    pointHitDetectionRadius : 20,
-
-			    //Boolean - Whether to show a stroke for datasets
-			    datasetStroke : true,
-
-			    //Number - Pixel width of dataset stroke
-			    datasetStrokeWidth : 2,
-
-			    //Boolean - Whether to fill the dataset with a colour
-			    datasetFill : true,
-
-			    //String - A legend template
-			    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-
-			    responsive: true,
-
-			    maintainAspectRatio: false,
-			};
-
-			var ctx = document.getElementById("total-chart").getContext("2d");
-			var coinChart = new Chart(ctx).Line(data,options);
-			coinChart.update();
-		} //end of if statements
-	}; //end of drawGraph function
-
-	drawGraph();
-}
-
-function initMain() {
-    $(window).load(function() {
-
-        var path = window.location.pathname;
-        var page = path.split("/").pop();
-
-
-        /* * * * * * * * * * * * * *
-         *                         *
-         *        GENERAL          *
-         *                         *
-         * * * * * * * * * * * * * */
-
-        $('.icon-spinner2').click(function(){
-            location.reload();	
-        });
-
-        $('tr').click(function(){
-            $(this).find('a')[0].click();
-        });
-
-        /* * * * * * * * * * * * * *
-         *                         *
-         *        GRAPHING         *
-         *                         *
-         * * * * * * * * * * * * * */
-
-        //grabs the data and then calls on drawAllTheGraphs()
-        getMetalData(page);
-
-        /* * * * * * * * * * * * * *
-         *                         *
-         *     MOBILE HANDLING     *
-         *                         *
-         * * * * * * * * * * * * * */
-
-        $('.mtb-1').click(function(){
-            $('.graph-panel').removeClass('graph-panel-show');
-            $('.market-status').fadeIn(0);
-            $('.market-list').fadeIn(0);
-            if( page == "metal-main.html")
-                $('.my_stack').fadeIn(0);
-            $('.mtb-2').removeClass('mobile-toggle-selected');
-            $('.mtb-1').addClass('mobile-toggle-selected');
-
-        });
-
-        $('.mtb-2').click(function(){
-            $('.market-status').fadeOut(0);
-            $('.market-list').fadeOut(0);
-            if( page == "metal-main.html")
-                $('.my_stack').fadeOut(0);
-            $('.mtb-1').removeClass('mobile-toggle-selected');
-            $('.mtb-2').addClass('mobile-toggle-selected');
-            $('.graph-panel').addClass('graph-panel-show');
-            drawGraph();
-        });
-
-        var resizer = function(){
-            winWidth = $(window).width();
-            winHeight = $(window).height();
-
-            if (winWidth > 999){
-                $('.graph-panel').removeClass('graph-panel-show');
-                $('.market-status').fadeIn(0);
-                $('.market-list').fadeIn(0);
-                if( page == "metal-main.html")
-                    $('.my_stack').fadeIn(0);
-                $('.mtb-2').removeClass('mobile-toggle-selected');
-                $('.mtb-1').addClass('mobile-toggle-selected');
+              } else {
+                paint = data[i];
+              }
             }
-        };
-
-        $(window).resize(resizer);
-
-
-    });
+            data[i] = paint;
+          }
+      }
+      getGoldData(function (json) {
+        goldOzData = [];
+        for (i = json.data.length - 1; i >= 0; i--) {
+          var dataDate = Date.parse(json.data[i][0]);
+          var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
+          if (idays < 30) {
+              goldOzData[idays] = parseFloat(json.data[i][1]);
+          }
+        }
+        fillGaps(goldOzData, 30);
+        goldDone = true;
+        finishCallback();
+      });
+      getSilverData(function (json) {
+        silverOzData = [];
+        for (i = json.data.length - 1; i >= 0; i--) {
+          var dataDate = Date.parse(json.data[i][0]);
+          var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
+          if (idays < 30) {
+              silverOzData[idays] = parseFloat(json.data[i][1]);
+          }
+        }
+        fillGaps(silverOzData, 30);
+        silverDone = true;
+        finishCallback();
+      });
+      getPlatinumData(function (json) {
+        platOzData = [];
+        for (i = json.data.length - 1; i >= 0; i--) {
+          var dataDate = Date.parse(json.data[i][0]);
+          var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
+          if (idays < 30) {
+              platOzData[idays] = parseFloat(json.data[i][1]);
+          }
+        }
+        fillGaps(platOzData, 30);
+        platDone = true;
+        finishCallback();
+      });
+      getSpotData(function (json) {
+        console.log(json[0]);
+        goldAsk = json[0].ask;
+        goldBid = json[0].bid;
+        goldChange = json[0].oneDayPercentChange;
+        silverAsk = json[1].ask;
+        silverBid = json[1].bid;
+        silverChange = json[1].oneDayPercentChange;
+        platAsk = json[2].ask;
+        platBid = json[2].bid;
+        platChange = json[2].oneDayPercentChange;
+        spotDone = true;
+        finishCallback();
+      });
+    }
+  }
+  getTotalMetals(
+      function(totals) {
+        goldTotal = totals[MetalType.GOLD];
+        silverTotal = totals[MetalType.SILVER];
+        platTotal = totals[MetalType.PLATINUM];
+        buildGraph();
+      }, 
+      function (item, error) {
+        alert(error.message);
+      });
 }
+
+function loadGraph() {
+  var options = {
+    scaleShowGridLines : true,
+    scaleGridLineColor : "rgba(104, 206, 222, 0.1)",
+    scaleGridLineWidth : 1,
+    scaleShowHorizontalLines: true,
+    scaleShowVerticalLines: true,
+    bezierCurve : true,
+    bezierCurveTension : 0.4,
+    pointDot : true,
+    pointDotRadius : 4,
+    pointDotStrokeWidth : 1,
+    pointHitDetectionRadius : 20,
+    datasetStroke : true,
+    datasetStrokeWidth : 2,
+    datasetFill : true,
+    responsive: true,
+    maintainAspectRatio: false,
+  };
+  var labels = ["now"];
+  for (var i = 2; i <= 30; i++) {
+    labels.push(i);
+  }
+  labels.reverse();
+  var pointStroke = "rgba(255,255,255,0.6)";
+  var pointHighlightFill = "#fff";
+  var pointHighlightStroke = "#fff";
+  var data = {
+    labels: labels,
+    datasets: [
+    {
+      label: "Gold Total",
+      fillColor: "rgba(104, 206, 222, 0.05)",
+      strokeColor: "#FF6D67",
+      pointColor: "#FF6D67",
+      pointStrokeColor: pointStroke,
+      pointHighlightFill: pointHighlightFill,
+      pointHighlightStroke: pointHighlightStroke,
+      data: goldTotalData
+    },
+    {
+      label: "Platinum Total",
+      fillColor: "rgba(104, 206, 222, 0.05)",
+      strokeColor: "#FFA859",
+      pointColor: "#FFA859",
+      pointStrokeColor: pointStroke,
+      pointHighlightFill: pointHighlightFill,
+      pointHighlightStroke: pointHighlightStroke,
+      data: platTotalData
+    },
+    {
+      label: "Silver Total",
+      fillColor: "rgba(104, 206, 222, 0.05)",
+      strokeColor: "#F3FF88",
+      pointColor: "#F3FF88",
+      pointStrokeColor: pointStroke,
+      pointHighlightFill: pointHighlightFill,
+      pointHighlightStroke: pointHighlightStroke,
+      data: silverTotalData
+    },
+    {
+      label: "1oz Gold",
+      fillColor: "rgba(104, 206, 222, 0.05)",
+      strokeColor: "#9FFF98",
+      pointColor: "#9FFF98",
+      pointStrokeColor: pointStroke,
+      pointHighlightFill: pointHighlightFill,
+      pointHighlightStroke: pointHighlightStroke,
+      data: goldOzData
+    },
+    {
+      label: "1oz Platinum",
+      fillColor: "rgba(104, 206, 222, 0.05)",
+      strokeColor: "#BBF5FF",
+      pointColor: "#BBF5FF",
+      pointStrokeColor: pointStroke,
+      pointHighlightFill: pointHighlightFill,
+      pointHighlightStroke: pointHighlightStroke,
+      data: platOzData
+    },
+    {
+      label: "1oz Silver",
+      fillColor: "rgba(104, 206, 222, 0.05)",
+      strokeColor: "#C29FFF",
+      pointColor: "#C29FFF",
+      pointStrokeColor: pointStroke,
+      pointHighlightFill: pointHighlightFill,
+      pointHighlightStroke: pointHighlightStroke,
+      data: silverOzData
+    },
+    ]
+  };
+  var ctx = document.getElementById("total-chart").getContext("2d");
+  coinChart = new Chart(ctx).Line(data, options);
+}
+
+/* Main */
+$(document).ready(function() {
+
+  var path = window.location.pathname;
+  var page = path.split("/").pop();
+
+  $('.icon-spinner2').click(function(){
+    location.reload();	
+  });
+
+  $('tr').click(function(){
+    $(this).find('a')[0].click();
+  });
+
+  $('.mtb-1').click(function(){
+    $('.graph-panel').removeClass('graph-panel-show');
+    $('.market-status').fadeIn(0);
+    $('.market-list').fadeIn(0);
+    if( page == "metal-main.html")
+      $('.my_stack').fadeIn(0);
+    $('.mtb-2').removeClass('mobile-toggle-selected');
+    $('.mtb-1').addClass('mobile-toggle-selected');
+
+  });
+
+  $('.mtb-2').click(function(){
+    $('.market-status').fadeOut(0);
+    $('.market-list').fadeOut(0);
+    if( page == "metal-main.html")
+      $('.my_stack').fadeOut(0);
+    $('.mtb-1').removeClass('mobile-toggle-selected');
+    $('.mtb-2').addClass('mobile-toggle-selected');
+    $('.graph-panel').addClass('graph-panel-show');
+  });
+
+  var resizer = function(){
+    winWidth = $(window).width();
+    winHeight = $(window).height();
+
+    if (winWidth > 999){
+      $('.graph-panel').removeClass('graph-panel-show');
+      $('.market-status').fadeIn(0);
+      $('.market-list').fadeIn(0);
+      if( page == "metal-main.html")
+        $('.my_stack').fadeIn(0);
+      $('.mtb-2').removeClass('mobile-toggle-selected');
+      $('.mtb-1').addClass('mobile-toggle-selected');
+    }
+  };
+
+  $(window).resize(resizer);
+  loadData();
+});
