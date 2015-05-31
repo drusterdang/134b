@@ -857,6 +857,11 @@ a:visited {
     cursor: pointer;
 }
 
+.my_stack img {
+    width: 35px;
+    height: 35px;
+}
+
 .coin_mini {
     width: 35px;
     height: 35px;
@@ -924,6 +929,13 @@ a:visited {
     float: left;
 }
 
+.coin_image input[type=file] {
+  border-radius: 0;
+  display: block;
+  width: 202px;
+  margin: 0 auto;
+}
+
 .coin_detail {
     float: left;
     padding-bottom: 50px;
@@ -973,7 +985,12 @@ a:visited {
     height: 200px;
     margin-left: auto;
     margin-right: auto;
-    border: 1px dashed white;
+    border: 1px solid #4C4C4C;
+}
+
+.img_box img {
+  width: 200px;
+  height: 200px;
 }
 
 .img_circle {
@@ -1008,6 +1025,11 @@ input {
     font-size: 12px;
     border-radius: 5px;
     outline: 0;
+}
+
+input[type=file]{
+    padding: 0;
+    width: 100%;
 }
 
 input:focus {

@@ -127,7 +127,7 @@
                 <table>
                     <caption>
                         <section class='label-and-search'>
-                          <h3>My <span class='metal-name'></span>
+                          <h3>My <span class='metal-name'></span></h3>
                             <div class='stack_ctrl'>
                                 <input id='searchbar' type='search' placeholder='Search'/>
                                 <a onclick='editItem();'>
@@ -144,7 +144,7 @@
                             <th>Item</th>
                             <th>Qty.</th>
                             <th class='weight_compr'><span>Weight/unit (g)</span></th>
-                            <th class='percent_compr'><span>% au</span></th>
+                            <th class='percent_compr'><span>%</span></th>
                             <th>Value</th>
                         </tr>
                     </thead>
@@ -232,9 +232,14 @@
       tbody.empty();
       for (var i = 0; i < currentTableItems.length; i++) {
         var item = currentTableItems[i];
+        var imgTag = "<div class='coin_mini'></div>"
+        var mpicture = item.get("picture");
+        if (mpicture) {
+            imgTag = "<img src='" + mpicture.url() +  "' alt='' />";
+        }
         var itemObject = 
           "<tr class='item'>" +
-          "<td class='stack_img_col'><div class='coin_mini'></div></td>" +
+          "<td class='stack_img_col'>" + imgTag + "</div></td>" +
           "<td>" + 
           "<a onclick='viewItem(" + i + ");' style='white-space: nowrap;'>" + item.get("name") + "</a>" + 
           "<span class='controls'>" + 

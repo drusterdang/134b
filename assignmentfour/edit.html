@@ -47,10 +47,11 @@
                         <span class='command-header'>Add Item</span>
                     </div>
                 </a>
-                <section class='coin_image'>
+                <section class='coin_image coin_detail'>
                     <div class='img_box'>
                         <div class='img_circle'></div>
                     </div>
+                    <input id='picture' type='file' name='picture'/>
                 </section>
                 <section class='coin_detail'>
                     <table>
@@ -149,6 +150,7 @@
     var unitPrice;
     var fineness;
     var wpu;
+    var picture;
 
     var knownTypes;
     var denominations;
@@ -177,6 +179,11 @@
       var funitPrice = parseFloat(unitPrice.val());
       var ffineness = parseFloat(fineness.val());
       var fwpu = parseFloat(wpu.val());
+      var fpicture;
+      if (picture[0].files.length >= 0) {
+        var file = picture[0].files[0];
+        fpicture = new Parse.File(file.name, file);
+      }
       if (currentEditItem) {
         updateItem(
             currentEditItem,
@@ -188,6 +195,7 @@
             funitPrice,
             ffineness,
             fwpu,
+            fpicture,
             function(item) {
               alert("Item updated");
             },
@@ -204,6 +212,7 @@
             funitPrice,
             ffineness,
             fwpu,
+            fpicture,
             function(item) {
               alert("Item created");
             },
@@ -311,6 +320,17 @@
         updateAutocomplete();
         updateCalculatables();
       });
+      picture.change(function(e) {
+        var files = picture[0].files;
+        if (FileReader && files && files.length) {
+          var fr = new FileReader();
+          fr.onload = function () {
+            var newImg = "<img src='" + fr.result +  "' alt='' />";
+            $(".img_box").html(newImg);
+          };
+          fr.readAsDataURL(files[0]);
+        }
+      });
     }
 
     /* Initializers */
@@ -323,6 +343,7 @@
       unitPrice = $("#unit-price");
       fineness = $("#fineness");
       wpu = $("#wpu");
+      picture = $("#picture");
       knownTypes = $("#known-types");
       denominations = $("#denominations");
       var mediumOptions = 
@@ -350,6 +371,11 @@
               unitPrice.val(currentEditItem.get("unitPrice")); 
               fineness.val(currentEditItem.get("fineness")); 
               wpu.val(currentEditItem.get("wpu")); 
+              var mpicture = currentEditItem.get("picture");
+              if (mpicture) {
+                var newImg = "<img src='" + mpicture.url() +  "' alt='' />";
+                $(".img_box").html(newImg);
+              }
               loadHandlers();
               updateCalculatables();
             },

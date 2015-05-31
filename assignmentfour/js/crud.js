@@ -151,6 +151,7 @@ function createItem(
         unitPrice,
         fineness,
         wpu,
+        picture,
         onsuccess,
         onerror) 
 {
@@ -164,6 +165,7 @@ function createItem(
     item.set("unitPrice", unitPrice);
     item.set("fineness", fineness);
     item.set("wpu", wpu);
+    if (picture) item.set("picture", picture);
     item.set("createdBy", Parse.User.current());
     item.setACL(new Parse.ACL(Parse.User.current()));
     item.save(null, {
@@ -193,12 +195,12 @@ function readAllItems(
         onerror)
 {
     var query = new Parse.Query(Parse.Object.extend("Item"));
+    query.equalTo("createdBy", Parse.User.current());
     if (filter) {
         filter(query);
     }
-    query.limit(5);
-    query.skip(page * 5);
-    query.equalTo("createdBy", Parse.User.current());
+    query.limit(10);
+    query.skip(page * 10);
     query.find({
         success: onsuccess,
         error: onerror
@@ -217,6 +219,7 @@ function updateItem(
         unitPrice,
         fineness,
         wpu,
+        picture,
         onsuccess,
         onerror) 
 {
@@ -228,6 +231,7 @@ function updateItem(
     item.set("unitPrice", unitPrice);
     item.set("fineness", fineness);
     item.set("wpu", wpu);
+    item.set("picture", picture);
     item.save(null, {
         success: onsuccess,
         error: onerror

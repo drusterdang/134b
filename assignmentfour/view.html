@@ -202,6 +202,11 @@
               unitPrice.text(numberPricify(currentViewItem.get("unitPrice"))); 
               fineness.text(numberNicify(currentViewItem.get("fineness"))); 
               wpu.text(numberNicify(currentViewItem.get("wpu"))); 
+              var mpicture = currentViewItem.get("picture");
+              if (mpicture) {
+                var newImg = "<img src='" + mpicture.url() +  "' alt='' />";
+                $(".img_box").html(newImg);
+              }
               updateCalculatables();
             },
             function (item, error) {
