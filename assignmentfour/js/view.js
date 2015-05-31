@@ -100,7 +100,7 @@ $(document).ready(function() {
                     typeName.text(currentViewItem.get("name"));
                     purchaseDate.text(dateNicify(currentViewItem.get("purchaseDate"))); 
                     qty.text(numberNicify(currentViewItem.get("qty"))); 
-                    unitPrice.text(numberPricify(currentViewItem.get("unitPrice"))); 
+                    unitPrice.text(currentViewItem.get("unitPrice")); 
                     fineness.text(numberNicify(currentViewItem.get("fineness"))); 
                     wpu.text(numberNicify(currentViewItem.get("wpu"))); 
                     var mpicture = currentViewItem.get("picture");
