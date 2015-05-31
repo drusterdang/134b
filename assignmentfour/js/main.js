@@ -24,7 +24,7 @@ function loadData() {
     setPopupMain("");
     showPopup();
 
-    /* Declare graph builder */
+    /* Graph Builder */
     function buildGraph() {
         var milliPerDay = 3600 * 1000 * 24;
         var now = (new Date()).getTime();
@@ -37,15 +37,18 @@ function loadData() {
             /* Process Finish Callback */
             function finishCallback() {
                 if (goldDone && silverDone && platDone && spotDone) {
+                    /* Reset data */
                     goldTotalData = [];
                     silverTotalData = [];
                     platTotalData = [];
+                    /* Set Data w/ user totals */
                     var i;
                     for (i = 0; i < 30; i++) {
                         goldTotalData[i] = goldTotal * goldOzData[i];
                         silverTotalData[i] = silverTotal * silverOzData[i];
                         platTotalData[i] = platTotal * platOzData[i];
                     }
+                    /* Set gold prices in view */
                     $(".gold-bid").text(numberPricify(goldBid));
                     $(".gold-ask").text(numberPricify(goldAsk));
                     var mGoldChange = $(".gold-change");
@@ -57,6 +60,7 @@ function loadData() {
                         mGoldChange.removeClass("pos-change");
                         mGoldChange.addClass("neg-change");
                     }
+                    /* Set silver prices in view */
                     $(".silver-bid").text(numberPricify(silverBid));
                     $(".silver-ask").text(numberPricify(silverAsk));
                     var mSilverChange = $(".silver-change");
@@ -68,6 +72,7 @@ function loadData() {
                         mSilverChange.removeClass("pos-change");
                         mSilverChange.addClass("neg-change");
                     }
+                    /* Set plat prices in view */
                     $(".plat-bid").text(numberPricify(platBid));
                     $(".plat-ask").text(numberPricify(platAsk));
                     var mPlatChange = $(".plat-change");
@@ -79,6 +84,7 @@ function loadData() {
                         mPlatChange.removeClass("pos-change");
                         mPlatChange.addClass("neg-change");
                     }
+                    /* Set total value and change w/ user data */
                     var totalValue = goldTotal * goldBid + silverTotal * silverBid + platTotal * platBid;
                     var totalChange = (goldTotal * goldBid * goldChange + silverTotal * silverBid * silverChange + platTotal * platBid * platChange) / 100;
                     var totalPercentChange = totalChange / totalValue * 100;
@@ -92,10 +98,13 @@ function loadData() {
                         mTotalChange.removeClass("neg-change");
                         mTotalChange.addClass("pos-change");
                     }
+                    /* Trigger graph load */
                     loadGraph();
+                    /* Finish loading */
                     hidePopup();
                 }
             }
+            /* Fill Gaps of Dates */
             function fillGaps(data, len) {
                 var paint = null;
                 var i;
@@ -114,6 +123,7 @@ function loadData() {
                     data[i] = paint;
                 }
             }
+            /* Gold Data */
             getGoldData(function (json) {
                 goldOzData = [];
                 var i;
@@ -128,6 +138,7 @@ function loadData() {
                 goldDone = true;
                 finishCallback();
             });
+            /* Silver Data */
             getSilverData(function (json) {
                 silverOzData = [];
                 var i;
@@ -142,6 +153,7 @@ function loadData() {
                 silverDone = true;
                 finishCallback();
             });
+            /* Plat Data */
             getPlatinumData(function (json) {
                 platOzData = [];
                 var i;
@@ -156,6 +168,7 @@ function loadData() {
                 platDone = true;
                 finishCallback();
             });
+            /* Spot Data */
             getSpotData(function (json) {
                 goldAsk = json[0].ask;
                 goldBid = json[0].bid;
@@ -171,6 +184,7 @@ function loadData() {
             });
         }
     }
+    /* Main Trigger */
     getTotalMetals(
             function(totals) {
                 goldTotal = totals[MetalType.GOLD];
@@ -179,10 +193,23 @@ function loadData() {
                 buildGraph();
             }, 
             function (item, error) {
-                alert(error.message);
+                /* Handle error with popup */
+                setPopupHeader("Error!");
+                setPopupMain(
+                        "<div class='popup-container'>" +
+                        "<p>Failed to load data.</p>" + 
+                        "<p>Got Error: " + error.message + "</p>" + 
+                        "</div>" +
+                        "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+                /* Free mutexes */
+                goldDone = true;
+                silverDone = true;
+                platDone = true;
+                spotDone = true;
             });
 }
 
+/* Load Global Data into Graph */
 function loadGraph() {
     var options = {
         scaleShowGridLines : true,
@@ -285,7 +312,8 @@ $(document).ready(function() {
     initPopup();
     var path = window.location.pathname;
     var page = path.split("/").pop();
-
+    
+    /* Not logged in */
     if (!Parse.User.current()) {
         setPopupHeader("Error!");
         setPopupMain(
@@ -298,9 +326,11 @@ $(document).ready(function() {
         return;
     }
 
+    /* Button setup */
     $('.icon-spinner2').click(function(){
         window.location.reload();	
     });
+
     $('.icon-cog').click(function(){
         setPopupHeader("Settings");
         setPopupMain(
@@ -310,9 +340,11 @@ $(document).ready(function() {
         setPopupSize(400);
         showPopup();
     });
+
     $('tr').click(function(){
         $(this).find('a')[0].click();
     });
+
     $('.mtb-1').click(function(){
         $('.graph-panel').removeClass('graph-panel-show');
         $('.market-status').fadeIn(0);
@@ -353,5 +385,7 @@ $(document).ready(function() {
     };
 
     $(window).resize(resizer);
+
+    /* Trigger data load */
     loadData();
 });

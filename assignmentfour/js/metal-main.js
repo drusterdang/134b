@@ -18,12 +18,14 @@ var coinChart;
 var searchbar;
 var currentPage = 0;
 
+/* Search bar and metal type filter */
 function currentFilter(query) {
     query.equalTo("mtype", metalType);
     if (searchbar.val()) {
         query.startsWith("name", searchbar.val());
     }
 }
+
 var currentTableItems = [];
 var nextTableItems = [];
 var prevTableItems = [];
@@ -64,6 +66,7 @@ function removeItem(i) {
     if (item) {
         if (!ajaxMutex) {
             ajaxMutex = true;
+            /* Display popup to begin removal */
             setPopupHeader("Removing item!");
             setPopupMain("");
             showPopup();
@@ -73,10 +76,12 @@ function removeItem(i) {
                         updateTable();
                         updateLoaded();
                         ajaxMutex = false;
+                        /* Finish removal */
                         hidePopup();
                     },
                     function (item, error) {
                         ajaxMutex = false;
+                        /* Error removal */
                         setPopupMain(
                                 "<div class='popup-container'>" +
                                 "<p>Failed to remove item.</p>" + 
@@ -89,6 +94,7 @@ function removeItem(i) {
 }
 
 /* Updates */
+
 function updateTable() {
     var tbody = $(".my_stack tbody");
     tbody.empty();
@@ -122,6 +128,7 @@ function updateTable() {
 function updateLoaded() {
     if (!ajaxMutex) {
         ajaxMutex = true;
+        /* Display popup to start update */
         setPopupHeader("Updating table!");
         setPopupMain("");
         showPopup();
@@ -135,12 +142,13 @@ function updateLoaded() {
                         updateTable();
                         setPageInHash(currentPage);
                         ajaxMutex = false;
+                        /* Finish update */
                         hidePopup();
                     }
                 },
                 function (items, error) {
-                    alert(error.message);
                     ajaxMutex = false;
+                    /* Error on update */
                     setPopupMain(
                             "<div class='popup-container'>" +
                             "<p>Failed to update table.</p>" + 
@@ -152,6 +160,8 @@ function updateLoaded() {
 }
 
 /* Loaders */
+
+/* See main for more info */
 function loadData() {
     setPopupSize(400);
     setPopupHeader("Loading your data!");
@@ -542,7 +552,7 @@ $(document).ready(function() {
     loadData();
 });
 
-/* Force reload */
+/* Force reload on tab change */
 window.onhashchange = function() {
     if (metalType != metalInHash()) {
         window.location.reload();

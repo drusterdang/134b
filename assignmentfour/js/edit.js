@@ -404,6 +404,7 @@ $(document).ready(function() {
                 function (item, error) {
                     alert(error.message);
                     ajaxMutex = false;
+                    setPopupHeader("Error!");
                     setPopupMain(
                             "<div class='popup-container'>" +
                             "<p>Failed to load data.</p>" + 
