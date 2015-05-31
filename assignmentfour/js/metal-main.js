@@ -191,8 +191,8 @@ function loadData() {
             mTotalChange.removeClass("neg-change");
             mTotalChange.addClass("pos-change");
           } else {
-            mTotalChange.removeClass("neg-change");
-            mTotalChange.addClass("pos-change");
+            mTotalChange.removeClass("pos-change");
+            mTotalChange.addClass("neg-change");
           }
           var mTotalOChange = $(".ochange");
           mTotalOChange.text(numberNicify(ochange) + "%");
@@ -200,8 +200,8 @@ function loadData() {
             mTotalOChange.removeClass("neg-change");
             mTotalOChange.addClass("pos-change");
           } else {
-            mTotalOChange.removeClass("neg-change");
-            mTotalOChange.addClass("pos-change");
+            mTotalOChange.removeClass("pos-change");
+            mTotalOChange.addClass("neg-change");
           }
           loadGraph();
         }
