@@ -151,10 +151,6 @@
                     <tbody>
                     </tbody>
                 </table>
-                <div id='page-control'>
-                  <a onclick='prevPage();'>Prev</a>
-                  <a onclick='nextPage();'>Next</a>
-                </div>
             </section>
         </section>
     </section>
@@ -168,28 +164,16 @@
     var searchbar;
     var currentPage = 0;
 
-    function currentFilter(query) {
+    function currentFilter() {
       query.equalTo("mtype", metalType);
       if (searchbar.val()) {
+        alert("lol");
         query.startsWith("name", searchbar.val());
       }
     }
     var currentTableItems = [];
 
     /* Hooks */
-
-    function prevPage() {
-      if (currentPage > 0) {
-        currentPage -= 1;
-        updateLoaded();
-      }
-    }
-
-    function nextPage() {
-      currentPage += 1;
-      updateLoaded();
-    }
-
     function viewItem(i) {
       var item = currentTableItems[i];
       if (item) {
@@ -251,12 +235,8 @@
     function updateLoaded() {
       readAllItems(currentPage, currentFilter, 
           function (items) {
-            if (items.length <= 0) {
-              prevPage();
-            } else {
-              currentTableItems = items;
-              updateTable();
-            }
+            currentTableItems = items;
+            updateTable();
           },
           function (items, error) {
             alert(error.message);
@@ -267,7 +247,7 @@
     function initTable() {
       updateLoaded();
       searchbar.keypress(function (e) {
-          var kcode = e.keyCode ? e.keyCode : e.which;
+          var kcode = e.keyCode ? e.keyCode : event.which;
           if (kcode == 13) {
             updateLoaded();
           }

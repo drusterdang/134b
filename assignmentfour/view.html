@@ -1,121 +1,216 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="description" content="bullion management site, rare coins, gold, silver, platinum">
-    <meta name="author" content="CSE134B Dream Team">
-    <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <meta name=viewport content="width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes">
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <script src="./js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
-    <script src="./js/velocity.min.js"></script>
-    <script src="./js/main.js"></script>
-    <title>Gold Item - CoinFlip</title>
+    <meta http-equiv='content-type' content='text/html; charset=UTF-8'>
+    <meta name='description' content='bullion management site, rare coins, gold, silver, platinum'>
+    <meta name='author' content='CSE134B Dream Team'>
+    <link rel='stylesheet' type='text/css' href='./style/style.css'>
+    <meta name=viewport content='width=device-width, initial-scale=.8, minimum-scale = .8, user-scalable=yes'>
+    <link rel='icon' href='favicon.ico' type='image/x-icon' />
+    <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
+    <script src='./js/combine.js'></script>
+    <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
+    <title>View Item - CoinFlip</title>
 </head>
 
 <body>
-    <script type="text/javascript">
+    <script type='text/javascript'>
+    initParse();
     loadTopNav();
-    </script>
-    <script type="text/javascript">
     loadSideNav(1);
     </script>
-    <section class="main-section">
-        <section class="coin_wrapper">
-            <div class="mobile-nav">
-                <a href="metal-main.html">
-                    <svg class="icon icon-keyboard-arrow-left">
-                        <symbol id="icon-keyboard-arrow-left" viewBox="0 0 1024 1024">
+    <section class='main-section'>
+        <section class='coin_wrapper'>
+            <div class='mobile-nav'>
+                <a onclick='cancel();'>
+                    <svg class='icon icon-keyboard-arrow-left'>
+                        <symbol id='icon-keyboard-arrow-left' viewBox='0 0 1024 1024'>
                             <title>keyboard-arrow-left</title>
-                            <path class="path1" d="M657.707 696.96l-195.627-195.627 195.627-195.627-60.373-60.373-256 256 256 256z"></path>
+                            <path class='path1' d='M657.707 696.96l-195.627-195.627 195.627-195.627-60.373-60.373-256 256 256 256z'></path>
                         </symbol>
-                        <use xlink:href="#icon-keyboard-arrow-left"></use>
+                        <use xlink:href='#icon-keyboard-arrow-left'></use>
                     </svg>
                 </a>
-                ITEM DETAIL
+                <span class='command-header'>View Item</span>
             </div>
-            <div class="coin_main">
-                <a href="metal-main.html">
-                    <div class="breadcrumb">
-                        <svg class="icon icon-play-arrow-rev">
-                            <symbol id="icon-play-arrow" viewBox="0 0 1024 1024">
+            <div class='coin_main'>
+                <a onclick='cancel();'>
+                    <div class='breadcrumb'>
+                        <svg class='icon icon-play-arrow-rev'>
+                            <symbol id='icon-play-arrow' viewBox='0 0 1024 1024'>
                                 <title>play-arrow</title>
-                                <path class="path1" d="M682.667 213.333v597.333l-469.333-298.667z"></path>
+                                <path class='path1' d='M682.667 213.333v597.333l-469.333-298.667z'></path>
                             </symbol>
-                            <use xlink:href="#icon-play-arrow"></use>
+                            <use xlink:href='#icon-play-arrow'></use>
                         </svg>
-                        Item Detail
+                        <span class='command-header'>View Item</span>
                     </div>
                 </a>
-                <section class="coin_image">
-                    <div class="img_box">
-                        <div class="img_circle"></div>
+                <section class='coin_image'>
+                    <div class='img_box'>
+                        <div class='img_circle'></div>
                     </div>
                 </section>
-                <section class="coin_detail">
+                <section class='coin_detail'>
                     <table>
                         <tr>
+                            <td>Medium</td>
+                            <td><span id='medium-type'></span></td>
+                        </tr>
+                        <tr>
                             <td>Metal</td>
-                            <td>Gold</td>
+                            <td><span id='metal-type'></span></td>
                         </tr>
                         <tr>
                             <td>Type</td>
-                            <td>US Eagle</td>
+                            <td><span id='type-name'></span></td>
                         </tr>
                         <tr>
                             <td>Purchase Date</td>
-                            <td>04 March 2015</td>
+                            <td><span id='purchase-date'></span></td>
                         </tr>
                         <tr>
                             <td>Qty.</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>Premium</td>
-                            <td>47.00</td>
+                            <td><span id='qty'></span></td>
                         </tr>
                         <tr>
                             <td>Unit Price</td>
-                            <td>1250.60</td>
+                            <td><span id='unit-price'></span></td>
                         </tr>
                         <tr>
-                            <td>Gold %</td>
-                            <td>0.999</td>
+                            <td>Metal %</td>
+                            <td><span id='fineness'></span></td>
                         </tr>
                         <tr>
                             <td>Weight/unit (g)</td>
-                            <td>1.244</td>
+                            <td><span id='wpu'></span></td>
                         </tr>
                         <tr>
-                            <td>Gold g/u</td>
-                            <td>1.244</td>
+                            <td>Metal g/u</td>
+                            <td><span id='mgpu'></span></td>
                         </tr>
                         <tr>
-                            <td>Gold ozt/u</td>
-                            <td>0.0400</td>
+                            <td>Metal ozt/u</td>
+                            <td><span id='mopu'></span></td>
                         </tr>
                         <tr>
-                            <td>Total au (ozt)</td>
-                            <td>0.0400</td>
+                            <td>Total Metal (ozt)</td>
+                            <td><span id='total-metal'></span></td>
+                        </tr>
+                        <tr>
+                            <td>Premium</td>
+                            <td><span id='premium'></span></td>
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong>1199.10</strong></td>
+                            <td><span id='total-cost'></span></td>
                         </tr>
                     </table>
                 </section>
             </div>
         </section>
     </section>
-    <script type="text/javascript">
+    <script type='text/javascript'>
     loadFooter();
 
-    /* Necessary for parse to work*/
-    Parse.initialize("C1vSKr7qozzQJbvpdwgirOAnFegdiBA4ATzsMIts", "z9OYp348kGoWdYpHOu1thm2D8897Q7ub7aDB67Mx");
+    /* Globals */
+    var g2ozt = 0.032151;
+
+    var currentViewItem = null;
+
+    var mediumType;
+    var metalType;
+    var typeName;
+    var purchaseDate;
+    var qty;
+    var unitPrice;
+    var fineness;
+    var wpu;
+    
+    /* Hooks */
+    function cancel() {
+      var metalType = metalInHash()
+      if (metalType >= 0) {
+        window.location.href = "metal-main.html#metal=" + metalToString(metalType);
+      } else {
+        window.location.href = "main.html";
+      }
+    }
+
+    /* Updates */
+    function updateCalculatables() {
+      var qtyVal = parseInt(qty.text());
+      if (isNaN(qtyVal)) {
+        qtyVal = 0;
+      }
+      var finenessVal = parseFloat(fineness.text());
+      if (isNaN(finenessVal)) {
+        finenessVal = 0;
+      }
+      var unitPriceVal = parseFloat(unitPrice.text());
+      if (isNaN(unitPriceVal)) {
+        unitPriceVal = 0;
+      }
+      var wpuVal = parseFloat(wpu.text());
+      if (isNaN(wpuVal)) {
+        wpuVal = 0;
+      }
+      var mcpo = 0;
+      if (metalType.val() == MetalType.GOLD)
+        mcpo = getGoldPrice();
+      if (metalType.val() == MetalType.SILVER)
+        mcpo = getSilverPrice();
+      if (metalType.val() == MetalType.PLATINUM)
+        mcpo = getPlatinumPrice();
+      $("#mgpu").text(numberNicify(finenessVal * wpuVal));
+      $("#mopu").text(numberNicify(finenessVal * wpuVal * g2ozt));
+      $("#total-metal").text(numberNicify(qtyVal * finenessVal * wpuVal * g2ozt));
+      $("#premium").text(numberPricify(qtyVal * (unitPriceVal - mcpo * finenessVal * wpuVal * g2ozt)));
+      $("#total-cost").text(numberPricify(unitPriceVal * qtyVal));
+    }
+
+    /* Initializers */
+    function baseInit() {
+      mediumType = $("#medium-type");
+      metalType = $("#metal-type");
+      typeName = $("#type-name");
+      purchaseDate = $("#purchase-date");
+      qty = $("#qty");
+      unitPrice = $("#unit-price");
+      fineness = $("#fineness");
+      wpu = $("#wpu");
+      var id = idInHash();
+      if (id) {
+        $("#delete").removeClass("hidden");
+        $(".command-header").text("View Item");
+        readItem(id, 
+            function (item) {
+              currentViewItem = item;
+              switch (currentViewItem.get("itype")) {
+              case ItemType.COIN: mediumType.text("Coin"); break;
+              case ItemType.BAR: mediumType.text("Bar"); break;
+              }
+              switch (currentViewItem.get("mtype")) {
+              case MetalType.GOLD: metalType.text("Gold"); break;
+              case MetalType.SILVER: metalType.text("Silver"); break;
+              case MetalType.PLATINUM: metalType.text("Platinum"); break;
+              }
+              typeName.text(currentViewItem.get("name"));
+              purchaseDate.text(dateNicify(currentViewItem.get("purchaseDate"))); 
+              qty.text(numberNicify(currentViewItem.get("qty"))); 
+              unitPrice.text(numberPricify(currentViewItem.get("unitPrice"))); 
+              fineness.text(numberNicify(currentViewItem.get("fineness"))); 
+              wpu.text(numberNicify(currentViewItem.get("wpu"))); 
+              updateCalculatables();
+            },
+            function (item, error) {
+              alert(error.message);
+            });
+      } else {
+        alert("Unable to load object");
+      }
+    }
+    $(document).ready(baseInit);
     </script>
 </body>
-
-</html>

@@ -769,6 +769,31 @@ a:visited {
     font-size: 12px;
 }
 
+.my_stack td:nth-child(2),
+.my_stack th:nth-child(2)
+{
+  text-align: left;
+  padding-left: 10px;
+}
+
+.my_stack td {
+  font-weight: 400;
+}
+
+.my_stack .item .controls {
+  visibility: hidden;
+}
+
+.my_stack .item:hover .controls {
+  visibility: visible;
+}
+
+.my_stack .item .controls a {
+  color: #AAAAAA;
+  font-weight: 400;
+  margin-left: 10px;
+}
+
 .my_stack {
     clear: both;
     margin-top: 30px;
@@ -835,6 +860,21 @@ a:visited {
     margin-right: auto;
     background-color: #5D5D5D;
 }
+
+#page-control {
+  padding-top: 20px;
+  text-align: center;
+}
+
+#page-control a {
+  cursor: pointer;
+  padding: 10px;
+}
+
+#page-control a:hover {
+  text-decoration: underline;
+}
+
 /* * * * * * * * * * * * * * * *
  *                             *
  *           WIRE 4            *
@@ -891,12 +931,16 @@ a:visited {
 
 .coin_detail span {
     display: block;
-    height: 55px;
-    line-height: 55px;
+    line-height: 35px;
     text-align: center;
     font-size: 1.3em;
+    font-weight: 400;
     margin-left: auto;
     margin-right: auto;
+}
+
+.coin_detail #total-cost {
+  font-weight: bold;
 }
 
 .coin_detail table {
@@ -986,7 +1030,7 @@ select {
 
 #save {
     background: #397C86;
-    border: 2px solid #151515;
+    border: 2px solid #397C86;
     color: white;
     text-decoration: none;
     width: 275px;
@@ -998,7 +1042,7 @@ select {
 
 #delete {
     background: #864332;
-    border: 2px solid #151515;
+    border: 2px solid #864332;
     color: white;
     text-decoration: none;
     width: 275px;
@@ -1016,7 +1060,7 @@ select {
 
 #cancel {
     background: #1C3A3F;
-    border: 2px solid #151515;
+    border: 2px solid #1C3A3F;
     color: white;
     text-decoration: none;
     width: 275px;

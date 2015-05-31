@@ -57,7 +57,7 @@ function loadSideNav(selected){
 	document.write("            <figcaption>Home<\/figcaption>");
 	document.write("        <\/figure>       ");
 	document.write("        <\/a> ");
-	document.write("        <a href=\"metal-main.html\">");
+	document.write("        <a href=\"metal-main.html#metal=gold\">");
 	if(selected == 1)
 		document.write("        <figure class='nav-selected'>");
 	else
@@ -66,7 +66,7 @@ function loadSideNav(selected){
 	document.write("            <figcaption>My Gold<\/figcaption>");
 	document.write("        <\/figure>       ");
 	document.write("        <\/a> ");
-	document.write("        <a href=\"metal-main.html\">");
+	document.write("        <a href=\"metal-main.html#metal=silver\">");
 	if(selected == 2)
 		document.write("        <figure class='nav-selected'>");
 	else
@@ -75,7 +75,7 @@ function loadSideNav(selected){
 	document.write("            <figcaption>My Silver<\/figcaption>");
 	document.write("        <\/figure>       ");
 	document.write("        <\/a> ");
-	document.write("        <a href=\"metal-main.html\">");
+	document.write("        <a href=\"metal-main.html#metal=platinum\">");
 	if(selected == 3)
 		document.write("        <figure class='nav-selected'>");
 	else
@@ -315,8 +315,6 @@ function drawAllTheGraphs(page, goldDates, goldData, silverData, platData){
 
 	drawGraph();
 }
-
-
 
 function initMain() {
     $(window).load(function() {

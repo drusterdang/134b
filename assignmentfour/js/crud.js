@@ -155,18 +155,18 @@ function createItem(
         onerror) 
 {
     /* We assume validity, allowing server to handle garbage */
-    var parseItem = new (Parse.Object.extend("Item"))();
-    parseItem.set("itype",  iType);
-    parseItem.set("mtype",  mType);
-    parseItem.set("name",   name);
-    parseItem.set("purchaseDate", purchaseDate);
-    parseItem.set("qty", qty);
-    parseItem.set("unitPrice", unitPrice);
-    parseItem.set("fineness", fineness);
-    parseItem.set("wpu", wpu);
-    parseItem.set("createdBy", Parse.User.current());
+    var item = new (Parse.Object.extend("Item"))();
+    item.set("itype",  iType);
+    item.set("mtype",  mType);
+    item.set("name",   name);
+    item.set("purchaseDate", purchaseDate);
+    item.set("qty", qty);
+    item.set("unitPrice", unitPrice);
+    item.set("fineness", fineness);
+    item.set("wpu", wpu);
+    item.set("createdBy", Parse.User.current());
     item.setACL(new Parse.ACL(Parse.User.current()));
-    parseItem.save(null, {
+    item.save(null, {
         success: onsuccess,
         error: onerror
     });
@@ -188,16 +188,16 @@ function readItem(
 
 function readAllItems(
         page,
-        filters,
+        filter,
         onsuccess,
         onerror)
 {
-    var query = new ParseQuery(Parse.Object.extend("Item"));
-    if (filters) {
-        filters(query);
+    var query = new Parse.Query(Parse.Object.extend("Item"));
+    if (filter) {
+        filter(query);
     }
-    query.limit(10);
-    query.skip(page * 10);
+    query.limit(5);
+    query.skip(page * 5);
     query.equalTo("createdBy", Parse.User.current());
     query.find({
         success: onsuccess,
@@ -273,4 +273,48 @@ function numberPricify(num) {
 
 function dateNicify(date) {
     return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+}
+
+function metalToString(mtype) {
+    switch (mtype) {
+    case MetalType.GOLD: return "gold";
+    case MetalType.SILVER: return "silver";
+    case MetalType.PLATINUM: return "platinum";
+    }
+    return null;
+}
+
+function metalInHash() {
+    var hash = window.location.hash.substring(1); 
+    var props = hash.split("&");
+    for (var i = 0; i < props.length; i++) {
+        var prop = props[i];
+        var split = prop.indexOf("=");
+        if (split > -1) {
+            var propName = prop.substring(0, split);
+            if (propName == "metal") {
+                switch (prop.substring(split + 1)) {
+                case "gold": return MetalType.GOLD;
+                case "silver": return MetalType.SILVER;
+                case "platinum": return MetalType.PLATINUM;
+                }
+            }
+        }
+    }
+    return -1;
+}
+
+function idInHash() {
+    var hash = window.location.hash.substring(1); 
+    var props = hash.split("&");
+    for (var i = 0; i < props.length; i++) {
+        var prop = props[i];
+        var split = prop.indexOf("=");
+        if (split > -1) {
+            var propName = prop.substring(0, split);
+            if (propName == "id") {
+                return prop.substring(split + 1);
+            }
+        }
+    }
 }

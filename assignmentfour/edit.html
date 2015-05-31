@@ -23,7 +23,7 @@
     <section class='main-section'>
         <section class='coin_wrapper'>
             <div class='mobile-nav'>
-                <a href='main.html'>
+                <a onclick='cancel();'>
                     <svg class='icon icon-keyboard-arrow-left'>
                         <symbol id='icon-keyboard-arrow-left' viewBox='0 0 1024 1024'>
                             <title>keyboard-arrow-left</title>
@@ -35,7 +35,7 @@
                 <span class='command-header'>Add Item</span>
             </div>
             <div class='coin_main'>
-                <a href='main.html'>
+                <a onclick='cancel();'>
                     <div class='breadcrumb'>
                         <svg class='icon icon-play-arrow-rev'>
                             <symbol id='icon-play-arrow' viewBox='0 0 1024 1024'>
@@ -71,8 +71,7 @@
                         <tr>
                             <td>Type</td>
                             <td>
-                                <select id='type-name' name='typeName'>
-                                </select>
+                                <input id='type-name' type='text' list='known-types' name='purchaseDate' />
                             </td>
                         </tr>
                         <tr>
@@ -99,7 +98,7 @@
                         </tr>
                         <tr>
                             <td>Weight/unit (g)</td>
-                            <td><input id='wpu' name='wpu'/></td>
+                            <td><input id='wpu' list='denominations' name='wpu'/></td>
                         </tr>
                         <tr>
                             <td>Metal g/u</td>
@@ -119,152 +118,238 @@
                         </tr>
                         <tr>
                             <td><strong>TOTAL</strong></td>
-                            <td><strong><span id='total-cost'></span></strong></td>
+                            <td><span id='total-cost'></span></td>
                         </tr>
                     </table>
                     <a onclick='submitItem()'><span id='save'>Save to My Stack</span></a>
                     <a onclick='removeItem()'><span id='delete' class='hidden'>Delete from My Stack</span></a>
-                    <a href='main.html'><span id='cancel'>Cancel</span></a>
+                    <a onclick='cancel();'><span id='cancel'>Cancel</span></a>
                 </section>
             </div>
         </section>
     </section>
+    <datalist id='known-types'>
+    </datalist>
+    <datalist id='denominations'>
+    </datalist>
     <script type='text/javascript'>
     loadFooter();
+
+    /* Globals */
+    var g2ozt = 0.032151;
 
     var currentEditItem = null;
     var currentItemList = [];
 
+    var mediumType;
+    var metalType;
+    var typeName;
+    var purchaseDate;
+    var qty;
+    var unitPrice;
+    var fineness;
+    var wpu;
+
+    var knownTypes;
+    var denominations;
+    
+    /* Hooks */
+    function cancel() {
+      var metalType = metalInHash()
+      if (metalType >= 0) {
+        window.location.href = "metal-main.html#metal=" + metalToString(metalType);
+      } else {
+        window.location.href = "main.html";
+      }
+    }
+
+    function submitItem() {
+      var currentUser = Parse.User.current();
+      if (!currentUser) {
+        alert("Must be logged in!");
+        return;
+      }
+      var fitype = parseInt(mediumType.val());
+      var fmtype = parseInt(metalType.val());
+      var fname = typeName.val();
+      var fpurchaseDate = new Date(purchaseDate.val());
+      var fqty = parseFloat(qty.val());
+      var funitPrice = parseFloat(unitPrice.val());
+      var ffineness = parseFloat(fineness.val());
+      var fwpu = parseFloat(wpu.val());
+      if (currentEditItem) {
+        updateItem(
+            currentEditItem,
+            fitype,
+            fmtype,
+            fname,
+            fpurchaseDate,
+            fqty,
+            funitPrice,
+            ffineness,
+            fwpu,
+            function(item) {
+              alert("Item updated");
+            },
+            function(item, error) {
+              alert(error.message)
+            });
+      } else {
+        createItem(
+            fitype,
+            fmtype,
+            fname,
+            fpurchaseDate,
+            fqty,
+            funitPrice,
+            ffineness,
+            fwpu,
+            function(item) {
+              alert("Item created");
+            },
+            function(item, error) {
+              alert(error.message)
+            });
+      }
+    }
+
+    function removeItem() {
+      if (currentEditItem) {
+        knownTypes = $("#known-types");
+        deleteItem(currentEditItem, 
+            function (item) {
+              alert("Item deleted"); },
+            function (item, error) {
+              alert(error.message)
+            });
+      }
+    }
+
+
     /* Updates */
     function updateTypeFilter() {
-      var typeName = $("#type-name");
-      var mediumType = $("#medium-type").val();
-      var metalType = $("#metal-type").val();
-      var knownItems = getKnownItems(mediumType, metalType);
-      currentItemList = [{ name: "Custom" }].concat(knownItems);
+      currentItemList = getKnownItems(mediumType.val(), metalType.val());
       var typeOptions = "";
       for (var i = 0; i < currentItemList.length; i++) {
-        typeOptions += "<option value='" + i + "'>" + currentItemList[i].name + "</option>";
+        typeOptions += "<option>" + currentItemList[i].name + "</option>";
       }
-      typeName.html(typeOptions);
+      knownTypes.html(typeOptions);
     }
 
-    function updateFineness() {
-      var id = $("#type-name").val();
-      if (id) {
-        var item = currentItemList[id];
-        if (item && item.fineness) {
-          $("#fineness").val(item.fineness);
-        }
-      }
-    }
-
-    function updateWpu() {
-      var id = $("#type-name").val();
-      if (id) {
-        var item = currentItemList[id];
-        if (item && item.wpu) {
-          $("#wpu").val(item.wpu);
+    function updateAutocomplete() {
+      for (var i = 0; i < currentItemList.length; i++) {
+        var item = currentItemList[i];
+        if (item.name == typeName.val()) {
+          if (item.wpu) {
+            wpu.val(item.wpu);
+          }
+          if (item.fineness) {
+            fineness.val(item.fineness);
+          }
+          if (item.denominations) {
+            var denomOptions = "";
+            for (var i = 0; i < item.denominations.length; i++) {
+              denomOptions += "<option>" + numberNicify(item.denominations[i] / g2ozt) + "</option>";
+            }
+            denominations.html(denomOptions);
+            if (!wpu.val() && item.denominations.length > 0) {
+              wpu.val(numberNicify(item.denominations[0] / g2ozt));
+            }
+          }
         }
       }
     }
 
     function updateCalculatables() {
-      var qty = parseInt($("#qty").val());
-      if (isNaN(qty)) {
-        qty = 0;
+      var qtyVal = parseInt(qty.val());
+      if (isNaN(qtyVal)) {
+        qtyVal = 0;
       }
-      var fineness = parseFloat($("#fineness").val());
-      if (isNaN(fineness)) {
-        fineness = 0;
+      var finenessVal = parseFloat(fineness.val());
+      if (isNaN(finenessVal)) {
+        finenessVal = 0;
       }
-      var unitPrice = parseFloat($("#unit-price").val());
-      if (isNaN(unitPrice)) {
-        unitPrice = 0;
+      var unitPriceVal = parseFloat(unitPrice.val());
+      if (isNaN(unitPriceVal)) {
+        unitPriceVal = 0;
       }
-      var wpu = parseFloat($("#wpu").val());
-      if (isNaN(wpu)) {
-        wpu = 0;
+      var wpuVal = parseFloat(wpu.val());
+      if (isNaN(wpuVal)) {
+        wpuVal = 0;
       }
       var mcpo = 0;
-      var mType = $("#metal-type").val();
-      if (mType == MetalType.GOLD)
+      if (metalType.val() == MetalType.GOLD)
         mcpo = getGoldPrice();
-      if (mType == MetalType.SILVER)
+      if (metalType.val() == MetalType.SILVER)
         mcpo = getSilverPrice();
-      if (mType == MetalType.PLATINUM)
+      if (metalType.val() == MetalType.PLATINUM)
         mcpo = getPlatinumPrice();
-      var g2ozt = 0.032151;
-      $("#mgpu").text(numberNicify(fineness * wpu));
-      $("#mopu").text(numberNicify(fineness * wpu * g2ozt));
-      $("#total-metal").text(numberNicify(qty * fineness * wpu * g2ozt));
-      $("#premium").text(numberPricify(unitPrice - mcpo * fineness * wpu * g2ozt));
-      $("#total-cost").text(numberPricify(unitPrice * qty));
+      $("#mgpu").text(numberNicify(finenessVal * wpuVal));
+      $("#mopu").text(numberNicify(finenessVal * wpuVal * g2ozt));
+      $("#total-metal").text(numberNicify(qtyVal * finenessVal * wpuVal * g2ozt));
+      $("#premium").text(numberPricify(qtyVal * (unitPriceVal - mcpo * finenessVal * wpuVal * g2ozt)));
+      $("#total-cost").text(numberPricify(unitPriceVal * qtyVal));
     }
 
-    /* Init Form */
-    function initForm() {
-      var mediumType = $("#medium-type");
+    /* Loaders */
+    function loadHandlers() {
+      mediumType.change(updateTypeFilter);
+      metalType.change(updateTypeFilter);
+      qty.focusout(function() {
+        updateCalculatables();
+      });
+      unitPrice.focusout(function() {
+        updateCalculatables();
+      });
+      fineness.focusout(function() {
+        updateCalculatables();
+      });
+      wpu.focusout(function() {
+        updateCalculatables();
+      });
+      typeName.focusout(function() {
+        updateAutocomplete();
+        updateCalculatables();
+      });
+    }
+
+    /* Initializers */
+    function baseInit() {
+      mediumType = $("#medium-type");
+      metalType = $("#metal-type");
+      typeName = $("#type-name");
+      purchaseDate = $("#purchase-date");
+      qty = $("#qty");
+      unitPrice = $("#unit-price");
+      fineness = $("#fineness");
+      wpu = $("#wpu");
+      knownTypes = $("#known-types");
+      denominations = $("#denominations");
       var mediumOptions = 
         "<option value='" + ItemType.COIN + "'>Coin</option>" + 
         "<option value='" + ItemType.BAR  + "'>Bar</option>";
       mediumType.html(mediumOptions);
-      var metalType = $("#metal-type");
       var metalOptions = 
         "<option value='" + MetalType.GOLD      + "'>Gold</option>" + 
         "<option value='" + MetalType.SILVER    + "'>Silver</option>" +
         "<option value='" + MetalType.PLATINUM  + "'>Platinum</option>";
-      function loadHandlers() {
-        metalType.html(metalOptions);
-        var purchaseDate = $("#purchase-date");
-        var theDate = new Date();
-        purchaseDate.val(dateNicify(theDate));
-        var typeName = $("#type-name");
-        var qty = $("#qty");
-        qty.change(function() {
-          updateCalculatables();
-        });
-        var unitPrice = $("#unit-price");
-        unitPrice.change(function() {
-          updateCalculatables();
-        });
-        var fineness = $("#fineness");
-        fineness.change(function() {
-          updateCalculatables();
-        });
-        var wpu = $("#wpu");
-        wpu.change(function() {
-          updateCalculatables();
-        });
-        mediumType.change(updateTypeFilter);
-        metalType.change(updateTypeFilter);
-        typeName.change(function() {
-          updateFineness();
-          updateWpu();
-          updateCalculatables();
-        });
-      }
-      if (window.location.hash) {
+      metalType.html(metalOptions);
+      var id = idInHash();
+      if (id) {
         $("#delete").removeClass("hidden");
         $(".command-header").text("Edit Item");
-        readItem(window.location.hash.substring(1),
+        readItem(id, 
             function (item) {
               currentEditItem = item;
-              $("#medium-type option").filter(function() {
-                return $(this).val() == currentEditItem.get("itype");
-              }).prop("selected", true);
-              $("#metal-type option").filter(function() {
-                return $(this).val() == currentEditItem.get("mtype");
-              }).prop("selected", true);
+              mediumType.children()[currentEditItem.get("itype")].selected = true;
+              metalType.children()[currentEditItem.get("mtype")].selected = true;
               updateTypeFilter();
-              $("#type-name option").filter(function() {
-                return $(this).text() == currentEditItem.get("name");
-              }).prop("selected", true);
-              $("#purchase-date").val(dateNicify(currentEditItem.get("purchaseDate"))); 
-              $("#qty").val(currentEditItem.get("qty")); 
-              $("#unit-price").val(currentEditItem.get("unitPrice")); 
-              $("#fineness").val(currentEditItem.get("fineness")); 
-              $("#wpu").val(currentEditItem.get("wpu")); 
+              typeName.val(currentEditItem.get("name"));
+              purchaseDate.val(dateNicify(currentEditItem.get("purchaseDate"))); 
+              qty.val(currentEditItem.get("qty")); 
+              unitPrice.val(currentEditItem.get("unitPrice")); 
+              fineness.val(currentEditItem.get("fineness")); 
+              wpu.val(currentEditItem.get("wpu")); 
               loadHandlers();
               updateCalculatables();
             },
@@ -272,80 +357,18 @@
               alert(error.message);
             });
       } else {
+        var theDate = new Date();
+        var metal = metalInHash();
+        if (metal >= 0) {
+            metalType.children()[metal].selected = true;
+        }
+        purchaseDate.val(dateNicify(theDate));
         loadHandlers();
         updateTypeFilter();
         updateCalculatables();
       }
     }
-
-
-    /* Submit Item */
-    function submitItem() {
-      var currentUser = Parse.User.current();
-      if (!currentUser) {
-        alert("Must be logged in!");
-        return;
-      }
-      var iType = parseInt($("#medium-type").val());
-      var mType = parseInt($("#metal-type").val());
-      var name = $("#type-name option:selected").text();
-      var purchaseDate = new Date($("#purchase-date").val());
-      var qty = parseInt($("#qty").val());
-      var unitPrice = parseFloat($("#unit-price").val());
-      var fineness = parseFloat($("#fineness").val());
-      var wpu = parseFloat($("#wpu").val());
-      if (currentEditItem) {
-        updateItem(
-            currentEditItem,
-            iType,
-            mType,
-            name,
-            purchaseDate,
-            qty,
-            unitPrice,
-            fineness,
-            wpu,
-            function(item) {
-              alert(item.toString() + " updated");
-            },
-            function(item, error) {
-              alert(item.toString() + " errored: " + error.message)
-            });
-      } else {
-        createItem(
-            iType,
-            mType,
-            name,
-            purchaseDate,
-            qty,
-            unitPrice,
-            fineness,
-            wpu,
-            function(item) {
-              alert(item.toString() + " created");
-            },
-            function(item, error) {
-              alert(item.toString() + " errored: " + error.message)
-            });
-      }
-    }
-
-    /* Delete Item */
-    function removeItem() {
-      if (currentEditItem) {
-        deleteItem(currentEditItem, 
-            function (item) {
-              alert(item.toString() + " deleted");
-            },
-            function (item, error) {
-              alert(item.toString() + " errored: " + error.message)
-            });
-      }
-    }
-
-    $(document).ready(function() {
-      initForm();
-    });
+    $(document).ready(baseInit);
     </script>
 </body>
 
