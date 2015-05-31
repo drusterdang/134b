@@ -11,7 +11,7 @@
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
     <script src='./js/combine.js'></script>
     <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
-    <title>My Gold - CoinFlip</title>
+    <title>My Metal - CoinFlip</title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
                         <use xlink:href='#icon-keyboard-arrow-left'></use>
                     </svg>
                 </a>
-                MY GOLD
+                My <span class='metal-name'></span>
                 <a onclick='editItem();'>
                     <svg class='icon icon-add'>
                         <symbol id='icon-add' viewBox='0 0 1024 1024'>
@@ -58,7 +58,7 @@
                             <td>+1.2%</td>
                         </tr>
                     </table> 
-                    <div class='total-label' id='my_gold_value'>My Gold Value</div>
+                    <div class='total-label' id='my_gold_value'>My <span class='metal-name'></span> Value</div>
 
                 </section>
                 <section class='mobile-toggle'>
@@ -106,13 +106,13 @@
                     <div class='legend-left-half'>
                         <section class='legend-item'>
                             <div class='legend-item-color' id='legend-1'></div>
-                            Gold Total
+                            <span class='metal-name'></span> Total
                         </section> 
                     </div>
                     <div class='legend-right-half'>      
                         <section class='legend-item'>
                             <div class='legend-item-color' id='legend-4'></div>
-                            1oz Gold
+                            1oz <span class='metal-name'></span>
                         </section>
                     </div>    
                 </section>
@@ -127,7 +127,7 @@
                 <table>
                     <caption>
                         <section class='label-and-search'>
-                            <h3>My Gold</h3>
+                          <h3>My <span class='metal-name'></span>
                             <div class='stack_ctrl'>
                                 <input id='searchbar' type='search' placeholder='Search'/>
                                 <a onclick='editItem();'>
@@ -175,6 +175,8 @@
       }
     }
     var currentTableItems = [];
+    var nextTableItems = [];
+    var prevTableItems = [];
 
     /* Hooks */
 
@@ -278,6 +280,11 @@
     function baseInit() {
       searchbar = $("#searchbar");
       metalType = metalInHash();
+      switch (metalType) {
+      case MetalType.GOLD: $(".metal-name").text("Gold"); break;
+      case MetalType.SILVER: $(".metal-name").text("Silver"); break;
+      case MetalType.PLATINUM: $(".metal-name").text("Platinum"); break;
+      }
       if (metalType >= 0) {
         initTable();
       } else {
