@@ -103,7 +103,7 @@ function getMetalData(page){
     var authenCode = "?auth_token=C3HZx3Q9-W8qQUhDX-vJ"; // Gives us unlimited access to data!
 
     // access gold data
-    $.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + startDate + authenCode, function(data){
+    $.getJSON("http://www.quandl.com/api/v1/datasets/WGC/GOLD_DAILY_USD.json" + authenCode + startDate, function(data){
         var myGoldData = data.data;
 
         var arrayOfDates = [];
@@ -115,7 +115,7 @@ function getMetalData(page){
         }
 
         //access silver data
-        $.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + startDate + authenCode, function(data){
+        $.getJSON("http://www.quandl.com/api/v1/datasets/LBMA/SILVER.json" + authenCode + startDate, function(data){
             var mySilverData = data.data;
 
             var silverData = [];
@@ -125,7 +125,7 @@ function getMetalData(page){
             }
 
             //access plat data
-            $.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + startDate + authenCode, function(data){
+            $.getJSON("http://www.quandl.com/api/v1/datasets/LPPM/PLAT.json" + authenCode + startDate, function(data){
                 var myPlatData = data.data;
 
                 var platData = [];
@@ -134,8 +134,34 @@ function getMetalData(page){
                     platData.push(myPlatData[i][1]);
                 }
 
-                // calls on function that uses data to construct graphs
-                drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData);
+            	// grabbing spot data
+				$.getJSON("https://cse134b.herokuapp.com/jm", function(data){
+					var spotData = data;
+					var goldAsk, goldBid, goldChange, silverAsk, silverBid, silverChange, platAsk, platBid, platChange;
+					var goldSpot, silverSpot, platSpot;
+
+					//Gold spot
+					goldSpot = spotData[0];
+					goldAsk = goldSpot.ask;
+					goldBid = goldSpot.bid;
+
+					//Silver spot
+
+					silverSpot = spotData[1];
+					silverAsk = silverSpot.ask;
+					silverBid = silverSpot.bid;
+
+					//Plat spot
+					platSpot = spotData[2];
+					platSpot = platSpot.ask;
+					platSpot = platSpot.bid;
+
+					// calls on function that uses data to construct graphs
+                	drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData, goldAsk, goldBid, goldChange, silverAsk, silverBid, silverChange, platAsk, platBid, platChange);
+
+				});
+
+
             });
 
 
@@ -143,9 +169,11 @@ function getMetalData(page){
 
     });
 
+
+
 }
 
-function drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData){
+function drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData, goldAsk, goldBid, goldChange, silverAsk, silverBid, silverChange, platAsk, platBid, platChange){
 	var drawGraph = function(){
 
 		var pointStroke = "rgba(255,255,255,0.6)";
@@ -275,9 +303,21 @@ function drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData){
 			var coinChart = new Chart(ctx).Line(data,options);
 			coinChart.update();
 
+			/* Updating Spot Prices in the Chart*/
+			//gold
+			$(".market-item-stats table tr:first td:first").text(goldBid);
+			$(".market-item-stats table tr:first td:second").text(goldAsk);
+
+			//silver
+
+
+			//plat
+
+
+
 		} else if(page =="metal-main.html"){
 			var data = {
-				labels: ["January", "February", "March", "April", "May", "June", "July"],
+				labels: arrayOfDates,
 				datasets: [
 				{
 					label: "Gold Total",
@@ -287,7 +327,7 @@ function drawAllTheGraphs(page, arrayOfDates, goldData, silverData, platData){
 					pointStrokeColor: pointStroke,
 					pointHighlightFill: pointHighlightFill,
 					pointHighlightStroke: pointHighlightStroke,
-					data: [700,820,700,800,730,950,900]
+					data: goldData
 				},
 				{
 					label: "1oz Gold",
