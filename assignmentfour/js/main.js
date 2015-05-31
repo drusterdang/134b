@@ -83,7 +83,7 @@ function loadData() {
             mTotalChange.removeClass("neg-change");
             mTotalChange.addClass("pos-change");
           } else {
-            mTotalChange.removelass("neg-change");
+            mTotalChange.removeClass("neg-change");
             mTotalChange.addClass("pos-change");
           }
           loadGraph();
