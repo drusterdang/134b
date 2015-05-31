@@ -48,6 +48,5 @@ function setPopupHeader(text) {
 }
 
 function setPopupMain(main) {
-    console.log(popupMain);
     popupMain.html(main);
 }
