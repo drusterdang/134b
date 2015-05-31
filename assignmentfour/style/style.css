@@ -1082,7 +1082,7 @@ select {
 
 #delete:hover {
     border: 2px solid #E69382;
-    background: ;
+    /*background: ;*/
 }
 
 #delete.hidden {
