@@ -201,11 +201,6 @@ function loadData() {
                         "<p>Got Error: " + error.message + "</p>" + 
                         "</div>" +
                         "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
-                /* Free mutexes */
-                goldDone = true;
-                silverDone = true;
-                platDone = true;
-                spotDone = true;
             });
 }
 

@@ -334,7 +334,17 @@ function loadData() {
                 buildGraph();
             }, 
             function (item, error) {
-                alert(error.message);
+                setPopupHeader("Error!");
+                setPopupMain(
+                        "<div class='popup-container'>" +
+                        "<p>Failed to load data.</p>" + 
+                        "<p>Got Error: " + error.message + "</p>" + 
+                        "</div>" +
+                        "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+                goldDone = true;
+                silverDone = true;
+                platDone = true;
+                spotDone = true;
             });
 }
 

@@ -15,6 +15,10 @@ var fineness;
 var wpu;
 var picture;
 
+var goldAsk, goldBid;
+var silverAsk, silverBid;
+var platAsk, platBid;
+
 var knownTypes;
 var denominations;
 
@@ -287,13 +291,13 @@ function updateCalculatables() {
     }
     var mcpo = 0;
     if (metalType.val() == MetalType.GOLD) {
-        mcpo = getGoldPrice();
+        mcpo = goldBid;
     }
     if (metalType.val() == MetalType.SILVER) {
-        mcpo = getSilverPrice();
+        mcpo = silverBid;
     }
     if (metalType.val() == MetalType.PLATINUM) {
-        mcpo = getPlatinumPrice();
+        mcpo = platBid;
     }
     $("#mgpu").text(numberNicify(finenessVal * wpuVal));
     $("#mopu").text(numberNicify(finenessVal * wpuVal * g2ozt));
@@ -370,57 +374,76 @@ $(document).ready(function() {
         "<option value='" + MetalType.PLATINUM  + "'>Platinum</option>";
     metalType.html(metalOptions);
     var id = idInHash();
-    if (id) {
-        $("#delete").removeClass("hidden");
-        $(".command-header").text("Edit Item");
-        ajaxMutex = true;
+    function buildView() {
+        if (id) {
+            $("#delete").removeClass("hidden");
+            $(".command-header").text("Edit Item");
+            ajaxMutex = true;
 
-        setPopupSize(400);
-        setPopupHeader("Loading your data!");
-        setPopupMain("");
-        showPopup();
-        readItem(id, 
-                function (item) {
-                    currentEditItem = item;
-                    ajaxMutex = false;
-                    mediumType.children()[currentEditItem.get("itype")].selected = true;
-                    metalType.children()[currentEditItem.get("mtype")].selected = true;
-                    updateTypeFilter();
-                    typeName.val(currentEditItem.get("name"));
-                    purchaseDate.val(dateNicify(currentEditItem.get("purchaseDate"))); 
-                    qty.val(currentEditItem.get("qty")); 
-                    unitPrice.val(currentEditItem.get("unitPrice")); 
-                    fineness.val(currentEditItem.get("fineness")); 
-                    wpu.val(currentEditItem.get("wpu")); 
-                    var mpicture = currentEditItem.get("picture");
-                    if (mpicture) {
-                        var newImg = "<img src='" + mpicture.url() +  "' alt='' />";
-                        $(".img_box").html(newImg);
-                    }
-                    loadHandlers();
-                    updateCalculatables();
-                    hidePopup();
-                },
-                function (item, error) {
-                    alert(error.message);
-                    ajaxMutex = false;
-                    setPopupHeader("Error!");
-                    setPopupMain(
-                            "<div class='popup-container'>" +
-                            "<p>Failed to load data.</p>" + 
-                            "<p>Got Error: " + error.message + "</p>" + 
-                            "</div>" +
-                            "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
-                });
-    } else {
-        var theDate = new Date();
-        var metal = metalInHash();
-        if (metal >= 0) {
-            metalType.children()[metal].selected = true;
+            setPopupSize(400);
+            setPopupHeader("Loading your data!");
+            setPopupMain("");
+            showPopup();
+            readItem(id, 
+                    function (item) {
+                        currentEditItem = item;
+                        ajaxMutex = false;
+                        mediumType.children()[currentEditItem.get("itype")].selected = true;
+                        metalType.children()[currentEditItem.get("mtype")].selected = true;
+                        updateTypeFilter();
+                        typeName.val(currentEditItem.get("name"));
+                        purchaseDate.val(dateNicify(currentEditItem.get("purchaseDate"))); 
+                        qty.val(currentEditItem.get("qty")); 
+                        unitPrice.val(currentEditItem.get("unitPrice")); 
+                        fineness.val(currentEditItem.get("fineness")); 
+                        wpu.val(currentEditItem.get("wpu")); 
+                        var mpicture = currentEditItem.get("picture");
+                        if (mpicture) {
+                            var newImg = "<img src='" + mpicture.url() +  "' alt='' />";
+                            $(".img_box").html(newImg);
+                        }
+                        loadHandlers();
+                        updateCalculatables();
+                        hidePopup();
+                    },
+                    function (item, error) {
+                        alert(error.message);
+                        ajaxMutex = false;
+                        setPopupHeader("Error!");
+                        setPopupMain(
+                                "<div class='popup-container'>" +
+                                "<p>Failed to load data.</p>" + 
+                                "<p>Got Error: " + error.message + "</p>" + 
+                                "</div>" +
+                                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+                    });
+        } else {
+            var theDate = new Date();
+            var metal = metalInHash();
+            if (metal >= 0) {
+                metalType.children()[metal].selected = true;
+            }
+            purchaseDate.val(dateNicify(theDate));
+            loadHandlers();
+            updateTypeFilter();
+            updateCalculatables();
         }
-        purchaseDate.val(dateNicify(theDate));
-        loadHandlers();
-        updateTypeFilter();
-        updateCalculatables();
     }
+    setPopupSize(400);
+    setPopupHeader("Loading your data!");
+    setPopupMain("");
+    showPopup();
+    getSpotData(function (json) {
+        goldAsk = json[0].ask;
+        goldBid = json[0].bid;
+        goldChange = json[0].oneDayPercentChange;
+        silverAsk = json[1].ask;
+        silverBid = json[1].bid;
+        silverChange = json[1].oneDayPercentChange;
+        platAsk = json[2].ask;
+        platBid = json[2].bid;
+        platChange = json[2].oneDayPercentChange;
+        spotDone = true;
+        buildView();
+    });
 });
