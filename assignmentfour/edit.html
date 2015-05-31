@@ -137,6 +137,7 @@
     loadFooter();
 
     /* Globals */
+    var ajaxMutex = false;;
     var g2ozt = 0.032151;
 
     var currentEditItem = null;
@@ -185,52 +186,68 @@
         fpicture = new Parse.File(file.name, file);
       }
       if (currentEditItem) {
-        updateItem(
-            currentEditItem,
-            fitype,
-            fmtype,
-            fname,
-            fpurchaseDate,
-            fqty,
-            funitPrice,
-            ffineness,
-            fwpu,
-            fpicture,
-            function(item) {
-              alert("Item updated");
-            },
-            function(item, error) {
-              alert(error.message)
-            });
+        if (!ajaxMutex) {
+          ajaxMutex = true;
+          updateItem(
+              currentEditItem,
+              fitype,
+              fmtype,
+              fname,
+              fpurchaseDate,
+              fqty,
+              funitPrice,
+              ffineness,
+              fwpu,
+              fpicture,
+              function(item) {
+                alert("Item updated");
+                ajaxMutex = false;
+              },
+              function(item, error) {
+                alert(error.message);
+                ajaxMutex = false;
+              });
+        }
       } else {
-        createItem(
-            fitype,
-            fmtype,
-            fname,
-            fpurchaseDate,
-            fqty,
-            funitPrice,
-            ffineness,
-            fwpu,
-            fpicture,
-            function(item) {
-              alert("Item created");
-            },
-            function(item, error) {
-              alert(error.message)
-            });
+        if (!ajaxMutex) {
+          ajaxMutex = true
+          createItem(
+              fitype,
+              fmtype,
+              fname,
+              fpurchaseDate,
+              fqty,
+              funitPrice,
+              ffineness,
+              fwpu,
+              fpicture,
+              function(item) {
+                alert("Item created");
+                ajaxMutex = false;
+              },
+              function(item, error) {
+                alert(error.message);
+                ajaxMutex = false;
+              });
+        }
       }
     }
 
     function removeItem() {
       if (currentEditItem) {
         knownTypes = $("#known-types");
-        deleteItem(currentEditItem, 
-            function (item) {
-              alert("Item deleted"); },
-            function (item, error) {
-              alert(error.message)
-            });
+        if (!ajaxMutex) {
+          ajaxMutex = true;
+          deleteItem(currentEditItem, 
+              function (item) {
+                alert("Item deleted"); 
+                ajaxMutex = false;
+              },
+              function (item, error) {
+                alert(error.message);
+                ajaxMutex = false;
+              });
+        }
       }
     }
 
@@ -359,9 +376,11 @@
       if (id) {
         $("#delete").removeClass("hidden");
         $(".command-header").text("Edit Item");
+        ajaxMutex = true;
         readItem(id, 
             function (item) {
               currentEditItem = item;
+              ajaxMutex = false;
               mediumType.children()[currentEditItem.get("itype")].selected = true;
               metalType.children()[currentEditItem.get("mtype")].selected = true;
               updateTypeFilter();
@@ -381,6 +400,7 @@
             },
             function (item, error) {
               alert(error.message);
+              ajaxMutex = false;
             });
       } else {
         var theDate = new Date();

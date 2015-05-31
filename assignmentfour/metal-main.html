@@ -164,6 +164,8 @@
     initMain();
 
     /* Globals */
+    var ajaxMutex = false;
+
     var metalType;
     var searchbar;
     var currentPage = 0;
@@ -213,16 +215,20 @@
     function removeItem(i) {
       var item = currentTableItems[i];
       if (item) {
-        deleteItem(item, 
-            function (item) {
-              alert("Successful delete");
-              currentTableItems.splice(i, 1);
-              updateTable();
-              updateLoaded();
-            },
-            function (item, error) {
-              alert(error.message);
-            });
+        if (!ajaxMutex) {
+          ajaxMutex = true;
+          deleteItem(item, 
+              function (item) {
+                currentTableItems.splice(i, 1);
+                updateTable();
+                updateLoaded();
+                ajaxMutex = false;
+              },
+              function (item, error) {
+                alert(error.message);
+                ajaxMutex = false;
+              });
+        }
       }
     }
     
@@ -257,18 +263,24 @@
     }
 
     function updateLoaded() {
-      readAllItems(currentPage, currentFilter, 
-          function (items) {
-            if (items.length <= 0) {
-              prevPage();
-            } else {
-              currentTableItems = items;
-              updateTable();
-            }
-          },
-          function (items, error) {
-            alert(error.message);
-          });
+      if (!ajaxMutex) {
+        ajaxMutex = true;
+        readAllItems(currentPage, currentFilter, 
+            function (items) {
+              if (items.length <= 0) {
+                ajaxMutex = false;
+                prevPage();
+              } else {
+                currentTableItems = items;
+                updateTable();
+                setPageInHash(currentPage);
+                ajaxMutex = false;
+              }
+            },
+            function (items, error) {
+              alert(error.message);
+            });
+      }
     }
 
     /* Initializers */
@@ -277,12 +289,14 @@
       searchbar.keypress(function (e) {
           var kcode = e.keyCode ? e.keyCode : e.which;
           if (kcode == 13) {
+
             updateLoaded();
           }
         });
     }
 
     function baseInit() {
+      currentPage = pageInHash();
       searchbar = $("#searchbar");
       metalType = metalInHash();
       switch (metalType) {

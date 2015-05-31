@@ -322,3 +322,44 @@ function idInHash() {
         }
     }
 }
+
+function pageInHash() {
+    var hash = window.location.hash.substring(1); 
+    var props = hash.split("&");
+    for (var i = 0; i < props.length; i++) {
+        var prop = props[i];
+        var split = prop.indexOf("=");
+        if (split > -1) {
+            var propName = prop.substring(0, split);
+            if (propName == "page") {
+                return parseInt(prop.substring(split + 1));
+            }
+        }
+    }
+    return 0;
+}
+
+function setPageInHash(page) {
+    var hash = window.location.hash.substring(1); 
+    var newHash = "#";
+    var props = hash.split("&");
+    var set = false;
+    for (var i = 0; i < props.length; i++) {
+        if (i) newHash += "&";
+        var prop = props[i];
+        var split = prop.indexOf("=");
+        if (split > -1) {
+            var propName = prop.substring(0, split);
+            if (propName == "page") {
+                newHash += "page=" + page;
+                set = true;
+                continue;
+            }
+        }
+        newHash += prop;
+    }
+    if (!set) {
+        newHash += "&page=" + page;
+    }
+    window.location.hash = newHash;
+}
