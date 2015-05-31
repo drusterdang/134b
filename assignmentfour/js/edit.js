@@ -427,6 +427,7 @@ $(document).ready(function() {
             loadHandlers();
             updateTypeFilter();
             updateCalculatables();
+            hidePopup();
         }
     }
     setPopupSize(400);
