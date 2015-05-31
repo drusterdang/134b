@@ -179,7 +179,7 @@ function loadData() {
                     silverTotalData = [];
                     platTotalData = [];
                     var i;
-                    for (i = 0; i < 30; i++) {
+                    for (i = 0; i <= 30; i++) {
                         switch (metalType) {
                             case MetalType.GOLD: goldTotalData[i] = goldTotal * goldOzData[i]; break;
                             case MetalType.SILVER: silverTotalData[i] = silverTotal * silverOzData[i]; break;
@@ -268,7 +268,7 @@ function loadData() {
                         for (i = json.data.length - 1; i >= 0; i--) {
                             var dataDate = Date.parse(json.data[i][0]);
                             var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                            if (idays < 30) {
+                            if (idays <= 30) {
                                 goldOzData[idays] = parseFloat(json.data[i][1]);
                             }
                         }
@@ -282,7 +282,7 @@ function loadData() {
                         for (i = json.data.length - 1; i >= 0; i--) {
                             var dataDate = Date.parse(json.data[i][0]);
                             var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                            if (idays < 30) {
+                            if (idays <= 30) {
                                 silverOzData[idays] = parseFloat(json.data[i][1]);
                             }
                         }
@@ -298,7 +298,7 @@ function loadData() {
                         for (i = json.data.length - 1; i >= 0; i--) {
                             var dataDate = Date.parse(json.data[i][0]);
                             var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                            if (idays < 30) {
+                            if (idays <= 30) {
                                 platOzData[idays] = parseFloat(json.data[i][1]);
                             }
                         }
@@ -369,8 +369,12 @@ function loadGraph() {
     };
     var labels = ["now"];
     var i;
-    for (i = 2; i <= 30; i++) {
-        labels.push(i + " days ago");
+    for (i = 1; i <= 30; i++) {
+        if(i == 1){
+            labels.push(i + " day ago");
+        } else{
+            labels.push(i + " days ago");
+        }
     }
     labels.reverse();
     var pointStroke = "rgba(255,255,255,0.6)";

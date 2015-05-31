@@ -239,7 +239,11 @@ function loadGraph() {
     var labels = ["now"];
     var i;
     for (i = 1; i <= 30; i++) {
-        labels.push(i + "days ago");
+        if(i == 1){
+            labels.push(i + " day ago");
+        } else{
+            labels.push(i + " days ago");
+        }
     }
     labels.reverse();
     var pointStroke = "rgba(255,255,255,0.6)";
