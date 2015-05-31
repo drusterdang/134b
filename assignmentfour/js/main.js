@@ -18,6 +18,8 @@ var coinChart;
 
 /* Loaders */
 function loadData() {
+
+  /* Popup: Let's users know something is happening in the background as they wait for data to load*/
   setPopupSize(400);
   setPopupHeader("Loading your data!");
   setPopupMain("");
@@ -87,7 +89,8 @@ function loadData() {
             mTotalChange.addClass("pos-change");
           }
           loadGraph();
-          hidePopup();
+
+          hidePopup(); // hides popup when data has been loaded
         }
       }
       function fillGaps(data, len) {
