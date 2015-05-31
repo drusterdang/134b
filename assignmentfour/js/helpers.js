@@ -10,7 +10,7 @@ function numberNicify(num) {
     var  big = parseInt(num);
     if (num < 0 && num > -1) {
         return "-" + big + "." + small;
-    
+    }
     return big + "." + small;
 }
 

@@ -64,16 +64,25 @@ function removeItem(i) {
   if (item) {
     if (!ajaxMutex) {
       ajaxMutex = true;
+      setPopupHeader("Removing item!");
+      setPopupMain("");
+      showPopup();
       deleteItem(item, 
           function (item) {
             currentTableItems.splice(i, 1);
             updateTable();
             updateLoaded();
             ajaxMutex = false;
+            hidePopup();
           },
           function (item, error) {
-            alert(error.message);
             ajaxMutex = false;
+            setPopupMain(
+                    "<div class='popup-container'>" +
+                    "<p>Failed to remove item.</p>" + 
+                    "<p>Got Error: " + error.message + "</p>" + 
+                    "</div>" +
+                    "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
           });
     }
   }
@@ -112,6 +121,9 @@ function updateTable() {
 function updateLoaded() {
   if (!ajaxMutex) {
     ajaxMutex = true;
+    setPopupHeader("Updating table!");
+    setPopupMain("");
+    showPopup();
     readAllItems(currentPage, currentFilter, 
         function (items) {
           if (items.length <= 0) {
@@ -122,17 +134,28 @@ function updateLoaded() {
             updateTable();
             setPageInHash(currentPage);
             ajaxMutex = false;
+            hidePopup();
           }
         },
         function (items, error) {
           alert(error.message);
           ajaxMutex = false;
+          setPopupMain(
+                  "<div class='popup-container'>" +
+                  "<p>Failed to update table.</p>" + 
+                  "<p>Got Error: " + error.message + "</p>" + 
+                  "</div>" +
+                  "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
         });
   }
 }
 
 /* Loaders */
 function loadData() {
+  setPopupSize(400);
+  setPopupHeader("Loading your data!");
+  setPopupMain("");
+  showPopup();
   function buildGraph() {
     var milliPerDay = 3600 * 1000 * 24;
     var now = (new Date()).getTime();
@@ -204,6 +227,7 @@ function loadData() {
             mTotalOChange.addClass("neg-change");
           }
           loadGraph();
+          hidePopup();
         }
       }
       function fillGaps(data, len) {
@@ -320,7 +344,7 @@ function loadGraph() {
   };
   var labels = ["now"];
   for (var i = 2; i <= 30; i++) {
-    labels.push(i);
+    labels.push(i + " days ago");
   }
   labels.reverse();
   var pointStroke = "rgba(255,255,255,0.6)";
@@ -409,6 +433,7 @@ function initTable() {
 }
 
 $(document).ready(function() {
+  initPopup();
   currentPage = pageInHash();
   searchbar = $("#searchbar");
   metalType = metalInHash();

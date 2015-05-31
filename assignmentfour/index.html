@@ -11,6 +11,7 @@
     <link rel='shortcut icon' href='favicon.ico' type='image/x-icon' />
     <title>Login - CoinFlip</title>
     <script src='./js/combine.js'></script>
+    <script src='./js/index.js'></script>
     <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
 </head>
 
@@ -58,36 +59,6 @@
     <script type='text/javascript'>
       loadFooter();
       initParse();
-
-      function signupUser() {
-        var user = new Parse.User();
-        var username = $("#username").val();
-        var password = $("#passwd").val();
-        user.set("username", username);
-        user.set("password", password);
-        user.signUp(null, {
-          success: function(user) {
-            alert("Successfully signed up!");
-          },
-          error: function(user, error) {
-            alert("Failed to sign up... " + error.message);
-          }
-        });
-      }
-
-      function loginUser() {
-        var username = $("#username").val();
-        var password = $("#passwd").val();
-        Parse.User.logIn(username, password, {
-          success: function (user) {
-            alert("Successfully logged in!");
-            window.location.href = "main.html";
-          },
-          error: function (user, error) {
-            alert("Failed to login... " + error.message)
-          }
-        });
-      }
     </script>
 </body>
 

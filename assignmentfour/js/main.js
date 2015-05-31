@@ -18,6 +18,10 @@ var coinChart;
 
 /* Loaders */
 function loadData() {
+  setPopupSize(400);
+  setPopupHeader("Loading your data!");
+  setPopupMain("");
+  showPopup();
   function buildGraph() {
     var milliPerDay = 3600 * 1000 * 24;
     var now = (new Date()).getTime();
@@ -83,6 +87,7 @@ function loadData() {
             mTotalChange.addClass("pos-change");
           }
           loadGraph();
+          hidePopup();
         }
       }
       function fillGaps(data, len) {
@@ -189,7 +194,7 @@ function loadGraph() {
   };
   var labels = ["now"];
   for (var i = 2; i <= 30; i++) {
-    labels.push(i);
+    labels.push(i + "days ago");
   }
   labels.reverse();
   var pointStroke = "rgba(255,255,255,0.6)";
@@ -266,18 +271,17 @@ function loadGraph() {
 
 /* Main */
 $(document).ready(function() {
-
+  initPopup();
   var path = window.location.pathname;
   var page = path.split("/").pop();
 
   $('.icon-spinner2').click(function(){
-    location.reload();	
+    window.location.reload();	
   });
 
   $('tr').click(function(){
     $(this).find('a')[0].click();
   });
-
   $('.mtb-1').click(function(){
     $('.graph-panel').removeClass('graph-panel-show');
     $('.market-status').fadeIn(0);
