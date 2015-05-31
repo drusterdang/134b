@@ -293,7 +293,6 @@ function loadData() {
         break;
       }
       getSpotData(function (json) {
-        console.log(json[0]);
         goldAsk = json[0].ask;
         goldBid = json[0].bid;
         goldChange = json[0].oneDayPercentChange;
