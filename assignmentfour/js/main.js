@@ -274,10 +274,30 @@ $(document).ready(function() {
   var path = window.location.pathname;
   var page = path.split("/").pop();
 
+  if (!Parse.User.current()) {
+    setPopupHeader("Error!");
+    setPopupMain(
+            "<div class='popup-container'>" +
+            "<p>Must be logged into access page.</p>" + 
+            "</div>" +
+            "<input type='button' class='popup-main-button' onclick='logout();' value='Continue'/>");
+    setPopupSize(300);
+    showPopup();
+    return;
+  }
+
   $('.icon-spinner2').click(function(){
     window.location.reload();	
   });
-
+  $('.icon-cog').click(function(){
+    setPopupHeader("Settings");
+    setPopupMain(
+            "<input type='button' class='popup-main-button' onclick='logout();' value='Logout'/>" +
+            "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Cancel'/>" 
+    );
+    setPopupSize(400);
+    showPopup();
+  });
   $('tr').click(function(){
     $(this).find('a')[0].click();
   });

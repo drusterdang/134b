@@ -76,7 +76,7 @@ function submitItem() {
                                 "<p>Failed to update item.</p>" + 
                                 "<p>Got Error: " + error.message + "</p>" + 
                                 "</div>" +
-                                "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
                     });
         }
     } else {
@@ -103,7 +103,7 @@ function submitItem() {
                                 "<div class='popup-container'>" +
                                 "<p>Successfully created item.</p>" + 
                                 "</div>" +
-                                "<input type='button' onclick='hidePopup(); cancel()' value='Dismiss'/>");
+                                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
                         cancel();
                     },
                     function(item, error) {
@@ -135,7 +135,7 @@ function removeItem() {
                                 "<p>Failed to remove item.</p>" + 
                                 "<p>Got Error: " + error.message + "</p>" + 
                                 "</div>" +
-                                "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
                         ajaxMutex = false;
                     });
         }
@@ -244,6 +244,17 @@ function loadHandlers() {
 /* Initializers */
 $(document).ready(function() {
     initPopup();
+    if (!Parse.User.current()) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Must be logged into access page.</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='logout();' value='Continue'/>");
+        setPopupSize(300);
+        showPopup();
+        return;
+    }
     mediumType = $("#medium-type");
     metalType = $("#metal-type");
     typeName = $("#type-name");
@@ -304,7 +315,7 @@ $(document).ready(function() {
                             "<p>Failed to load data.</p>" + 
                             "<p>Got Error: " + error.message + "</p>" + 
                             "</div>" +
-                            "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                            "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
                 });
     } else {
         var theDate = new Date();

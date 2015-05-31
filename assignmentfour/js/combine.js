@@ -135,6 +135,12 @@ function initParse() {
       "z9OYp348kGoWdYpHOu1thm2D8897Q7ub7aDB67Mx");
 }
 
+function logout() {
+    Parse.User.logOut();
+    window.location.href = "index.html";
+}
+
+
 /* Temporary Functions (Until next project) */
 var knownItems = [
   /* Gold Coins */

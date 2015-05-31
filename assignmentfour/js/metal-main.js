@@ -82,7 +82,7 @@ function removeItem(i) {
                     "<p>Failed to remove item.</p>" + 
                     "<p>Got Error: " + error.message + "</p>" + 
                     "</div>" +
-                    "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                    "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
           });
     }
   }
@@ -145,7 +145,7 @@ function updateLoaded() {
                   "<p>Failed to update table.</p>" + 
                   "<p>Got Error: " + error.message + "</p>" + 
                   "</div>" +
-                  "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                  "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
         });
   }
 }
@@ -433,6 +433,17 @@ function initTable() {
 
 $(document).ready(function() {
   initPopup();
+  if (!Parse.User.current()) {
+    setPopupHeader("Error!");
+    setPopupMain(
+            "<div class='popup-container'>" +
+            "<p>Must be logged into access page.</p>" + 
+            "</div>" +
+            "<input type='button' class='popup-main-button' onclick='logout();' value='Continue'/>");
+    setPopupSize(300);
+    showPopup();
+    return;
+  }
   currentPage = pageInHash();
   searchbar = $("#searchbar");
   metalType = metalInHash();
@@ -468,7 +479,15 @@ $(document).ready(function() {
   $('.icon-spinner2').click(function(){
     location.reload();	
   });
-
+  $('.icon-cog').click(function(){
+    setPopupHeader("Settings");
+    setPopupMain(
+            "<input type='button' class='popup-main-button' onclick='logout();' value='Logout'/>" +
+            "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Cancel'/>" 
+    );
+    setPopupSize(400);
+    showPopup();
+  });
   $('tr').click(function(){
     $(this).find('a')[0].click();
   });

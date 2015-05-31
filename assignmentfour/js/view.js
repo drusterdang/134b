@@ -55,6 +55,17 @@ function updateCalculatables() {
 /* Initializers */
 $(document).ready(function() {
     initPopup();
+    if (!Parse.User.current()) {
+        setPopupHeader("Error!");
+        setPopupMain(
+                "<div class='popup-container'>" +
+                "<p>Must be logged into access page.</p>" + 
+                "</div>" +
+                "<input type='button' class='popup-main-button' onclick='logout();' value='Continue'/>");
+        setPopupSize(300);
+        showPopup();
+        return;
+    }
     mediumType = $("#medium-type");
     metalType = $("#metal-type");
     typeName = $("#type-name");
@@ -103,7 +114,7 @@ $(document).ready(function() {
                             "<p>Failed to load data.</p>" + 
                             "<p>Got Error: " + error.message + "</p>" + 
                             "</div>" +
-                            "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                            "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
                 });
     } else {
         setPopupMain(
@@ -111,6 +122,6 @@ $(document).ready(function() {
                 "<p>Failed to load data.</p>" + 
                 "<p>Got Error: invalid object id</p>" + 
                 "</div>" +
-                "<input type='button' onclick='hidePopup(); cancel()' value='Dismiss'/>");
+                "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
     }
 });

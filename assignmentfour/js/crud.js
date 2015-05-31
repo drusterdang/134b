@@ -13,13 +13,6 @@ var MetalType = Object.freeze({
   PLATINUM    : 2
 });
 
-/* Initialize Parse */
-function initParse() {
-  Parse.initialize(
-      "C1vSKr7qozzQJbvpdwgirOAnFegdiBA4ATzsMIts", 
-      "z9OYp348kGoWdYpHOu1thm2D8897Q7ub7aDB67Mx");
-}
-
 /* Temporary Functions (Until next project) */
 var knownItems = [
   /* Gold Coins */

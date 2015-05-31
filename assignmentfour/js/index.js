@@ -16,7 +16,7 @@ function signupUser() {
                     "<p>Successfully signed up new user.</p>" + 
                     "<p>Please login now.</p>" + 
                     "</div>" +
-                    "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                    "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
         },
         error: function(user, error) {
             setPopupHeader("Error!");
@@ -25,7 +25,7 @@ function signupUser() {
                     "<p>Failed to signup.</p>" + 
                     "<p>Got Error: " + error.message + "</p>" + 
                     "</div>" +
-                    "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                    "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
         }
     });
 }
@@ -48,7 +48,7 @@ function loginUser() {
                     "<p>Failed to login.</p>" + 
                     "<p>Got Error: " + error.message + "</p>" + 
                     "</div>" +
-                    "<input type='button' onclick='hidePopup();' value='Dismiss'/>");
+                    "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
         }
     });
 }
