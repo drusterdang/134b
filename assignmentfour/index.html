@@ -12,6 +12,7 @@
     <title>Login - Bulliown</title>
     <script src='./js/combine.js'></script>
     <script src='./js/index.js'></script>
+    <script type='text/javascript' src='http://connect.facebook.net/en_US/sdk.js'></script>
     <script type='text/javascript' src='http://www.parsecdn.com/js/parse-1.4.2.min.js'></script>
 </head>
 
@@ -28,6 +29,7 @@
             <h1>BULLIOWN</h1>
             <h3>Manage your coin collection with a simple app.</h3>
             <br/>
+            <a id='login-button-facebook' onclick='loginUserFacebook();'><span>Login With Facebook</span></a>
             <div id='main-input-section'>
               <table>
                 <tr>
@@ -52,7 +54,6 @@
                 <div id='iphone-home'></div>
             </div>
         </section>
-
     </div>
     <script type='text/javascript'>
       loadFooter();
