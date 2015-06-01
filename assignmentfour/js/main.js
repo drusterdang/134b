@@ -43,7 +43,7 @@ function loadData() {
                     platTotalData = [];
                     /* Set Data w/ user totals */
                     var i;
-                    for (i = 0; i <= 30; i++) {
+                    for (i = 0; i < 30; i++) {
                         goldTotalData[i] = goldTotal * goldOzData[i];
                         silverTotalData[i] = silverTotal * silverOzData[i];
                         platTotalData[i] = platTotal * platOzData[i];
@@ -137,7 +137,7 @@ function loadData() {
                     //determine how many days ago
                     var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
                     //save the data for the date if within 30 days
-                    if (idays <= 30) {
+                    if (idays < 30) {
                         goldOzData[idays] = parseFloat(json.data[i][1]);
                     }
                 }
@@ -155,7 +155,7 @@ function loadData() {
                     var dataDate = Date.parse(json.data[i][0]);
                     //determine how many days ago
                     var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                    if (idays <= 30) {
+                    if (idays < 30) {
                         silverOzData[idays] = parseFloat(json.data[i][1]);
                     }
                 }
@@ -172,7 +172,7 @@ function loadData() {
                     var dataDate = Date.parse(json.data[i][0]);
                     //determine how many days ago
                     var idays = parseInt((now - Date.parse(json.data[i][0])) / milliPerDay);
-                    if (idays <= 30) {
+                    if (idays < 30) {
                         platOzData[idays] = parseFloat(json.data[i][1]);
                     }
                 }
@@ -238,7 +238,7 @@ function loadGraph() {
     };
     var labels = ["now"];
     var i;
-    for (i = 1; i <= 30; i++) {
+    for (i = 1; i < 30; i++) {
         if(i == 1){
             labels.push(i + " day ago");
         } else{
