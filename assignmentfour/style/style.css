@@ -392,14 +392,16 @@ a:visited {
 }
 
 #signup-button,
-#login-button
+#login-button,
+#login-button-facebook
 {
   box-sizing: border-box;
   display: block;
 }
 
 #signup-button .button-main,
-#login-button .button-main
+#login-button .button-main,
+#login-button-facebook .button-main,
 {
   margin-top: 0;
 }
@@ -422,6 +424,16 @@ a:visited {
 #login-button:hover {
     cursor: pointer;
     border: 2px solid #599CA6;
+}
+
+#login-button-facebook {
+    border: 2px solid #47639E;
+    background: #47639E;
+}
+
+#login-button-facebook:hover {
+    cursor: pointer;
+    border: 2px solid #7793BE;
 }
 
 #w1-right {

@@ -53,6 +53,27 @@ function loginUser() {
     });
 }
 
+function loginUserFacebook() {
+    setPopupHeader("Logging You In!");
+    setPopupMain("");
+    setPopupSize(400);
+    showPopup();
+    Parse.FacebookUtils.logIn(null, {
+        success: function (user) {
+            window.location.href = "main.html";
+        },
+        error: function (user, error) {
+            setPopupHeader("Error!");
+            setPopupMain(
+                    "<div class='popup-container'>" +
+                    "<p>Failed to login.</p>" + 
+                    "<p>Got Error: " + error.message + "</p>" + 
+                    "</div>" +
+                    "<input type='button' class='popup-main-button' onclick='hidePopup();' value='Dismiss'/>");
+        }
+    });
+}
+
 $(document).ready(function() {
     initPopup();
 });
