@@ -1,6 +1,6 @@
 ===============================================================================
-                             CSE134B DREAM TEAM
-                               COINFLIP - HW3
+                             CSE134B Team #14
+                               Bulliown - HW4
 ===============================================================================
 
 # # # # # # # # # # # # # # # 
@@ -8,67 +8,34 @@
 # # # # # # # # # # # # # # #
 
 Navigation:
-	Start with index.html as the login/signup page. All other pages are named
+	Start with index.html as the login/signup page through Facebook authentication or username login. All other pages are named
 	as such:
 
 	index.html - Login/signup page with demo
-	wire2.html - Home page with Total Coin Value and graphs for all coins
-	wire3.html - My Gold page with details on owned gold coins
-	wire4.html - Gold Item page that looks at a specific gold coin
-	wire5.html - New Item page that is the mock-up for adding a new coin
+	main.html - Home page with Total Coin Value and graphs for all coins
+	main-metal.html - Information particular to a specific metal type, contains a store of all coins/bars of that specific type
+	edit.html - the update and create in our CRUD model, depending on if an object id is specified.
+	view.html - View page that allows you to view details about a coin not shown in the main-metal page.
+	
+	In main, you are given an overview all all the metals and a very generalized description of the user’s inventory. Clicking on the looping arrow will cause the page to refresh. Additionally, clicking on the settings cogs icon will cause a logout prompt to pop up, which is cancellable. 
 
-	Clicking on the AG (silver) or PT (platinum) boxes on the side nav will
-	simply navigate you to the AU (gold) page [wire3.html] as this mock-up
-	only implements the My Gold page.
+	Clicking on the AU (gold), AG (silver), or PT (platinum) boxes on the side nav will
+	simply navigate you to the AU (gold) page, AG (silver) page, PT (platinum) page.
+	From there, you can see the the value, price per time chart graph, and a collection of the amount of coins you added. Each coin has a image, item type, qty, weight, percentage, and a value. In the table of coins, you can navigate one page at a time. Page numbers are stored in the hash of the location so one can navigate to a particular page with a specific url. Furthermore, the search functionality allows one to filter out items, by typing a string that filters by whether the item’s name starts with the query. The actual search is triggered by hitting [Enter] after typing the query.
+	
+	When you click the plus sign in these pages, it will take you to the create page. The create page will be passed a hash specifying the type of item to start out with. Furthermore, it also determined the page the user will go back to if the user cancels. With that, the metal field is automatically selected when you go to the create page. The next thing to note is that with the name, when one starts typing, one will see a list of known items filtered by the types specified above. When one finishes typing the field, and it matches a known type, the fineness and denominations (wpu) will automatically be populated. Because there are multiple denominations, we simply chose the first one, but one can easily change that by editing as one would regularly the denominations and then have it autocomplete just as the names did. We decided to do an autocomplete text field because we figured that because we probably will not be able to fulfill getting all the known coins, allowing the user to modify and assisting the user when we have extra information without restricting the user's input was a crucial part. 
+
+We did a lot of work displaying what was going on in the background with pop-up’s, which visually block the user from doing anything, although we have code that prevents critical operations from slamming into each other. Furthermore, these pop-up’s give us a means of providing information when an error has occurred. We feel the fact you can see the page slowly build as data comes in to be a plus, and it sort of confirms to the user that work is being done. Furthermore, the updates create immediate visual feedback when the user does an action, rather than assuming that the AJAX call will return quickly enough to seem contiguous with the action.
+
 
 Responsive Design:
-	THe high-fidelity mock switches to mobile view when the screen size 
-	reaches a width of 1000px or below.
-
-
+	The high-fidelity mock switches to mobile view when the screen size < 1000px.
 
 # # # # # # # # # # # # # # # 
-#   Cross-Platform Issues   #
+#   Cross-Platform Issues  #
 # # # # # # # # # # # # # # #
 
-Chrome:
-	We mainly developed on Chrome, so there were issues with compatibility in
-	that department. 
-
-Firefox:
-	Firefox also seemed to work perfectly well with no issues. Did not note any
-	major problems, if any problems at all, with that browser. The only slight
-	difference that we noticed is that the dropdown selector in wire5.html was 
-	styled a little bit differently in Firefox (not as nice looking as we would
-	have hoped and seen in Chrome).
-
-Safari:
-	Here, the dropdown selector in wire5.html was also a little bit different, 
-	although not as ugly as in Firefox. One of the major issues we bumped into,
-	however, was that a lot of our SVG elements were not showing. This turned
-	out to be this really annoying problem that with SVG symbols, all other 
-	browsers let you call "use" before declaring the symbol EXCEPT Safari. 
-	This required an insane amount of browsing through all the files and 
-	doing a move of that line of code below the symbol declaration for pretty
-	much every single SVG element we used. Overall, testing on Safari brought
-	out the key point that some browsers will care about the order of certain
-	markup while others wont. 
-
-	Another thing we noticed is that Safari renders fonts a little bit 
-	differently from all the other browsers, and especially font-size. We used
-	font-size: 0 to bring some divs flush close to each other but on Safari
-	that doesn't work for some strange reason, so we compensated with some
-	white-space: nowrap so that our mobile toggling selectors didn't overflow.
-
-Internet Explorer:
-	Okay this one actually scared us a ton at first because the entire layout 
-	was whack. Turns out after some research, the "main" semantic element isn't
-	supported in IE, so the padding we had used for that element didn't have
-	any effect at all. To fix this, we simply switched out the "main" element
-	for a "section" element with a specific class and styled it the same
-	as we had with the "main" element.
-
-
+Chrome Firefox, Safari, Internet explorer: No compatibility issues for the most part. One key compatibility issue we had was that our type dropdown for edit.html when adding a coin was not showing up. 
 
 # # # # # # # # # # # # # # # 
 #     Validation Issues     #
@@ -78,92 +45,49 @@ HTML:
 	All the HTML validation checked out so there was no problem there.
 
 CSS:
-	The errors in CCS validation were broken down into only two problems:
+	The errors in CCS validation were broken down into only two problems that exist as bugs by the CSS validator. Theres two being the ones below:
 
 	Property fill Doesn't Exist:
 		CSS3 validator doesn't recognize fill as a valid attribute, but
 		as we tested it with Chrome, Firefox, Safari, and IE, we're willing
 		to forgo solving of this validation flag to implement the fill 
-		attribute. After some further research, this seems to be a bug in 
-		the validator, much like the one that will be described next.
+		attribute. 
 
 	Calc() parse errors:
 		Anywhere we used calc() in our CSS, the CSS validator threw a parse
-		error. However, with research, we determined that this was a bug with 
-		the CSS validator. 
+		error.
 
-		Source: https://www.w3.org/Bugs/Public/show_bug.cgi?id=18913 
+		Source Bugs: https://www.w3.org/Bugs/Public/show_bug.cgi?id=18913 
 
 
 
 # # # # # # # # # # # # # # # 
 #    Implementation Tech    #
 # # # # # # # # # # # # # # #
+HTML: HTML5 was mostly used with the additional use of IcoMoon for icons. 
 
-HTML:
-	We used HTML5 so this technology was pretty straightforward. Perhaps
-	the one noteworthy thing is our use of SVG, particularly for icons
-	from IcoMoon.io (source: https://icomoon.io/) to save us the time
-	of actually designing our own icons
 
 SASS/CSS:
-	We wrote all of our CSS using SASS that compiled into CSS. We used 
-	SASS in a way that the syntax was identical to that of simply using
-	CSS. The only additions we utilized SASS for were as follows:
-
-		1) SASS Variables - easier refactoring of color themes
-		2) SASS Nesting   - easier for the developer to nest attributes, mainly
-			                used as a security fall-back against conflicting 
-			                styling as we were merging files and work
-		3) SASS Mixins    - For any CSS attributes that needed all the extra
-		                    prefix declarations for moz, webkit, etc., we used
-		                    simple @include mixins from SASS to avoid having to
-		                    type all the prefixes ourselves.
-
-    Otherwise, all of our SASS was written exactly the same as CSS. We simply
-    employed the SASS to save some time and organize common themes easier. 
+	We wrote all of our CSS using SASS that compiled into CSS. Utilizing SAAS for their variables (easier refactoring), nesting attributes, and mixins (avoid all prefixes) provided to us. 
 
     The SASS file is located in sass/style.scss.
     The CSS file is located in style/style.css.
 
 
 Javascript:
-	We used a little bit a Javascript, not much, to accomplish these goals:
+- Parse.js: initializes parse and sets logout to index.html window 
+- Chart.js: to create the graphs
+- Crud.js: file containing all of our create, read, update, and delete code, as well as some helper functions related to that.
+Combine.js: a javascript file that is the concatenation of a bunch of “global” javascript files
+- Data.js: contains code for retrieving data hosted on other servers. Simply created to hide service details, but does not hide data details.
+- Edit.js: javascript particular to the edit page.
+- Helpers.js: Some string helpers for nice presentation.
+- Index.js: javascript particular to index.html
+- Main.js: javascript particular to main.html. The import functions for top navigation, side navigation, and footer for all the pages can be found in main.js and include loadTopNav(), loadTopNavPersist(), loadSideNav(selected), loadFooter().
+- Metal-main.js: javascript particular to metal-main.html
+- Jquery: minified, used by a lot of our dependencies
+- Popup.js: Creates a popup, that is used throughout the application as a means of blocking user (visually) while providing info about why application is blocked
+- Velocity.js: minified, Javascript animation for display animations on our site 
+- View.js : a photo viewer, Jquery file 
 
-		1) Importing top navigation, side navigation, and footer on all pages.
-		   This allowed us to be able to just change the common elements in one 
-		   place and have it affect all 5 pages rather than have to go through 
-		   every single page for changes. This was done through simple document
-		   write statements (with extra input in to the function for the side
-		   navigation, this let us easily specify which side navigation button
-		   should be 'pressed'). These import functions are all in main.js and
-		   are:
-		   		- loadTopNav()
-		   		- loadTopNavPersist()
-		   		- loadSideNav(selected)
-		   		- loadFooter()
-
-		2) Creating the graphs. This was done using a library called Chart.js.
-		   Source: http://www.chartjs.org/
-
-		3) Handling navigation toggle buttons. This is when the application is 
-		   shrunk down to mobile size where the toggle buttons of information
-		   and chart appear. Instead of having those buttons navigate to
-		   different pages, we thought it made more sense that they would 
-		   toggle what information is already on the page. This was done with
-		   jQuery on click events. 
-		   Source: https://jquery.com/
-
-
-
-# # # # # # # # # # # # # # # 
-#        Thank you!         #
-# # # # # # # # # # # # # # #
-
-We hope you enjoyed our high-fidelity mock-up of CoinFlip, the simple 
-application for managing your entire coin collection! Feel free to 
-contact us with any feedback, comments, suggestions, or concerns.
-
-Best,
-CSE134B Dream Team
 
