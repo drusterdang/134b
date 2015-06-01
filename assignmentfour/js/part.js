@@ -7,7 +7,7 @@ function loadTopNav(){
 	document.write("            <\/symbol>");
 	document.write("            <use xlink:href=\"#icon-spinner2\"><\/use>");
 	document.write("        <\/svg>");
-	document.write("        <a href=\"main.html\">COINFLIP<\/a>");
+	document.write("        <a href=\"main.html\">BULLIOWN<\/a>");
 	document.write("        <svg class=\"icon-cog\">");
 	document.write("            <symbol id=\"icon-cog\" viewBox=\"0 0 1024 1024\">");
 	document.write("                <title>cog<\/title>");
@@ -27,7 +27,7 @@ function loadTopNavPersist(){
 	document.write("            <\/symbol>");
 	document.write("            <use xlink:href=\"#icon-spinner2\"><\/use>");
 	document.write("        <\/svg>");
-	document.write("        <a href=\"main.html\">COINFLIP<\/a>");
+	document.write("        <a href=\"main.html\">BULLIOWN<\/a>");
 	document.write("        <svg class=\"icon-cog\">");
 	document.write("            <symbol id=\"icon-cog\" viewBox=\"0 0 1024 1024\">");
 	document.write("                <title>cog<\/title>");
@@ -93,7 +93,7 @@ function loadSideNav(selected){
 
 function loadFooter(){
 	document.write("    <footer>");
-	document.write("        &copy; 2015 CoinFlip");
+	document.write("        &copy; 2015 BULLIOWN");
 	document.write("    <\/footer> ");
 
 }

@@ -8,23 +8,24 @@
 # # # # # # # # # # # # # # #
 
 Navigation: Start with index.html as the login/signup page through Facebook
-authentication or username login. All other pages are named as such:
+authentication or username login/signup flow. All other pages are named as such:
 
-index.html - Login/signup page with demo main.html - Home page with Total Coin
-Value and graphs for all coins main-metal.html - Information particular to a
-specific metal type, contains a store of all coins/bars of that specific type
+index.html - Login/signup page with demo. 
+main.html - Home page with Total Coin Value and graphs for all coins. 
+main-metal.html - Information particular to a specific metal type, contains a store of all coins/bars of that specific type
 edit.html - the update and create in our CRUD model, depending on if an object
-id is specified.  view.html - View page that allows you to view details about a
+id is specified.  
+view.html - View page that allows you to view details about a
 coin not shown in the main-metal page.
 
-In main, you are given an overview all all the metals and a very generalized
+In main, you are given an overview of all the metals and a very generalized
 description of the user’s inventory. Clicking on the looping arrow will cause
 the page to refresh. Additionally, clicking on the settings cogs icon will
 cause a logout prompt to pop up, which is cancellable. 
 
 Clicking on the AU (gold), AG (silver), or PT (platinum) boxes on the side nav
 will simply navigate you to the AU (gold) page, AG (silver) page, PT (platinum)
-page.  From there, you can see the the value, price per time chart graph, and a
+page.  From there, you can see the value, price per time chart graph, and a
 collection of the amount of coins you added. Each coin has a image, item type,
 qty, weight, percentage, and a value. In the table of coins, you can navigate
 one page at a time. Page numbers are stored in the hash of the location so one
@@ -38,7 +39,7 @@ happening with the asynchronous calls that are happening in the background,
 making for a nice and more intuitive experience for the user.
 
 When you click the plus sign in these pages, it will take you to the create
-page. The create page will be passed a hash specifying the type of item to
+page. The create page will be passed a hash specifying the type of the item to
 start out with. Furthermore, it also determined the page the user will go back
 to if the user cancels. With that, the metal field is automatically selected
 when you go to the create page. The next thing to note is that with the name,
