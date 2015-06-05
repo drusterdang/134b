@@ -46,7 +46,7 @@ function validateForm(username, password, confirmPasswd, email, confirmEmail) {
         showError("Password fields do not match");
         return false;
     } else if(password == ""){
-        showError("Invalid Password");
+        showError("Password field is empty");
         return false;
     } else if(email == "" || !regExpression.test(email)){
         showError("Invalid Email");
